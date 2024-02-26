@@ -1,0 +1,19 @@
+{
+  "name": "mess_management_backend",
+  "version": "1.0.0",
+  "description": "Folder for Backend programs.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prisma": "^5.10.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.10.2"
+  }
+}
