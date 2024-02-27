@@ -1,24 +1,13 @@
-import { PrismaClient } from '@prisma/client'
+import 'dotenv/config'
+import connectDB from "./db/index.js";
+import { app } from './app.js';
 
-const prisma = new PrismaClient()
-
-async function showTable() {
-    // ... you will write your Prisma Client queries here
-    const allUsers = await prisma.student.findMany();
-    console.log(allUsers);
-}
-
-async function insert() {
-    // ... you will write your Prisma Client queries here
-    const student = await prisma.student.create({
-        data: {
-            name: 'Alice',
-            email: 'example',
-            hostel: 'B13',
-            mess: 'pine'
-        },
-    });
-    console.log(student);
-}
-
-showTable();
+connectDB()
+    .then(() => {
+        app.listen(process.env.PORT || 3001, () => {
+            console.log(`Server running at port ${process.env.PORT}`)
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+    })
