@@ -1,1 +1,2 @@
-Folder for Backend programs.
+Prisma Docs - https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/next-steps-typescript-postgresql
+Prisma CRUD Docs - https://www.prisma.io/docs/orm/prisma-client/queries/crud#create
