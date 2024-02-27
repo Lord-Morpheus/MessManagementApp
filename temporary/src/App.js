@@ -10,7 +10,7 @@ function App() {
   },[])
 
   const fetchDataFromBackend=async()=>{
-      axios.get('http://localhost:3000/user/getUser')
+      axios.get('http://localhost:5000/user/getUser')
       .then(res=>{
       console.log(res);
       setUsers(res.data);
@@ -33,7 +33,7 @@ function App() {
     const handleSubmit=async(e)=>{
       e.preventDefault();
       try{
-        const response =await fetch('http://localhost:3000/user/addUser',{
+        const response =await fetch('http://localhost:5000/user/addUser',{
           method:'POST',
           headers:{
               'Content-Type':'application/json',
@@ -65,7 +65,7 @@ function App() {
 
   const handleDelete = async(id)=>{
       try{
-          const response = await fetch(`http://localhost:3000/user/deleteUser/${id}`,{
+          const response = await fetch(`http://localhost:5000/user/deleteUser/${id}`,{
               method:'DELETE',
           });
           if(response.ok){
@@ -84,23 +84,23 @@ function App() {
       <form className='d-flex flex-column w-50% align-items-flex-start justify-content-center' onSubmit={handleSubmit}>
         <div className="form-group">
           <label for="exampleInputEmail1">Name</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='username' value={formData.name} aria-describedby="emailHelp" placeholder="Enter Your Name" onChange={handleChange}/>
+          <input type="text" className="form-control" id="exampleInputEmail1" name='username' value={formData.name} aria-describedby="emailHelp" placeholder="Enter Your Name" onChange={handleChange}/>
         </div>
         <div className="form-group">
           <label for="exampleInputEmail1">Roll nunber</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='userid' value={formData.userid} aria-describedby="emailHelp" placeholder="Enter Roll Nunber" onChange={handleChange}/>
+          <input type="text" className="form-control" id="exampleInputEmail1" name='userid' value={formData.userid} aria-describedby="emailHelp" placeholder="Enter Roll Nunber" onChange={handleChange}/>
         </div>
         <div className="form-group">
           <label for="exampleInputEmail1">Hostel</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='hostel' value={formData.hostelname} aria-describedby="emailHelp" placeholder="Enter Hostel(eg. alpha dashir block)" onChange={handleChange}/>
+          <input type="text" className="form-control" id="exampleInputEmail1" name='hostelname' value={formData.hostelname} aria-describedby="emailHelp" placeholder="Enter Hostel(eg. alpha dashir block)" onChange={handleChange}/>
         </div>
         <div className="form-group">
           <label for="exampleInputEmail1">Batch</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='batch' value={formData.batch} aria-describedby="emailHelp" placeholder="Enter your batch" onChange={handleChange}/>
+          <input type="text" className="form-control" id="exampleInputEmail1" name='batch' value={formData.batch} aria-describedby="emailHelp" placeholder="Enter your batch" onChange={handleChange}/>
         </div>
         <div className="form-group">
           <label for="exampleInputPassword1">Email ID</label>
-          <input type="email" className="form-control" id="exampleInputPassword1" name='email' value={formData.email} placeholder="Enter your email id" onChange={handleChange}/>
+          <input type="text" className="form-control" id="exampleInputPassword1" name='email' value={formData.email} placeholder="Enter your email id" onChange={handleChange}/>
         </div>
         <div className="form-check">
           <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
@@ -147,7 +147,9 @@ function App() {
                   <div className="col">
                     {user.email}
                   </div>
-                  <button type='button' className='btn btn-danger' onClick={()=>handleDelete(user._id)}>Delete</button>
+                  <div className="col">
+                    <button type='button' className='btn btn-danger' onClick={()=>handleDelete(user._id)}>Delete</button>
+                  </div>
                 </div>
               )
             })

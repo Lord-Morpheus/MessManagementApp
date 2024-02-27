@@ -13,14 +13,15 @@ const userSchema=new Schema({
     },
     batch:{
         type: String,
-        unique:true
+        required:true,
     },
     hostelname:{
-        type:String,   
-        unique:true,
+        type:String, 
+        required:true,  
     },
     email:{
         type: String,
+        required:true,
         unique:true,
     }
 });

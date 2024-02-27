@@ -12,8 +12,8 @@ exports.getUser=async(req,res)=>{
 
 exports.addUser=async(req,res)=>{
     try{
-        const {team,username,position,instaid,linkdin,image}=req.body;
-        const UserData=new User({team,username,position,instaid,linkdin,image});
+        const {username,userid,batch,hostelname,email}=req.body;
+        const UserData=new User({username,userid,batch,hostelname,email});
         const save = await UserData.save();
         res.status(200).json({save});
     }
@@ -24,15 +24,14 @@ exports.addUser=async(req,res)=>{
 }
 
 exports.updateUser = async (req, res) => {
-    const {team,username,position,instaid,linkdin,image} = req.body;
+    const {username,userid,batch,hostelname,email} = req.body;
     try{
         const updated = {};
-        if(team) updated.team = team;
         if(username) updated.username = username;
-        if(image) updated.image = image;
-        if(position) updated.position = position;
-        if(instaid) updated.instaid = instaid;
-        if(linkdin) updated.linkdin = linkdin;
+        if(userid) updated.userid = userid;
+        if(batch) updated.batch = batch;
+        if(hostelname) updated.hostelname = hostelname;
+        if(email) updated.email = email;
 
         let UserData = await User.findById(req.params.id);
         if(!UserData) return res.status(404).json({msg: "Not found"});
