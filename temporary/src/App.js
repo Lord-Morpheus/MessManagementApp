@@ -10,7 +10,7 @@ function App() {
   }, [])
 
   const fetchDataFromBackend = async () => {
-    axios.get('http://localhost:3000/user/getUser')
+    axios.get('http://localhost:3001/api/v1/admin/getStudents')
       .then(res => {
         console.log(res);
         setUsers(res.data);
@@ -24,16 +24,16 @@ function App() {
 
 
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     userid: '',
     batch: '',
-    hostelname: '',
+    hostel: '',
     email: '',
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/user/addUser', {
+      const response = await fetch('http://localhost:3001/api/v1/admin/addStudent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,10 +51,10 @@ function App() {
       console.error('Error:', error);
     }
     setFormData({
-      username: '',
+      name: '',
       userid: '',
       batch: '',
-      hostelname: '',
+      hostel: '',
       email: '',
     })
   };
@@ -65,7 +65,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/user/deleteUser/${id}`, {
+      const response = await fetch(`http://localhost:3001/api/v1/admin/deleteStudent/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -84,19 +84,19 @@ function App() {
       <form className='d-flex flex-column w-50% align-items-flex-start justify-content-center' onSubmit={handleSubmit}>
         <div className="form-group">
           <label for="exampleInputEmail1">Name</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='username' value={formData.name} aria-describedby="emailHelp" placeholder="Enter Your Name" onChange={handleChange} />
+          <input type="text" className="form-control" id="exampleInputEmail1" name='name' value={formData.name} aria-describedby="emailHelp" placeholder="Enter Your Name" onChange={handleChange} />
         </div>
         <div className="form-group">
           <label for="exampleInputEmail1">Roll nunber</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='userid' value={formData.userid} aria-describedby="emailHelp" placeholder="Enter Roll Nunber" onChange={handleChange} />
+          <input type="text" className="form-control" id="exampleInputEmail1" name='userid' value={formData.userid} aria-describedby="emailHelp" placeholder="Enter Roll Nunber" onChange={handleChange} />
         </div>
         <div className="form-group">
           <label for="exampleInputEmail1">Hostel</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='hostel' value={formData.hostelname} aria-describedby="emailHelp" placeholder="Enter Hostel(eg. alpha dashir block)" onChange={handleChange} />
+          <input type="text" className="form-control" id="exampleInputEmail1" name='hostel' value={formData.hostel} aria-describedby="emailHelp" placeholder="Enter Hostel(eg. alpha dashir block)" onChange={handleChange} />
         </div>
         <div className="form-group">
           <label for="exampleInputEmail1">Batch</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" name='batch' value={formData.batch} aria-describedby="emailHelp" placeholder="Enter your batch" onChange={handleChange} />
+          <input type="text" className="form-control" id="exampleInputEmail1" name='batch' value={formData.batch} aria-describedby="emailHelp" placeholder="Enter your batch" onChange={handleChange} />
         </div>
         <div className="form-group">
           <label for="exampleInputPassword1">Email ID</label>
@@ -133,13 +133,13 @@ function App() {
             return (
               <div className="row" key={user._id}>
                 <div className="col">
-                  {user.username}
+                  {user.name}
                 </div>
                 <div className="col">
                   {user.userid}
                 </div>
                 <div className="col">
-                  {user.hostelname}
+                  {user.hostel}
                 </div>
                 <div className="col">
                   {user.batch}
