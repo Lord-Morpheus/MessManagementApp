@@ -16,8 +16,8 @@ datasource db {
 model Student {
   id          String     @id @default(uuid()) @map("_id")
   name        String
-  username    String
-  email       String
+  username    String     @unique
+  email       String     @unique
   hostel      String
   mess        String?
   password    String

@@ -1,19 +1,9 @@
-import express from 'express';
-import cors from 'cors';
+import { Router } from "express";
+const router = Router();
 
-const app = express();
-
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-}));
-app.use(express.json({ limit: "16kb" }));
+import userRouter from './routes/user.routes.js';
 
 // routes
-import adminRouter from './routes/user.routes.js';
+router.use('/users', userRouter);
 
-app.use('/api/v1/admin', adminRouter);
-
-export {
-    app
-};
+export default router;

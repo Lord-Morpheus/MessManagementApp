@@ -16,7 +16,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
 
     try {
-        const existingUser = await client.user.findUnique({
+        const existingUser = await client.student.findUnique({
             where: {
                 email: signUpData.email,
             },
@@ -28,7 +28,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(signUpData.password, 10);
 
-        const user = await client.user.create({
+        const user = await client.student.create({
             data: {
                 name: signUpData.name,
                 username: signUpData.username,
@@ -63,7 +63,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     const { username, password } = loginData;
 
     try {
-        const user = await client.user.findUnique({
+        const user = await client.student.findUnique({
             where: {
                 username
             },
