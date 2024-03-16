@@ -16,7 +16,7 @@ const sendEmail = async (props) => {
         const info = await transporter.sendMail({
             from: process.env.SMTP_USER,
             to: props.mail,
-            subject: 'Password Recovery',
+            subject: props.subject,
             text: props.text,
         });
 

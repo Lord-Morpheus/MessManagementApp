@@ -28,8 +28,6 @@ model Student {
   messId      String?
   MessForm    MessForm[]
   defaultMess String?
-  resetToken  String?    @unique
-  tokenExpiry DateTime?
 }
 
 model Feedback {
@@ -98,4 +96,12 @@ model Admin {
   password    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Otp {
+  id        String   @id @default(uuid()) @map("_id")
+  key       String   @unique
+  email     String   @unique
+  expiry    DateTime
+  createdAt DateTime @default(now())
 }

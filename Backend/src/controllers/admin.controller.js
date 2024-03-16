@@ -8,8 +8,6 @@ import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient()
 
-// Admin can't add students, they dont have access to the user password
-
 export const signUp = asyncHandler(async (req, res) => {
     const { name, username, email, password, adminSecret } = req.body;
     const { success } = adminSignUpSchema.safeParse(req.body);
@@ -295,5 +293,4 @@ export const resetPassword = asyncHandler(async (req, res) => {
     } catch (err) {
         return res.status(403).json(err);
     }
-}
-);
+});

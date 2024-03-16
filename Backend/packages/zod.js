@@ -7,6 +7,7 @@ export const registerSchema = z.object({
     hostel: z.string(),
     password: z.string().min(6),
     defaultMess: z.string().optional(),
+    OTP: z.string().length(8),
 });
 
 export const loginSchema = z.object({

@@ -7,5 +7,6 @@ const OTP_CONFIG = {
 
 export const generateOTP = () => {
     const OTP = otpGenerator.generate(8, OTP_CONFIG);
-    return OTP;
+    const OTP_EXPIRY = new Date();
+    return { OTP, OTP_EXPIRY };
 };

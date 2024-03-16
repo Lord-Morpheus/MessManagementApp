@@ -9,35 +9,113 @@ import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient();
 
-export const registerUser = asyncHandler(async (req, res) => {
-    const signUpData = req.body;
-    const { success } = registerSchema.safeParse(signUpData);
+export const deleteOtp = async (email) => {
+    const entry = await client.otp.findFirst({
+        where: {
+            email,
+        },
+    });
+
+    if (entry) {
+        await client.otp.delete({
+            where: {
+                email,
+            },
+        });
+    }
+};
+
+export const sendSignupOTP = asyncHandler(async (req, res) => {
+    const { email, username } = req.body;
+    const { success } = z.string().email().safeParse(email);
 
     if (!success) {
         return res.status(400).json({ message: "Invalid Input" });
     }
 
     try {
-        const existingUser = await client.student.findUnique({
+        const user1 = await client.student.findUnique({
             where: {
-                email: signUpData.email,
+                email
             },
         });
 
-        if (existingUser) {
-            return res.status(400).json({ message: "User already exists" });
+        const user2 = await client.student.findUnique({
+            where: {
+                username
+            },
+        });
+
+        if (user1 || user2) {
+            return res.status(404).json({ message: "User already exists" });
         }
 
-        const hashedPassword = await bcrypt.hash(signUpData.password, 10);
+        const { OTP, OTP_EXPIRY } = generateOTP();
+
+        await deleteOtp(email);
+
+        await client.otp.create({
+            data: {
+                email,
+                key: OTP,
+                expiry: OTP_EXPIRY,
+            },
+        });
+
+        await sendEmail({
+            mail: email,
+            subject: 'Account Registration',
+            text: `OTP to register account is \n\n ${OTP}`,
+        });
+
+        return res.status(200).json({ username, email, message: `OTP send to email ${email}` });
+    } catch (err) {
+        await deleteOtp(email);
+
+        return res.status(403).json(err);
+    }
+});
+
+export const registerUser = asyncHandler(async (req, res) => {
+    const { username, name, email, hostel, password, OTP, defaultMess } = req.body;
+    const { success } = registerSchema.safeParse(req.body);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+
+        console.log(req.body);
+
+        const matched = await client.otp.findFirst({
+            where: {
+                email,
+                key: OTP,
+            },
+        });
+
+        if (!matched) {
+            return res.status(404).json({ message: "Invalid OTP" });
+        }
+
+        const currentTime = new Date().getTime();
+        const otpExpiry = new Date(matched.expiry).getTime();
+
+        await deleteOtp(email);
+
+        if (currentTime - otpExpiry > 15 * 60 * 1000) {
+            return res.status(400).json({ message: "OTP expired" });
+        }
 
         const user = await client.student.create({
             data: {
-                name: signUpData.name,
-                username: signUpData.username,
-                email: signUpData.email,
-                hostel: signUpData.hostel,
-                password: hashedPassword,
-                defaultMess: signUpData.defaultMess,
+                name,
+                username,
+                email,
+                hostel,
+                password: password ? await bcrypt.hash(password, 10) : undefined,
+                defaultMess
             },
         });
 
@@ -49,6 +127,8 @@ export const registerUser = asyncHandler(async (req, res) => {
 
         return res.status(200).json({ token, message: "User registered successfully" });
     } catch (err) {
+        await deleteOtp(email);
+
         return res.status(403).json(err);
     }
 });
@@ -196,14 +276,6 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
     }
 });
 
-const generateRecoveryToken = () => {
-    const resetToken = crypto.randomUUID();
-
-    const tokenExpiry = new Date();
-
-    return { resetToken, tokenExpiry };
-};
-
 export const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
     const { success } = z.string().email().safeParse(email);
@@ -223,94 +295,74 @@ export const forgotPassword = asyncHandler(async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const { resetToken, tokenExpiry } = generateRecoveryToken();
-        console.log(resetToken, tokenExpiry);
+        const { OTP, OTP_EXPIRY } = generateOTP();
 
-        await client.student.update({
-            where: {
-                email,
-            },
+        await deleteOtp(email);
+
+        await client.otp.create({
             data: {
-                resetToken,
-                tokenExpiry,
+                email,
+                key: OTP,
+                expiry: OTP_EXPIRY,
             },
         });
 
-        console.log(resetToken);
-
-        const passwordResetURL = `${req.protocol}://${req.get('host')}/api/v1/users/reset/password/${resetToken}`;
-
         await sendEmail({
             mail: email,
-            text: `Your recovery token is \n\n ${passwordResetURL}`,
+            subject: 'Account Recovery',
+            text: `OTP to recover account is \n\n ${OTP}`,
         });
 
         return res.status(200).json({ message: `Recovery email send to ${email}` });
     } catch (err) {
-        await client.student.update({
-            where: {
-                email,
-            },
-            data: {
-                resetToken: null,
-                tokenExpiry: null,
-            },
-        });
+        await deleteOtp(email);
+
         return res.status(403).json(err);
     }
 });
 
 export const resetPassword = asyncHandler(async (req, res) => {
-    const resetToken = req.params.token;
-    const { password } = req.body;
+    const { email, OTP, password } = req.body;
     const { success } = z.object({
-        resetToken: z.string().length(36),
+        email: z.string().email(),
+        OTP: z.string().min(8),
         password: z.string().min(6),
-    }).safeParse({ ...req.body, resetToken });
+    }).safeParse(req.body);
 
     if (!success) {
         return res.status(400).json({ message: "Invalid Input" });
     }
 
     try {
-        const user = await client.student.findUnique({
+        const matched = await client.otp.findFirst({
             where: {
-                resetToken,
+                email,
+                key: OTP,
             },
         });
 
-        if (!user) {
-            return res.status(404).json({ message: "Password recovery token is invalid" });
+        if (!matched) {
+            return res.status(404).json({ message: "Invalid OTP" });
         }
 
+        await deleteOtp(email);
+
         const currentTime = new Date().getTime();
-        const tokenExpiry = new Date(user.tokenExpiry).getTime();
-        const timeDiff = currentTime - tokenExpiry;
+        const otpExpiry = new Date(matched.expiry).getTime();
+        const timeDiff = currentTime - otpExpiry;
 
         if (timeDiff > 15 * 60 * 1000) {
-            await client.student.update({
-                where: {
-                    resetToken,
-                },
-                data: {
-                    resetToken: null,
-                    tokenExpiry: null,
-                },
-            });
-
-            return res.status(400).json({ message: "Recovery token expired" });
+            return res.status(400).json({ message: "OTP expired" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const updatedUser = await client.student.update({
             where: {
-                resetToken,
+                email,
             },
             data: {
                 password: hashedPassword,
-                resetToken: null,
-                tokenExpiry: null,
             },
         });
 
