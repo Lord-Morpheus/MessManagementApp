@@ -51,7 +51,6 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-
 export const loginUser = asyncHandler(async (req, res) => {
     const loginData = req.body;
     const { success } = loginSchema.safeParse(loginData);

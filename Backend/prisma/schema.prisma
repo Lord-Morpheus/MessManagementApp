@@ -88,11 +88,12 @@ model MessForm {
 }
 
 model Admin {
-  id        String   @id @default(uuid()) @map("_id")
-  name      String
-  username  String
-  email     String
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid()) @map("_id")
+  adminSecret String
+  name        String
+  username    String   @unique
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

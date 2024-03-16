@@ -2,37 +2,33 @@ import { Student } from "../models/student.model.js";
 import asyncHandler from "../utils/asyncHandler.js"
 import { PrismaClient } from '@prisma/client'
 
+const client = new PrismaClient()
 
-const addStudent = asyncHandler(async (req, res) => {
-    const prisma = new PrismaClient()
-    const { hostel, userid, name, batch, email } = req.body;
+// Admin can't add students, they dont have access to the user password
 
-    const user = await prisma.student.create({
-        data: {
-            hostel,
-            userid,
-            name,
-            batch,
-            email
-        }
-    })
-
-    return res.status(201).json({ data: user })
-})
-
-const deleteStudent = asyncHandler(async (req, res) => {
+export const deleteStudent = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
-    const user = await Student.deleteOne({
-        _id: id
-    })
+    try {
+        const user = await client.student.delete({
+            where: {
+                id
+            },
+            select: {
+                name: true,
+                username: true,
+                email: true,
+                hostel: true,
+            }
+        });
 
-    return res.status(201).json({ data: user })
+        if (!user) {
+            return res.status(404).json({ msg: "User not found" })
+        }
+
+        return res.status(201).json({ data: user, msg: "User deleted successfully" })
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
 })
-
-const getStudents = asyncHandler(async (req, res) => {
-    const allStudents = await Student.find({});
-    return res.status(200).json({ allStudents })
-});
-
-export { addStudent, getStudents, deleteStudent }
