@@ -27,7 +27,7 @@ model Student {
   Mess        Mess?      @relation(fields: [messId], references: [id])
   messId      String?
   MessForm    MessForm[]
-  defaultMess String
+  defaultMess String?
 }
 
 model Feedback {
