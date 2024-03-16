@@ -1,15 +1,20 @@
 import { Student } from "../models/student.model.js";
 import asyncHandler from "../utils/asyncHandler.js"
+import { PrismaClient } from '@prisma/client'
+
 
 const addStudent = asyncHandler(async (req, res) => {
-    const { hostel, password, username, email, name } = req.body;
+    const prisma = new PrismaClient()
+    const { hostel, userid, name, batch, email } = req.body;
 
-    const user = await Student.create({
-        username,
-        email,
-        hostel,
-        name,
-        batch
+    const user = await prisma.student.create({
+        data: {
+            hostel,
+            userid,
+            name,
+            batch,
+            email
+        }
     })
 
     return res.status(201).json({ data: user })
