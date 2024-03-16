@@ -92,7 +92,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 });
 
 export const getUser = asyncHandler(async (req, res) => {
-    const user = await client.user.findUnique({
+
+    const user = await client.student.findUnique({
         where: {
             id: req.user.id,
         },
@@ -103,9 +104,16 @@ export const getUser = asyncHandler(async (req, res) => {
             email: true,
             hostel: true,
             defaultMess: true,
+            // mess: {
+            //     select: {
+            //         id: true,
+            //         name: true,
+            //         location: true,
+            //     },
+            // }
         },
     });
-
+    // console.log(user);
     return res.status(200).json(user);
 });
 
@@ -119,7 +127,7 @@ export const updatePassword = asyncHandler(async (req, res) => {
     }
 
     try {
-        const user = await client.user.update({
+        const user = await client.student.update({
             where: {
                 id: req.user.id,
             },
@@ -132,6 +140,13 @@ export const updatePassword = asyncHandler(async (req, res) => {
                 email: true,
                 hostel: true,
                 defaultMess: true,
+                // mess: {
+                //     select: {
+                //         id: true,
+                //         name: true,
+                //         location: true,
+                //     },
+                // }
             },
         });
 
@@ -151,7 +166,7 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
     }
 
     try {
-        const user = await client.user.update({
+        const user = await client.student.update({
             where: {
                 id: req.user.id,
             },
@@ -164,6 +179,13 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
                 email: true,
                 hostel: true,
                 defaultMess: true,
+                // mess: {
+                //     select: {
+                //         id: true,
+                //         name: true,
+                //         location: true,
+                //     },
+                // }
             },
         });
 
