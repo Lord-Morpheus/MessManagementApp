@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.0",
     "node-mailer": "^0.1.1",
+    "otp-generator": "^4.0.1",
     "zod": "^3.22.4"
   }
 }

@@ -28,6 +28,8 @@ model Student {
   messId      String?
   MessForm    MessForm[]
   defaultMess String?
+  resetToken  String?    @unique
+  tokenExpiry DateTime?
 }
 
 model Feedback {

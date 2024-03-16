@@ -4,6 +4,8 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { z } from "zod";
+import { generateOTP } from "../utils/email/generateOTP.js";
+import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient();
 
@@ -194,19 +196,131 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
     }
 });
 
-export const resetPassword = asyncHandler(async (req, res) => {
+const generateRecoveryToken = () => {
+    const resetToken = crypto.randomUUID();
+
+    const tokenExpiry = new Date();
+
+    return { resetToken, tokenExpiry };
+};
+
+export const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
-    const { success } = z.email().safeParse(email);
+    const { success } = z.string().email().safeParse(email);
 
     if (!success) {
         return res.status(400).json({ message: "Invalid Input" });
     }
 
     try {
-        await sendEmail(email, "Reset Password", "Reset your password here");
-        return res.status(200).json({ message: "Email sent successfully" });
+        const user = await client.student.findUnique({
+            where: {
+                email,
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const { resetToken, tokenExpiry } = generateRecoveryToken();
+        console.log(resetToken, tokenExpiry);
+
+        await client.student.update({
+            where: {
+                email,
+            },
+            data: {
+                resetToken,
+                tokenExpiry,
+            },
+        });
+
+        console.log(resetToken);
+
+        const passwordResetURL = `${req.protocol}://${req.get('host')}/api/v1/users/reset/password/${resetToken}`;
+
+        await sendEmail({
+            mail: email,
+            text: `Your recovery token is \n\n ${passwordResetURL}`,
+        });
+
+        return res.status(200).json({ message: `Recovery email send to ${email}` });
+    } catch (err) {
+        await client.student.update({
+            where: {
+                email,
+            },
+            data: {
+                resetToken: null,
+                tokenExpiry: null,
+            },
+        });
+        return res.status(403).json(err);
+    }
+});
+
+export const resetPassword = asyncHandler(async (req, res) => {
+    const resetToken = req.params.token;
+    const { password } = req.body;
+    const { success } = z.object({
+        resetToken: z.string().length(36),
+        password: z.string().min(6),
+    }).safeParse({ ...req.body, resetToken });
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+        const user = await client.student.findUnique({
+            where: {
+                resetToken,
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "Password recovery token is invalid" });
+        }
+
+        const currentTime = new Date().getTime();
+        const tokenExpiry = new Date(user.tokenExpiry).getTime();
+        const timeDiff = currentTime - tokenExpiry;
+
+        if (timeDiff > 15 * 60 * 1000) {
+            await client.student.update({
+                where: {
+                    resetToken,
+                },
+                data: {
+                    resetToken: null,
+                    tokenExpiry: null,
+                },
+            });
+
+            return res.status(400).json({ message: "Recovery token expired" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const updatedUser = await client.student.update({
+            where: {
+                resetToken,
+            },
+            data: {
+                password: hashedPassword,
+                resetToken: null,
+                tokenExpiry: null,
+            },
+        });
+
+        const payload = { id: updatedUser.id };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: 3600,
+        });
+
+        return res.status(200).json({ token, message: "Password reset successfully" });
     } catch (err) {
         return res.status(403).json(err);
     }
-}
-);
+});
