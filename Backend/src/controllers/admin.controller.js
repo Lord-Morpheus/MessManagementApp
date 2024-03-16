@@ -4,12 +4,12 @@ import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import jwt from 'jsonwebtoken';
-import sendEmail from "../utils/email/index.js";
+import { deleteOtp } from "./common.controller.js";
 
 const client = new PrismaClient()
 
 export const signUp = asyncHandler(async (req, res) => {
-    const { name, username, email, password, adminSecret } = req.body;
+    const { name, username, email, password, adminSecret, OTP } = req.body;
     const { success } = adminSignUpSchema.safeParse(req.body);
 
     if (!success) {
@@ -22,14 +22,24 @@ export const signUp = asyncHandler(async (req, res) => {
     }
 
     try {
-        const existingUser = await client.admin.findUnique({
+        const matched = await client.otp.findFirst({
             where: {
-                email
+                email,
+                key: OTP,
             },
         });
 
-        if (existingUser) {
-            return res.status(400).json({ message: "Admin already exists" });
+        if (!matched) {
+            return res.status(404).json({ message: "Invalid OTP" });
+        }
+
+        const currentTime = new Date().getTime();
+        const otpExpiry = new Date(matched.expiry).getTime();
+
+        await deleteOtp(email);
+
+        if (currentTime - otpExpiry > 15 * 60 * 1000) {
+            return res.status(400).json({ message: "OTP expired" });
         }
 
         const user = await client.admin.create({
@@ -279,18 +289,3 @@ export const deleteStudent = asyncHandler(async (req, res) => {
     }
 })
 
-export const resetPassword = asyncHandler(async (req, res) => {
-    const { email } = req.body;
-    const { success } = z.email().safeParse(email);
-
-    if (!success) {
-        return res.status(400).json({ message: "Invalid Input" });
-    }
-
-    try {
-        await sendEmail(email, "Reset Password", "Reset your password here");
-        return res.status(200).json({ message: "Email sent successfully" });
-    } catch (err) {
-        return res.status(403).json(err);
-    }
-});
