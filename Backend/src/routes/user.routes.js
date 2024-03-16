@@ -7,7 +7,7 @@ const router = Router();
 router.post('/signup', registerUser);
 router.post('/login', loginUser);
 router.get('/get', authMiddleware, getUser);
-router.put('/update_password', authMiddleware, updatePassword);
-router.put('/update_default_mess', authMiddleware, updateDefaultMess);
+router.put('/update/password', authMiddleware, updatePassword);
+router.put('/update/defaultMess', authMiddleware, updateDefaultMess);
 
 export default router;

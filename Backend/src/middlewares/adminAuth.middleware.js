@@ -4,26 +4,15 @@ import { PrismaClient } from '@prisma/client';
 
 const client = new PrismaClient();
 
-export const adminAuth = asyncHandler(async (req, res, next) => {
-    const secret = req.headers.secret;
-
-    if (secret !== process.env.ADMIN_SECRET) {
-        return res.status(401).json({ message: "Forbidden" });
-    }
-
-    next();
-});
-
 export const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
-    const secret = req.headers.secret;
     const token = req.headers.authorization?.split(" ")[1];
 
-    if (!token || !secret || secret !== process.env.ADMIN_SECRET) {
+    if (!token || req.headers.authorization?.split(" ")[0] !== "Admin") {
         return res.status(401).json({ message: "Forbidden" });
     }
 
     try {
-        const payload = jwt.verify(token, process.env.ADMIN_JWT_SECRET);
+        const payload = await jwt.verify(token, process.env.ADMIN_JWT_SECRET);
         const userId = payload.id;
 
         const user = await client.admin.findUnique({
@@ -37,11 +26,9 @@ export const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
         }
 
         req.user = user;
-        console.log(req.user);
         next();
     }
     catch (err) {
         return res.status(401).json({ message: "Forbidden" });
     }
-}
-);
+});

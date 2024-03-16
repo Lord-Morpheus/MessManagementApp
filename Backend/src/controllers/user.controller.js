@@ -45,7 +45,7 @@ export const registerUser = asyncHandler(async (req, res) => {
             expiresIn: 3600,
         });
 
-        return res.status(200).json({ token });
+        return res.status(200).json({ token, message: "User registered successfully" });
     } catch (err) {
         return res.status(403).json(err);
     }
@@ -84,7 +84,7 @@ export const loginUser = asyncHandler(async (req, res) => {
             expiresIn: 3600,
         });
 
-        return res.status(200).json({ token });
+        return res.status(200).json({ token, message: "User logged in successfully" });
     } catch (err) {
         return res.status(403).json(err);
     }
