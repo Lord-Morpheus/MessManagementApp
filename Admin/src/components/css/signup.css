@@ -1,0 +1,71 @@
+.background{
+    height: 100lvh;
+    /* background: content-box radial-gradient(grey, black); */
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signupbox{
+    height:85%;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    
+}
+.image{
+    height: 95%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffdab9;
+    margin-left: 1.7%;
+    border-radius: 3%;
+    
+} 
+.auth{
+    height: 80%;
+    width: 100%
+}
+.signform{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: black;
+}
+.signform h2{
+    text-decoration: solid;
+    font-weight: bolder;
+}
+.signform form{
+    margin-top: 5%;
+    width: 80%;
+    font-weight: 600;
+    margin-bottom: 2%;
+}
+.form-field input{
+    border: none;
+}
+.form-field .field{
+    box-shadow: 2px;
+}
+.submit button{
+    width: 80%;
+    color:black;
+    background-color: #ffdab9;
+    border: none;
+}
+.login{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    border-top: dotted gray;
+}
