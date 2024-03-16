@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import jwt from 'jsonwebtoken';
+import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient()
 
@@ -280,3 +281,19 @@ export const deleteStudent = asyncHandler(async (req, res) => {
     }
 })
 
+export const resetPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const { success } = z.email().safeParse(email);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+        await sendEmail(email, "Reset Password", "Reset your password here");
+        return res.status(200).json({ message: "Email sent successfully" });
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+}
+);

@@ -193,3 +193,20 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
         return res.status(403).json(err);
     }
 });
+
+export const resetPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const { success } = z.email().safeParse(email);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+        await sendEmail(email, "Reset Password", "Reset your password here");
+        return res.status(200).json({ message: "Email sent successfully" });
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+}
+);
