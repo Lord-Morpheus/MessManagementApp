@@ -12,7 +12,7 @@ export const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
     }
 
     try {
-        const payload = await jwt.verify(token, process.env.ADMIN_JWT_SECRET);
+        const payload = jwt.verify(token, process.env.ADMIN_JWT_SECRET);
         const userId = payload.id;
 
         const user = await client.admin.findUnique({

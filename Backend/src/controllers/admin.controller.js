@@ -111,7 +111,7 @@ export const signIn = asyncHandler(async (req, res) => {
     }
 });
 
-export const getAllStudents = asyncHandler(async (req, res) => {
+export const getAllStudents = asyncHandler(async (req, res, next) => {
     try {
         const users = await client.student.findMany({
             select: {
@@ -130,7 +130,9 @@ export const getAllStudents = asyncHandler(async (req, res) => {
             }
         });
 
-        return res.status(200).json({ data: users });
+        req.users = users;
+
+        next(res.status(200).json({ data: users }));
     } catch (err) {
         return res.status(403).json(err);
     }
