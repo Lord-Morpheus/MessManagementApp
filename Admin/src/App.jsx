@@ -6,11 +6,12 @@ import Navbar from './components/pages/Navbar';
 import Login from './components/pages/loginPage';
 import Home from './components/pages/HomePage';
 import Signup from './components/pages/signupPage';
-import OTP from "./components/pages/verifyOTP";
 import GetOTP from "./components/pages/getOTP";
+import Mess from './components/pages/MessDetail';
 
 function App() {
-  return(
+
+  return (
     <>
       <BrowserRouter>
         <Routes>
@@ -21,12 +22,12 @@ function App() {
             <Route path="form" element={<Form />} />
             <Route path="signup" element={<Signup />} />
             <Route path="getOTP" element={<GetOTP />} />
-            <Route path="OTP" element={<OTP />} />
+            <Route path="mess" element={<Mess />} />
             </Route>
         </Routes>
       </BrowserRouter>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
