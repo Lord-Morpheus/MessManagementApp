@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { deleteStudent, filterStudentsBatch, filterStudentsByHostel, filterStudentsByMess, getAllStudents, getStudent, signIn, signUp } from '../controllers/admin.controller.js';
+import { deleteStudent, filterStudents, getAllStudents, getStudent, signIn, signUp } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/common.controller.js';
 import { exportUser } from '../controllers/excel.controller.js';
@@ -11,10 +11,7 @@ router.post('/signup', signUp);
 router.post('/signin', signIn);
 router.get('/getAll', adminAuthMiddleware, getAllStudents);
 router.get('/get/:id', adminAuthMiddleware, getStudent);
-router.get('/get', adminAuthMiddleware, filterStudentsBatch)
-router.get('/get', adminAuthMiddleware, filterStudentsByHostel)
-router.get('/get', adminAuthMiddleware, filterStudentsByMess)
-router.get('/filter', adminAuthMiddleware, filterMiddleware)
+router.get('/filter', adminAuthMiddleware, filterMiddleware, filterStudents)
 router.delete('/delete/:id', adminAuthMiddleware, deleteStudent);
 router.post('/reset/password', forgotPassword);
 router.put('/reset/password/', resetPassword);

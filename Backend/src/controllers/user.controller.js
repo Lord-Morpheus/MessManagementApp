@@ -4,8 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { z } from "zod";
-import { generateOTP } from "../utils/email/generateOTP.js";
-import sendEmail from "../utils/email/index.js";
 import { deleteOtp } from "./common.controller.js";
 
 const client = new PrismaClient();
@@ -202,6 +200,54 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
         });
 
         return res.status(200).json(user);
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const createFeedback = asyncHandler(async (req, res) => {
+    const { title, description, attachment } = req.body;
+    const { success } = z.object({
+        title: z.string().min(1),
+        description: z.string().min(50),
+        attachment: z.string().optional(),
+    }).safeParse(req.body);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+        const user = await client.student.findUnique({
+            where: {
+                id: req.user.id,
+            },
+        })
+
+        const feedbackData = await client.feedback.create({
+            data: {
+                title,
+                description,
+                studentId: user.id,
+                messId: user.messId
+            },
+        });
+
+        return res.status(200).json(feedbackData);
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const getFeedbacks = asyncHandler(async (req, res) => {
+    try {
+        const feedbacks = await client.feedback.findMany({
+            where: {
+                studentId: req.user.id,
+            },
+        });
+
+        return res.status(200).json(feedbacks);
     } catch (err) {
         return res.status(403).json(err);
     }

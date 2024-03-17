@@ -62,6 +62,4 @@ export const filterMiddleware = asyncHandler(async (req, res, next) => {
     } catch (err) {
         return res.status(403).json(err);
     }
-}
-);
-
+});

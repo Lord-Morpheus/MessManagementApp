@@ -8,6 +8,7 @@ import { deleteOtp } from "./common.controller.js";
 
 const client = new PrismaClient()
 
+// Admin Signup using OTP and Admin Secret
 export const signUp = asyncHandler(async (req, res) => {
     const { name, username, email, password, adminSecret, OTP } = req.body;
     const { success } = adminSignUpSchema.safeParse(req.body);
@@ -70,6 +71,7 @@ export const signUp = asyncHandler(async (req, res) => {
     }
 });
 
+// Admin Signin
 export const signIn = asyncHandler(async (req, res) => {
     const { username, password } = req.body;
 
@@ -111,6 +113,7 @@ export const signIn = asyncHandler(async (req, res) => {
     }
 });
 
+// Get all students
 export const getAllStudents = asyncHandler(async (req, res, next) => {
     try {
         const users = await client.student.findMany({
@@ -138,6 +141,7 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
     }
 });
 
+// Get a student by id
 export const getStudent = asyncHandler(async (req, res) => {
     const userId = req.params.id;
 
@@ -172,98 +176,15 @@ export const getStudent = asyncHandler(async (req, res) => {
     }
 });
 
-export const filterStudentsByHostel = asyncHandler(async (req, res) => {
-    const { hostelId } = req.query.hostel;
+// Filter students by various fields
+export const filterStudents = asyncHandler(async (req, res) => {
+    const data = req.data;
 
-    try {
-        const users = await client.student.findMany({
-            where: {
-                hostelId: hostelId
-            },
-            select: {
-                id: true,
-                name: true,
-                username: true,
-                email: true,
-                hostel: true,
-                // mess: {
-                //     select: {
-                //         id: true,
-                //         name: true,
-                //         location: true,
-                //     }
-                // }
-            }
-        });
+    return res.status(200).json({ data });
+}
+);
 
-        return res.status(200).json({ data: users });
-    } catch (err) {
-        return res.status(403).json(err);
-    }
-});
-
-export const filterStudentsByMess = asyncHandler(async (req, res) => {
-    const { messId } = req.query.mess;
-
-    try {
-        const users = await client.student.findMany({
-            where: {
-                messId: messId
-            },
-            select: {
-                id: true,
-                name: true,
-                username: true,
-                email: true,
-                hostel: true,
-                // mess: {
-                //     select: {
-                //         id: true,
-                //         name: true,
-                //         location: true,
-                //     }
-                // }
-            }
-        });
-
-        return res.status(200).json({ data: users });
-    } catch (err) {
-        return res.status(403).json(err);
-    }
-});
-
-export const filterStudentsBatch = asyncHandler(async (req, res) => {
-    const { batch } = req.query;
-
-    try {
-        const users = await client.student.findMany({
-            where: {
-                username: {
-                    startsWith: batch
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                username: true,
-                email: true,
-                hostel: true,
-                // mess: {
-                //     select: {
-                //         id: true,
-                //         name: true,
-                //         location: true,
-                //     }
-                // }
-            }
-        });
-
-        return res.status(200).json({ data: users });
-    } catch (err) {
-        return res.status(403).json(err);
-    }
-});
-
+// Delete a student from database
 export const deleteStudent = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
@@ -290,4 +211,100 @@ export const deleteStudent = asyncHandler(async (req, res) => {
         return res.status(403).json(err);
     }
 })
+
+// Update a student in database
+export const updateStudent = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { name, username, email, hostel, mess } = req.body;
+
+    try {
+        const user = await client.student.update({
+            where: {
+                id
+            },
+            data: {
+                name,
+                username,
+                email,
+                hostel,
+                mess
+            },
+            select: {
+                name: true,
+                username: true,
+                email: true,
+                hostel: true,
+                mess: true
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ msg: "User not found" })
+        }
+
+        return res.status(201).json({ data: user, msg: "User updated successfully" })
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const addMess = asyncHandler(async (req, res) => {
+    const { name, vendorId } = req.body;
+
+    try {
+        const mess = await client.mess.create({
+            data: {
+                name,
+                vendorId,
+            },
+            select: {
+                id: true,
+                name: true,
+                vendor: {
+                    select: {
+                        id: true,
+                        name: true,
+                        username: true,
+                        email: true,
+                        phone: true,
+                    }
+                }
+            }
+        });
+
+        return res.status(201).json({ data: mess, msg: "Mess added successfully" })
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const addVendor = asyncHandler(async (req, res) => {
+    const { name, username, email, phone, password } = req.body;
+
+    try {
+        const vendor = await client.vendor.create({
+            data: {
+                name,
+                username,
+                email,
+                phone,
+                password: password ? await bcrypt.hash(password, 10) : undefined
+            },
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                phone: true,
+            }
+        });
+
+        return res.status(201).json({ data: vendor, msg: "Vendor added successfully" })
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
+});
 

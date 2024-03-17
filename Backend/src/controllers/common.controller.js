@@ -6,6 +6,7 @@ import { generateOTP } from '../utils/email/generateOTP.js';
 import jwt from 'jsonwebtoken';
 const client = new PrismaClient();
 
+//  Delete OTP
 export const deleteOtp = async (email) => {
     const entry = await client.otp.findFirst({
         where: {
@@ -22,6 +23,7 @@ export const deleteOtp = async (email) => {
     }
 };
 
+//  Send OTP for signup
 export const sendSignupOTP = asyncHandler(async (req, res) => {
     const { email, username } = req.body;
     const { success } = z.string().email().safeParse(email);
@@ -73,6 +75,7 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
     }
 });
 
+//  Send OTP for forgot password
 export const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
     const { success } = z.string().email().safeParse(email);
@@ -118,6 +121,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     }
 });
 
+//  Reset password using OTP
 export const resetPassword = asyncHandler(async (req, res) => {
     const { email, OTP, password } = req.body;
     const { success } = z.object({
