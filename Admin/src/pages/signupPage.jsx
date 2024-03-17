@@ -1,9 +1,38 @@
-import React from "react";
+import { useState } from "react";
 import Authimg from "../images/auth.svg";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../css/signup.css";
+import axios from "axios";
 
 export default function Signup() {
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [securityKey, setSecurityKey] = useState("");
+  const [OTP, setOTP] = useState("");
+
+  const handleClick = async () => {
+    try {
+      const { status, data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/signup`,
+        { name, username, email, password, securityKey, OTP }
+      );
+
+      const { token } = data;
+
+      window.localStorage.setItem("token", token);
+
+      if (status === 200) {
+        console.log("Data saved successfully");
+      } else {
+        console.error("Failed Siging up the user");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
       <div className="bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded-3xl">
@@ -15,15 +44,15 @@ export default function Signup() {
           <form className="w-4/5 font-medium">
             <div className="form-field">
               Name <br />
-              <div class="flex rounded-lg shadow-sm">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-pen-fill">
+              <div className="flex rounded-lg shadow-sm">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-pen-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-pen-fill"
+                      className="bi bi-pen-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
@@ -32,22 +61,23 @@ export default function Signup() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="enter your name"
+                  onChange={(e) => setName(() => e.target.value)}
                 />
               </div>
             </div>
             <div className="form-field">
               Username <br />
-              <div class="flex rounded-lg shadow-sm">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-person-fill">
+              <div className="flex rounded-lg shadow-sm">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-person-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-person-fill"
+                      className="bi bi-person-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
@@ -56,23 +86,24 @@ export default function Signup() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="enter your username"
+                  onChange={(e) => setUsername(() => e.target.value)}
                 />
               </div>
             </div>
             <div className="form-field">
               Email Id
               <br />
-              <div class="flex rounded-lg shadow-sm">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-envelope-at-fill">
+              <div className="flex rounded-lg shadow-sm">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-envelope-at-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-envelope-at-fill"
+                      className="bi bi-envelope-at-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671" />
@@ -82,22 +113,23 @@ export default function Signup() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="userid@gmail.com"
+                  onChange={(e) => setEmail(() => e.target.value)}
                 />
               </div>
             </div>
             <div className="form-field">
               Password <br />
-              <div class="flex rounded-lg shadow-sm">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-eye-fill">
+              <div className="flex rounded-lg shadow-sm">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-eye-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-eye-fill"
+                      className="bi bi-eye-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
@@ -107,23 +139,24 @@ export default function Signup() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
+                  onChange={(e) => setPassword(() => e.target.value)}
                 />
               </div>
             </div>
             <div className="form-field">
               Security Key
               <br />
-              <div class="flex rounded-lg shadow-sm">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-key-fill">
+              <div className="flex rounded-lg shadow-sm">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-key-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-key-fill"
+                      className="bi bi-key-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
@@ -132,23 +165,24 @@ export default function Signup() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
+                  onChange={(e) => setSecurityKey(() => e.target.value)}
                 />
               </div>
             </div>
             <div className="form-field">
               OTP
               <br />
-              <div class="flex rounded-lg shadow-sm mb-5">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-key-fill">
+              <div className="flex rounded-lg shadow-sm mb-5">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-key-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-lock-fill"
+                      className="bi bi-lock-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
@@ -157,14 +191,19 @@ export default function Signup() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
+                  onChange={(e) => setOTP(() => e.target.value)}
                 />
               </div>
             </div>
             <div className="w-full flex justify-center mb-3">
               <Link className="w-4/5 flex justify-center" to="/home">
-                <button type="button" class="w-4/5 h-9 bg-peachette">
+                <button
+                  type="button"
+                  className="w-4/5 h-9 bg-peachette"
+                  onClick={async () => await handleClick()}
+                >
                   Sign-Up
                 </button>
               </Link>

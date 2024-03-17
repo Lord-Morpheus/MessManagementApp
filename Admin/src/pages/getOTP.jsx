@@ -1,8 +1,34 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Security from "../images/otp.svg";
+import { useState } from "react";
+import axios from "axios";
 
-export default function getOTP() {
+export default function GetOTP() {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      const { status, data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/send/otp`,
+        {
+          email,
+          username,
+        }
+      );
+
+      console.log(data);
+
+      if (status === 200) {
+        console.log("Data saved successfully");
+      } else {
+        console.error("Failed to save data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
       <div className="bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded-3xl">
@@ -10,20 +36,19 @@ export default function getOTP() {
           <img className="w-full" src={Security} alt="not found" />
         </div>
         <div className="h-full w-1/2 flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-bold">Verification</h2>
+          <h2 className="text-3xl font-bold">OTP Verification</h2>
           <form className="w-4/5 font-medium">
-            <div className="form-field">
-              Username
-              <br />
+            <div className="form-field mt-10 ">
+              <div className="mb-1">Username</div>
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-envelope-at-fill">
-                  <svg
+                  <i className="bi bi-envelope-at-fill">
+                    <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-person-fill"
+                      className="bi bi-person-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
@@ -32,22 +57,22 @@ export default function getOTP() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="px-4 py-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  onChange={(e) => setUsername((prev) => e.target.value)}
                 />
               </div>
             </div>
-            <div className="form-field">
-              Email Id
-              <br />
+            <div className="form-field mt-5">
+              <div className="mb-1">Email Id</div>
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-envelope-at-fill">
+                  <i className="bi bi-envelope-at-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-envelope-at-fill"
+                      className="bi bi-envelope-at-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671" />
@@ -57,29 +82,28 @@ export default function getOTP() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  onChange={(e) => setEmail((prev) => e.target.value)}
                 />
               </div>
             </div>
 
-            <div className="w-full flex justify-center mb-3 mt-3">
-              <Link
-                className="w-4/5 flex justify-center"
-                to="/signup"
-              >
+            <div className="w-full flex justify-center my-5">
+              <Link className="w-48 flex justify-center" to="/signup">
                 <button
                   type="button"
-                  className="w-4/5 h-9 bg-peachette"
+                  className="w-full h-9 bg-peachette rounded-md"
+                  onClick={async () => await handleSubmit()}
                 >
                   Send OTP
                 </button>
               </Link>
             </div>
           </form>
-          <p className="flex justify-center w-4/5 border-t-4 border-dashed">
+          <p className="flex justify-center w-4/5 border-t-4 border-dashed p-4">
             Already have a account?--
             <Link className="text-blue-600 underline" to="/login">
-              login
+              Log in
             </Link>
           </p>
         </div>
