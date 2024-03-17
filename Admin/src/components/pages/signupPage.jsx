@@ -82,7 +82,9 @@ export default function Signup() {
                         </div>
                     </div>
                     <div className='submit d-flex justify-content-center'>
-                      <button type="button" class="btn btn-success">Sign-Up</button>
+                      <Link className='w-100 d-flex justify-content-center text-decoration-none' to='/home'>
+                        <button type="button" class="btn btn-success">Sign-Up</button>
+                      </Link>
                     </div>
                   </form>
                   <p className='login'>

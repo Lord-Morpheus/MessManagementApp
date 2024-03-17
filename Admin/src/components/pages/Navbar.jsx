@@ -13,7 +13,7 @@ export default function Navbar() {
                     <div class="main collapse navbar-collapse" id="navbarNav">
                     <div class="navbar-nav">
                         <li class="nav-item">
-                            <Link className='nav-link' to="/">Home</Link>
+                            <Link className='nav-link' to="/home">Home</Link>
                         </li>
                         <li class="nav-item">
                             <Link className='nav-link' to="/login">Login</Link>
@@ -21,11 +21,6 @@ export default function Navbar() {
                         <li class="nav-item">
                             <Link className='nav-link' to="/form">Form</Link>
                         </li>
-                        {/* <li class="nav-item">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-                        </li> */}
-
                     </div>
                     </div>
                 </div>
