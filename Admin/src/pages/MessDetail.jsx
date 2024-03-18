@@ -9,6 +9,7 @@ export default function Mess() {
         <Sidebar/>
       </aside>
       <div className="col-span-7 bg-aliceblue">
+        
         <div className="flex justify-center bg-darkPeach">
           <img className="object-fill h-48 w-96" src={Eating1} alt="not found" />
           <img className="object-fill h-48 w-96" src={Eating2} alt="not found" />

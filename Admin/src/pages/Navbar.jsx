@@ -5,23 +5,15 @@ export default function Navbar() {
   return (
     <>
       <nav
-<<<<<<< HEAD
-        className="flex w-full flex-nowrap items-center justify-between bg-gray-500 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4 sticky top-0"
-=======
-        className="relative flex w-full flex-nowrap items-center justify-between bg-slate-800 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
->>>>>>> 41a9048070ba9758de8bd6bdae5beb00f9c37603
+        className="relative flex w-full flex-nowrap items-center justify-between bg-zinc-50 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
         data-twe-navbar-ref
       >
         <div className="flex w-full flex-wrap items-center justify-between px-3">
-          <div className="mx-4">
-            <a
-              className="text-xl font-semibold text-blue-700 dark:text-white"
-              href="#"
-            >
-              Mess Management
+          <div className="ms-2">
+            <a className="text-xl text-black dark:text-white" href="#">
+              Navbar
             </a>
           </div>
-
           <button
             className="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
             type="button"
@@ -38,99 +30,50 @@ export default function Navbar() {
                 fill="currentColor"
               >
                 <path
-                  fillRule="evenodd"
+                  fill-rule="evenodd"
                   d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-                  clipRule="evenodd"
+                  clip-rule="evenodd"
                 />
               </svg>
             </span>
           </button>
+
           <div
-            className="!visible hidden flex-grow justify-center basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
+            className="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
             id="navbarSupportedContent3"
             data-twe-collapse-item
           >
             <div
-              className="list-style-none me-auto flex flex-col justify-center items-center lg:flex-row"
+              className="list-style-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
               data-twe-navbar-nav-ref
             >
               <div
-                className="flex justify-center items-center h-9 w-28 mx-2 hover:bg-gray-700 rounded-full"
+                className="my-4 ml-3 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
                 data-twe-nav-item-ref
               >
-                <Link
-                  className="flex justify-center w-full text-white"
-                  to="/home"
-                >
-                  Dashboard
-                </Link>
-              </div>
-              <div
-                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
-                data-twe-nav-item-ref
-              >
-                <Link
-                  className="w-full flex justify-center text-white"
-                  to="/login"
-                >
+                <Link to='/home'>
                   Home
                 </Link>
               </div>
               <div
-                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
+                className="mb-4 ml-3 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
                 data-twe-nav-item-ref
               >
-                <Link
-                  className="w-full flex justify-center text-white"
-                  to="/signup"
-                  data-twe-nav-link-ref
-                >
-                  Mess
+                <Link to='/login'>
+                  Login
                 </Link>
-              </div>{" "}
-              <div
-                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
-                data-twe-nav-item-ref
-              >
-                <Link
-                  className="w-full flex justify-center text-white"
-                  to="/signup"
-                  data-twe-nav-link-ref
-                >
-                  Hostels
-                </Link>
-              </div>{" "}
-              <div
-                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
-                data-twe-nav-item-ref
-              >
-                <Link
-                  className="w-full flex justify-center text-white"
-                  to="/signup"
-                  data-twe-nav-link-ref
-                >
-                  Students
-                </Link>
+                
               </div>
               <div
-                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
+                className="mb-4 ml-3 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
                 data-twe-nav-item-ref
               >
-                <Link
-                  className="w-full flex justify-center text-white"
-                  to="/signup"
-                  data-twe-nav-link-ref
-                >
-                  Feedbacks
+                <Link to='/signup'>
+                  signup
                 </Link>
               </div>
+              
             </div>
-            <button
-              type="button"
-              className=" text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Logout
-            </button>
           </div>
         </div>
       </nav>
