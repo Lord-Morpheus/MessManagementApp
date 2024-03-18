@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "./sidebar";
 import Eating1 from "../images/eatingImg1.svg";
 import Eating2 from "../images/eatingImg2.svg";
+import { CardHoverEffectDemo } from "../components/Cards";
 
 export default function Home() {
   return (
