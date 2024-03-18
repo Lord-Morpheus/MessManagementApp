@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CardHoverEffectDemo } from "../components/Cards";
 import { getToken } from "../utils/getToken";
-import Sidebar from "./sidebar";
 import { useFeedback } from "../hooks/useFeedback";
 
 const Feedback = () => {

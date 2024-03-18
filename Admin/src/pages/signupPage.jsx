@@ -2,7 +2,7 @@ import { useState } from "react";
 import Authimg from "../images/auth.svg";
 import { Link } from "react-router-dom";
 import "../css/signup.css";
-import axios from "axios";
+import { handleSignup } from "../handlers/handleSignup";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -11,27 +11,6 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [adminSecret, setadminSecret] = useState("");
   const [OTP, setOTP] = useState("");
-
-  const handleClick = async () => {
-    try {
-      const { status, data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/admin/signup`,
-        { name, username, email, password, adminSecret, OTP }
-      );
-
-      const { token } = data;
-
-      window.localStorage.setItem("token", token);
-
-      if (status === 200) {
-        console.log("Data saved successfully");
-      } else {
-        console.error("Failed Siging up the user");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
@@ -202,7 +181,16 @@ export default function Signup() {
                 <button
                   type="button"
                   className="w-full h-9 bg-peachette rounded-md"
-                  onClick={async () => await handleClick()}
+                  onClick={async () =>
+                    await handleSignup({
+                      name,
+                      username,
+                      email,
+                      password,
+                      adminSecret,
+                      OTP,
+                    })
+                  }
                 >
                   Sign-Up
                 </button>

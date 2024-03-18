@@ -1,32 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logimg from "../images/login.svg";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { handleLogin } from "../handlers/handleLogin";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = async () => {
-    try {
-      const { status, data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/admin/signin`,
-        { username, password }
-      );
-
-      const { token } = data;
-
-      window.localStorage.setItem("token", token);
-
-      if (status === 200) {
-        console.log("Data saved successfully");
-      } else {
-        console.error("Failed Siging in the user");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
@@ -104,7 +83,9 @@ export default function Login() {
                 <button
                   type="button"
                   className="w-full h-9 bg-peachette rounded-md"
-                  onClick={async () => await handleLogin()}
+                  onClick={async () =>
+                    await handleLogin({ username, password })
+                  }
                 >
                   Login
                 </button>
