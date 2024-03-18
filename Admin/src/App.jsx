@@ -9,8 +9,12 @@ import Signup from "./pages/signupPage";
 import GetOTP from "./pages/getOTP";
 import Mess from "./pages/MessDetail";
 import Cards from "./pages/cards";
+import Feedback from "./pages/Feedback";
+import { StudentsPage } from "./pages/StudentsPage";
 
 function App() {
+  // const token = localStorage.getItem("token");
+
   return (
     <>
       <BrowserRouter>
@@ -24,6 +28,8 @@ function App() {
             <Route path="getOTP" element={<GetOTP />} />
             <Route path="mess" element={<Mess />} />
             <Route path="cards" element={<Cards />} />
+            <Route path="feedback" element={<Feedback />} />
+            <Route path="student" element={<StudentsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

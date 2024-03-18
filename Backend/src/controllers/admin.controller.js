@@ -308,3 +308,13 @@ export const addVendor = asyncHandler(async (req, res) => {
     }
 });
 
+export const getFeedbacks = asyncHandler(async (req, res) => {
+
+    try {
+        const feedbacks = await client.feedback.findMany({});
+
+        return res.status(200).json({ data: feedbacks });
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});

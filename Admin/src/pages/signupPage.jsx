@@ -2,36 +2,15 @@ import { useState } from "react";
 import Authimg from "../images/auth.svg";
 import { Link } from "react-router-dom";
 import "../css/signup.css";
-import axios from "axios";
+import { handleSignup } from "../handlers/handleSignup";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [securityKey, setSecurityKey] = useState("");
+  const [adminSecret, setadminSecret] = useState("");
   const [OTP, setOTP] = useState("");
-
-  const handleClick = async () => {
-    try {
-      const { status, data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/admin/signup`,
-        { name, username, email, password, securityKey, OTP }
-      );
-
-      const { token } = data;
-
-      window.localStorage.setItem("token", token);
-
-      if (status === 200) {
-        console.log("Data saved successfully");
-      } else {
-        console.error("Failed Siging up the user");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
@@ -167,7 +146,7 @@ export default function Signup() {
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
-                  onChange={(e) => setSecurityKey(() => e.target.value)}
+                  onChange={(e) => setadminSecret(() => e.target.value)}
                 />
               </div>
             </div>
@@ -202,7 +181,16 @@ export default function Signup() {
                 <button
                   type="button"
                   className="w-full h-9 bg-peachette rounded-md"
-                  onClick={async () => await handleClick()}
+                  onClick={async () =>
+                    await handleSignup({
+                      name,
+                      username,
+                      email,
+                      password,
+                      adminSecret,
+                      OTP,
+                    })
+                  }
                 >
                   Sign-Up
                 </button>
