@@ -4,7 +4,7 @@ import profilePic from "../images/femaleAvatar.svg";
 
 export default function Sidebar() {
   return (
-    <div className="h-lvh w-1/4 bg-peachette">
+    <div className="h-lvh bg-peachette">
       <div className=" mb-3 flex flex-wrap items-center border-b-2 border-gray-600 border-solid">
         <img className="w-2/5 m-3" src={profilePic} alt="not found" />
         <p className="font-bold mt-3">Welcome admin!</p>

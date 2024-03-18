@@ -58,6 +58,7 @@ export default function GetOTP() {
                 <input
                   type="text"
                   className="px-4 py-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  placeholder="enter your username"
                   onChange={(e) => setUsername((prev) => e.target.value)}
                 />
               </div>
@@ -84,6 +85,7 @@ export default function GetOTP() {
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   onChange={(e) => setEmail((prev) => e.target.value)}
+                  placeholder="userid@gmail.com"
                 />
               </div>
             </div>
@@ -100,7 +102,7 @@ export default function GetOTP() {
               </Link>
             </div>
           </form>
-          <p className="flex justify-center w-4/5 border-t-4 border-dashed p-4">
+          <p className="flex justify-center w-4/5 border-t-4 border-dashed">
             Already have a account?--
             <Link className="text-blue-600 underline" to="/login">
               Log in

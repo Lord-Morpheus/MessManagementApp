@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="relative flex w-full flex-nowrap items-center justify-between bg-gray-500 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
+        className="flex w-full flex-nowrap items-center justify-between bg-gray-500 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4 sticky top-0"
         data-twe-navbar-ref
       >
         <div className="flex w-full flex-wrap items-center justify-between px-3">
