@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function Login() {
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
-      <div className=" bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded-3xl">
+      <div className=" bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded-3xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
         <div className="image w-1/2 bg-peachette flex justify-center items-center ml-4">
           <img className="w-full" src={logimg} alt="not found" />
         </div>

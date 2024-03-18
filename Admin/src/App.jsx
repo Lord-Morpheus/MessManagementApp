@@ -8,6 +8,7 @@ import Home from "./pages/HomePage";
 import Signup from "./pages/signupPage";
 import GetOTP from "./pages/getOTP";
 import Mess from "./pages/MessDetail";
+import Cards from "./pages/cards";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="getOTP" element={<GetOTP />} />
             <Route path="mess" element={<Mess />} />
+            <Route path="cards" element={<Cards />} />
           </Route>
         </Routes>
       </BrowserRouter>

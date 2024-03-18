@@ -72,6 +72,14 @@ export default function Navbar() {
                   signup
                 </Link>
               </div>
+              <div
+                className="mb-4 ml-3 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+                data-twe-nav-item-ref
+              >
+                <Link to='/cards'>
+                  cards
+                </Link>
+              </div>
               
             </div>
           </div>
