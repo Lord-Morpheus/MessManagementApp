@@ -1,7 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import { CardHoverEffectDemo } from "../components/Cards";
+import { getToken } from "../utils/getToken";
 import Sidebar from "./sidebar";
+import { useFeedback } from "../hooks/useFeedback";
 
 const Feedback = () => {
+  const token = getToken();
+  const navigate = useNavigate();
+  if (!token) {
+    navigate("/login");
+  }
+
+  const { loading, feedbacks } = useFeedback();
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
   const projects = [
     {
       title: "Stripe",
