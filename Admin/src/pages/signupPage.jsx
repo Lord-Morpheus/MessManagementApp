@@ -40,9 +40,9 @@ export default function Signup() {
           <img className="w-full" src={Authimg} alt="not found" />
         </div>
         <div className="h-full w-1/2 flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-bold">Signup</h2>
+          <h2 className="text-3xl font-bold mt-3">Signup</h2>
           <form className="w-4/5 font-medium">
-            <div className="form-field">
+            <div className="form-field mt-4">
               Name <br />
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
@@ -67,7 +67,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="form-field">
+            <div className="form-field mt-1">
               Username <br />
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
@@ -92,7 +92,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="form-field">
+            <div className="form-field mt-1">
               Email Id
               <br />
               <div className="flex rounded-lg shadow-sm">
@@ -119,7 +119,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="form-field">
+            <div className="form-field mt-1">
               Password <br />
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
@@ -145,7 +145,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="form-field">
+            <div className="form-field mt-1">
               Security Key
               <br />
               <div className="flex rounded-lg shadow-sm">
@@ -171,7 +171,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="form-field">
+            <div className="form-field mt-1">
               OTP
               <br />
               <div className="flex rounded-lg shadow-sm mb-5">
@@ -197,11 +197,11 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="w-full flex justify-center mb-3">
-              <Link className="w-4/5 flex justify-center" to="/home">
+            <div className="w-full flex justify-center mb-5">
+              <Link className="w-48 flex justify-center" to="/home">
                 <button
                   type="button"
-                  className="w-4/5 h-9 bg-peachette"
+                  className="w-full h-9 bg-peachette rounded-md"
                   onClick={async () => await handleClick()}
                 >
                   Sign-Up
@@ -209,8 +209,8 @@ export default function Signup() {
               </Link>
             </div>
           </form>
-          <p className="flex justify-center w-4/5 border-t-4 border-dashed">
-            Already have a account?
+          <p className="flex justify-center w-4/5 border-t-4 border-dashed p-4">
+            Already have a account?--
             <Link className="text-blue-600 underline" to="/login">
               Login
             </Link>

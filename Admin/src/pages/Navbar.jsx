@@ -5,13 +5,16 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="relative flex w-full flex-nowrap items-center justify-between bg-gray-500 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
+        className="relative flex w-full flex-nowrap items-center justify-between bg-slate-800 py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
         data-twe-navbar-ref
       >
         <div className="flex w-full flex-wrap items-center justify-between px-3">
-          <div className="ms-2">
-            <a className="text-xl text-black dark:text-white" href="#">
-              Navbar
+          <div className="mx-4">
+            <a
+              className="text-xl font-semibold text-blue-700 dark:text-white"
+              href="#"
+            >
+              Mess Management
             </a>
           </div>
 
@@ -38,47 +41,95 @@ export default function Navbar() {
               </svg>
             </span>
           </button>
-
           <div
-            className="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
+            className="!visible hidden flex-grow justify-center basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
             id="navbarSupportedContent3"
             data-twe-collapse-item
           >
             <div
-              className="list-style-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
+              className="list-style-none me-auto flex flex-col justify-center items-center lg:flex-row"
               data-twe-navbar-nav-ref
             >
               <div
-                className="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
+                className="flex justify-center items-center h-9 w-28 mx-2 hover:bg-gray-700 rounded-full"
                 data-twe-nav-item-ref
               >
-                <Link className="text-black me-2" to="/home">
+                <Link
+                  className="flex justify-center w-full text-white"
+                  to="/home"
+                >
+                  Dashboard
+                </Link>
+              </div>
+              <div
+                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
+                data-twe-nav-item-ref
+              >
+                <Link
+                  className="w-full flex justify-center text-white"
+                  to="/login"
+                >
                   Home
                 </Link>
               </div>
-
               <div
-                className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
                 data-twe-nav-item-ref
               >
-                <Link className="text-black me-2" to="/login">
-                  Login
+                <Link
+                  className="w-full flex justify-center text-white"
+                  to="/signup"
+                  data-twe-nav-link-ref
+                >
+                  Mess
+                </Link>
+              </div>{" "}
+              <div
+                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
+                data-twe-nav-item-ref
+              >
+                <Link
+                  className="w-full flex justify-center text-white"
+                  to="/signup"
+                  data-twe-nav-link-ref
+                >
+                  Hostels
+                </Link>
+              </div>{" "}
+              <div
+                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
+                data-twe-nav-item-ref
+              >
+                <Link
+                  className="w-full flex justify-center text-white"
+                  to="/signup"
+                  data-twe-nav-link-ref
+                >
+                  Students
                 </Link>
               </div>
               <div
-                className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+                className="flex justify-center items-center h-9 w-28 hover:bg-gray-700 rounded-full mx-2"
                 data-twe-nav-item-ref
               >
-                <Link className="text-black" to="/signup" data-twe-nav-link-ref>
-                  {" "}
-                  Signup
+                <Link
+                  className="w-full flex justify-center text-white"
+                  to="/signup"
+                  data-twe-nav-link-ref
+                >
+                  Feedbacks
                 </Link>
               </div>
             </div>
+            <button
+              type="button"
+              className=" text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </nav>
-
       <Outlet />
     </>
   );

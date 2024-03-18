@@ -12,11 +12,11 @@ export default function Login() {
         <div className="h-full w-1/2 flex flex-col justify-center items-center">
           <h2 className="text-3xl font-bold">Login</h2>
           <form className="w-4/5 font-medium">
-            <div className="form-field">
-              Username <br />
-              <div class="flex rounded-lg shadow-sm">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-person-fill">
+            <div className="form-field mt-10">
+              <div className="mb-1">Username</div>
+              <div className="flex rounded-lg shadow-sm">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-person-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -33,21 +33,21 @@ export default function Login() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                 />
               </div>
             </div>
 
-            <div className="form-field">
-              Password <br />
-              <div class="flex rounded-lg shadow-sm border-black border-solid">
-                <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i class="bi bi-eye-fill">
+            <div className="form-field mt-5">
+              <div className="mb-1">Password</div>
+              <div className="flex rounded-lg shadow-sm border-black border-solid">
+                <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+                  <i className="bi bi-eye-fill">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      class="w-6 h-6"
+                      className="w-6 h-6"
                     >
                       <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                       <path
@@ -60,27 +60,30 @@ export default function Login() {
                 </span>
                 <input
                   type="text"
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
                 />
               </div>
             </div>
-            <div className="mb-3 flex justify-end font-normal ">
+            <div className="mb-3 flex justify-end font-normal mt-2">
               <Link className="text-blue-600 underline" to="/Signup">
                 Forgot password
               </Link>
             </div>
 
-            <div className="w-full flex justify-center mb-3">
-              <Link className="w-4/5 flex justify-center" to="/home">
-                <button type="button" className="w-4/5 h-9 bg-peachette">
+            <div className="w-full flex justify-center my-5">
+              <Link className="w-48 flex justify-center" to="/home">
+                <button
+                  type="button"
+                  className="w-full h-9 bg-peachette rounded-md"
+                >
                   Login
                 </button>
               </Link>
             </div>
           </form>
-          <p className="flex justify-center w-4/5 border-t-4 border-dashed">
-            Don't have a account?--
+          <p className="flex justify-center w-4/5 border-t-4 border-dashed p-4">
+            {"Don't have a account?--"}
             <Link className=" text-blue-600 underline" to="/getOTP">
               Signup
             </Link>
