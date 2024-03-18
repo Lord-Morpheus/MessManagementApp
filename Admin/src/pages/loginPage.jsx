@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import logimg from "../images/login.svg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const { status, data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/signin`,
+        { username, password }
+      );
+
+      const { token } = data;
+
+      window.localStorage.setItem("token", token);
+
+      if (status === 200) {
+        console.log("Data saved successfully");
+      } else {
+        console.error("Failed Siging in the user");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
       <div className=" bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded-3xl">
@@ -35,6 +60,7 @@ export default function Login() {
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="enter your username"
+                  onChange={(e) => setUsername(() => e.target.value)}
                 />
               </div>
             </div>
@@ -63,6 +89,7 @@ export default function Login() {
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
+                  onChange={(e) => setPassword(() => e.target.value)}
                 />
               </div>
             </div>
@@ -77,6 +104,7 @@ export default function Login() {
                 <button
                   type="button"
                   className="w-full h-9 bg-peachette rounded-md"
+                  onClick={async () => await handleLogin()}
                 >
                   Login
                 </button>
