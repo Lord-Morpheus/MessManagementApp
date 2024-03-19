@@ -1,10 +1,17 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import profilePic from "../images/femaleAvatar.svg";
 
 export default function Sidebar() {
+  function toggleDropdown() {
+    let dropdown = document.getElementById('dropdown');
+    console.log('clicked');
+    return dropdown.classList.toggle("hidden");
+  }
+
   return (
-    <div className="h-screen bg-peachette">
+    <div className="sidebar">
       <div className=" mb-3 flex flex-wrap items-center border-b-2 border-gray-600 border-solid">
         <img className="w-2/5 m-3" src={profilePic} alt="not found" />
         <p className="font-bold mt-3">Welcome Admin!</p>
@@ -81,7 +88,11 @@ export default function Sidebar() {
           <span className="ml-3 text-dark">Student Details</span>
         </Link>
       </div>
-      <div className="input-group flex items-center">
+      <div
+        id="dropdownButton"
+        onClick= {toggleDropdown}
+        className="input-group flex items-center cursor-pointer select-none"
+      >
         <i className="bi bi-journal-bookmark-fill ml-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -99,9 +110,34 @@ export default function Sidebar() {
             <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
           </svg>
         </i>
-        <Link className="text-decoration-none" to="/feedback">
-          <span className="ml-3 text-dark">Feedback</span>
-        </Link>
+        <span className="ml-3 text-dark mr-1">Feedback</span>
+        <i class="bi bi-chevron-down">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-down"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </i>
+      </div>
+      <div id="dropdown" className="rounded bg-white mx-10 py-1 hidden">
+        <div className="cursor-pointer flex justify-center hover:bg-gray-300 py-1">
+          <Link onClick={toggleDropdown} className='' to='/giveFeedback'>
+            Give Feedback
+          </Link>
+        </div>
+        <div onClick={toggleDropdown} className="cursor-pointer flex justify-center hover:bg-gray-300 py-1">
+          <Link to='/ViewFeedback'>
+            view feedback
+          </Link>
+        </div>
       </div>
     </div>
   );

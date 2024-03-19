@@ -9,7 +9,8 @@ import Signup from "./pages/signupPage";
 import GetOTP from "./pages/getOTP";
 import Mess from "./pages/MessDetail";
 import Cards from "./pages/cards";
-import Feedback from "./pages/Feedback";
+import GiveFeedback from "./pages/GiveFeedback";
+import ViewFeedback from "./pages/viewFeedback";
 import { StudentsPage } from "./pages/StudentsPage";
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
             <Route path="getOTP" element={<GetOTP />} />
             <Route path="mess" element={<Mess />} />
             <Route path="cards" element={<Cards />} />
-            <Route path="feedback" element={<Feedback />} />
+            <Route path="giveFeedback" element={<GiveFeedback />} />
+            <Route path="viewFeedback" element={<ViewFeedback />} />
             <Route path="student" element={<StudentsPage />} />
           </Route>
         </Routes>

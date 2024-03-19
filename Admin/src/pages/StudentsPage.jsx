@@ -6,11 +6,11 @@ import { useFilter } from "../hooks/useFilter";
 
 // eslint-disable-next-line react/prop-types
 export const StudentsPage = ({ hostel, mess, batch, date, username, day }) => {
-  const token = getToken();
-  const navigate = useNavigate();
-  if (!token) {
-    navigate("/login");
-  }
+  // const token = getToken();
+  // const navigate = useNavigate();
+  // if (!token) {
+  //   navigate("/login");
+  // }
 
   const { loading, students } = useFilter({
     hostel,

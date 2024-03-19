@@ -19,14 +19,14 @@ import Card1 from "./cards";
 
 export default function Slider() {
   return (
-    <div className="flex items-center justify-center flex-col h-full w-full">
+    <div className="flex items-center justify-center flex-col h-full w-[90%]">
       <Swiper
         breakpoints={{
           340: {
             slidesPerView: 2,
           },
           700: {
-            slidesPerView: 3,
+            slidesPerView: 1,
           },
         }}
         coverflowEffect={{
@@ -42,46 +42,50 @@ export default function Slider() {
         pagination={{
           clickable: true,
         }}
-        modules={[FreeMode, Pagination,EffectCoverflow]}
-        className="swiper-container max-w-[80%] lg:max-w-[95%]"
+        navigation={true}
+        modules={[FreeMode, Pagination,EffectCoverflow,Navigation]}
+        className="swiper-container max-w-[80%] lg:max-w-[95%] mb-20"
       >
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[250px] w-[215px] lg:h-[400px] lg:w-[350px] overflow-hidden cursor-pointer">
+          <div className="flex flex-col items-center mb-5 group relative shadow-lg text-white rounded-xl px-3 py-8 h-[250px] w-[215px] lg:h-full lg:w-full overflow-hidden cursor-pointer">
             <Card1/>
           </div>
         </SwiperSlide>
 
         <div className="slider-controler">
+          <div className="left">
+            
+          </div>
           <div className="swiper-pagination"></div>
         </div>
       </Swiper>
