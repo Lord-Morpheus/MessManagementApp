@@ -32,6 +32,10 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: "Invalid Input" });
     }
 
+    if (!email.endsWith("iitmandi.ac.in")) {
+        return res.status(400).json({ message: "Please use institute email ID" });
+    }
+
     try {
         const user1 = await client.student.findUnique({
             where: {
@@ -63,8 +67,17 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
 
         await sendEmail({
             mail: email,
-            subject: 'Account Registration',
-            text: `OTP to register account is \n\n ${OTP}`,
+            subject: '🍽️ Welcome to IIT Mandi Mess Service! Activate Your Account',
+            text: `Hi there! Welcome to IIT Mandi Mess Service. We're thrilled to have you join us for delicious meals! To complete your registration and start enjoying our meals, please use the OTP below:
+        
+        🔒 One-Time Passcode (OTP): ${OTP}
+    
+        If you have any questions or need assistance, feel free to reach out to our support team.
+        
+        We can't wait to serve you!
+        
+        Best regards,
+        III Mandi Mess Service Team`
         });
 
         return res.status(200).json({ username, email, message: `OTP send to email ${email}` });
@@ -110,7 +123,17 @@ export const forgotPassword = asyncHandler(async (req, res) => {
         await sendEmail({
             mail: email,
             subject: 'Account Recovery',
-            text: `OTP to recover account is \n\n ${OTP}`,
+            text: `Hi there! You're receiving this email because you requested to recover your account. Please use the OTP below to proceed:
+                
+                🔒 One-Time Passcode (OTP): ${OTP}
+                
+                Copy above OTP and paste it into the designated field on our recovery page.
+                
+                If you have any questions or need assistance, feel free to contact our support team.
+                
+                Best regards,
+                IIT Mandi Mess Sevice Team
+        `,
         });
 
         return res.status(200).json({ message: `Recovery email send to ${email}` });

@@ -1,4 +1,17 @@
+import { useState } from "react";
+import { handleExport } from "../handlers/handleExcel";
+import { handleFilter } from "../handlers/handleFilter";
+
+// hostel, mess, batch, date, username, day
+
 export const Filter = () => {
+  const [hostel, setHostel] = useState(null);
+  const [mess, setMess] = useState(null);
+  const [batch, setBatch] = useState(null);
+  const [fromDate, setFromDate] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [toDate, setToDate] = useState(null);
+
   return (
     <div>
       <div className="m-10 w-screen max-w-screen-md">
@@ -31,25 +44,27 @@ export const Filter = () => {
                   type="name"
                   name="search"
                   className="h-12 w-full cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  placeholder="Search by name, type, manufacturer, etc"
+                  placeholder="Search by student id"
+                  onChange={(e) => setUsername(() => e.target.value)}
                 />
               </div>
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <label
                     htmlFor="name"
                     className="text-sm font-medium text-stone-600"
                   >
-                    Name
+                    Student ID
                   </label>
                   <input
                     type="text"
                     id="name"
                     placeholder="Raspberry juice"
                     className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    onChange={(e) => setUsername(() => e.target.value)}
                   />
-                </div>
+                </div> */}
 
                 <div className="flex flex-col">
                   <label
@@ -62,11 +77,30 @@ export const Filter = () => {
                   <select
                     id="manufacturer"
                     className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    onChange={(e) => setMess(() => e.target.value)}
                   >
                     <option>Mess 1</option>
                     <option>Mess 2</option>
                     <option>Mess 3</option>
                     <option>Mess 4</option>
+                  </select>
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="manufacturer"
+                    className="text-sm font-medium text-stone-600"
+                  >
+                    Batch
+                  </label>
+                  <select
+                    id="manufacturer"
+                    className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    onChange={(e) => setBatch(() => e.target.value)}
+                  >
+                    <option>2024</option>
+                    <option>2023</option>
+                    <option>2022</option>
+                    <option>2021</option>
                   </select>
                 </div>
 
@@ -75,12 +109,27 @@ export const Filter = () => {
                     htmlFor="date"
                     className="text-sm font-medium text-stone-600"
                   >
-                    Date of Entry
+                    From Date
                   </label>
                   <input
                     type="date"
                     id="date"
                     className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    onChange={(e) => setFromDate(() => e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="date"
+                    className="text-sm font-medium text-stone-600"
+                  >
+                    To Date
+                  </label>
+                  <input
+                    type="date"
+                    id="date"
+                    className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    onChange={(e) => setToDate(() => e.target.value)}
                   />
                 </div>
 
@@ -95,6 +144,7 @@ export const Filter = () => {
                   <select
                     id="status"
                     className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    onChange={(e) => setHostel(() => e.target.value)}
                   >
                     <option>Hostel 1</option>
                     <option>Hostel 2</option>
@@ -105,11 +155,35 @@ export const Filter = () => {
               </div>
 
               <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
-                <button className="rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-700 outline-none hover:opacity-80 focus:ring">
-                  Reset
+                <button
+                  className="rounded-full bg-peachette px-8 py-2 font-medium text-black outline-none hover:opacity-80 focus:ring"
+                  onClick={async () =>
+                    await handleFilter({
+                      hostel,
+                      mess,
+                      batch,
+                      fromDate,
+                      username,
+                      toDate,
+                    })
+                  }
+                >
+                  Filter
                 </button>
-                <button className="rounded-lg bg-blue-600 px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring">
-                  Search
+                <button
+                  className="rounded-full bg-green-500 px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring"
+                  onClick={async () =>
+                    await handleExport({
+                      hostel,
+                      mess,
+                      batch,
+                      fromDate,
+                      username,
+                      toDate,
+                    })
+                  }
+                >
+                  Export to Excel
                 </button>
               </div>
             </htmlForm>

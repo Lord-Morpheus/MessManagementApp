@@ -35,59 +35,21 @@ export default function GiveFeedback() {
             />
           </div>
 
-          <form action="" className="w-[90%] mt-[4%]">
+          <form action="" className="w-[90%] mt-[2%]">
             <div className="relative w-full">
-              <button
-                className="flex  px-4 py-2 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-md select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="button"
-                onClick={toggleDropdown}
+              <span className="font-bold">Select Mess</span>
+              <select
+                id="manufacturer"
+                className="block mb-3 w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                onChange={(e) => setMess(() => e.target.value)}
               >
-                Select Mess
-                <i className="bi bi-chevron-down ml-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-chevron-down"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
-                    />
-                  </svg>
-                </i>
-              </button>
-              <div
-                id="messSelect"
-                className="rounded bg-white mx-10 py-1 hidden"
-              >
-                <div
-                  onClick={toggleDropdown}
-                  className="cursor-pointer flex justify-center hover:bg-gray-300 py-1"
-                >
-                  Give Feedback
-                </div>
-                <div
-                  onClick={toggleDropdown}
-                  className="cursor-pointer flex justify-center hover:bg-gray-300 py-1"
-                >
-                  view feedback
-                </div>
-                <div
-                  onClick={toggleDropdown}
-                  className="cursor-pointer flex justify-center hover:bg-gray-300 py-1"
-                >
-                  view feedback
-                </div>
-                <div
-                  onClick={toggleDropdown}
-                  className="cursor-pointer flex justify-center hover:bg-gray-300 py-1"
-                >
-                  view feedback
-                </div>
-              </div>
+                <option>Oak Mess</option>
+                <option>Pine Mess</option>
+                <option>Alder Mess</option>
+                <option>Tulsi Mess</option>
+                <option>Peepal Mess</option>
+              </select>
+
               <span className="font-bold">Subject</span>
               <div className="relative w-full min-w-[200px]">
                 <textarea

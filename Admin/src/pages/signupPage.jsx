@@ -1,13 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Authimg from "../images/auth.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/signup.css";
 import { handleSignup } from "../handlers/handleSignup";
+import { getToken } from "../utils/getToken";
 
 export default function Signup() {
-  const [name, setName] = useState("");
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const token = getToken();
+
+  if (token) {
+    navigate("/home");
+  }
+
+  useEffect(() => {
+    if (!window.localStorage.getItem("user-info")) {
+      navigate("/getOTP");
+    } else {
+      const { username, email } = JSON.parse(
+        window.localStorage.getItem("user-info")
+      );
+      console.log(username, email);
+      setUsername(username);
+      setEmail(email);
+    }
+
+    return () => {
+      window.localStorage.removeItem("user-info");
+    };
+  }, []);
+
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [adminSecret, setadminSecret] = useState("");
   const [OTP, setOTP] = useState("");
@@ -66,8 +91,8 @@ export default function Signup() {
                 <input
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="enter your username"
-                  onChange={(e) => setUsername(() => e.target.value)}
+                  value={username}
+                  readOnly
                 />
               </div>
             </div>
@@ -93,8 +118,8 @@ export default function Signup() {
                 <input
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="userid@gmail.com"
-                  onChange={(e) => setEmail(() => e.target.value)}
+                  value={email}
+                  readOnly
                 />
               </div>
             </div>

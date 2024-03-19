@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Form from "./pages/formPage";
 import Navbar from "./pages/Navbar";
@@ -8,7 +8,7 @@ import Home from "./pages/HomePage";
 import Signup from "./pages/signupPage";
 import GetOTP from "./pages/getOTP";
 import Mess from "./pages/MessDetail";
-import Cards from "./pages/cards";
+import Cards from "./components/MessCard";
 import GiveFeedback from "./pages/GiveFeedback";
 import ViewFeedback from "./pages/viewFeedback";
 import { StudentsPage } from "./pages/StudentsPage";

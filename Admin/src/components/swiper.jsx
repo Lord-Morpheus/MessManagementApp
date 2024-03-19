@@ -15,7 +15,7 @@ import {
   Pagination,
   Navigation,
 } from "swiper/modules";
-import Card1 from "./cards";
+import Card1 from "./MessCard";
 
 export default function Slider() {
   return (

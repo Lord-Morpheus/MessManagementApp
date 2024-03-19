@@ -1,11 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Security from "../images/otp.svg";
 import { useState } from "react";
 import axios from "axios";
+import { getToken } from "../utils/getToken";
 
 export default function GetOTP() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const token = getToken();
+
+  if (token) {
+    navigate("/home");
+  }
 
   const handleSubmit = async () => {
     try {
@@ -19,12 +26,20 @@ export default function GetOTP() {
 
       console.log(data);
 
+      await window.localStorage.setItem(
+        "user-info",
+        JSON.stringify({ email, username })
+      );
+
+      navigate("/signup");
+
       if (status === 200) {
         console.log("Data saved successfully");
       } else {
         console.error("Failed to save data");
       }
     } catch (error) {
+      alert(error.response.data.message);
       console.error("Error:", error);
     }
   };
@@ -91,15 +106,13 @@ export default function GetOTP() {
             </div>
 
             <div className="w-full flex justify-center my-5">
-              <Link className="w-48 flex justify-center" to="/signup">
-                <button
-                  type="button"
-                  className="w-full h-9 bg-peachette rounded-md"
-                  onClick={async () => await handleSubmit()}
-                >
-                  Send OTP
-                </button>
-              </Link>
+              <button
+                type="button"
+                className=" h-9 bg-peachette rounded-md w-48"
+                onClick={async () => await handleSubmit()}
+              >
+                Send OTP
+              </button>
             </div>
           </form>
           <p className="flex justify-center w-4/5 border-t-4 border-dashed">

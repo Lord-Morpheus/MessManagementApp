@@ -7,7 +7,7 @@ const client = new PrismaClient();
 
 export const filterMiddleware = asyncHandler(async (req, res, next) => {
 
-    const { hostel, mess, batch, date, username, day } = req.query;
+    const { hostel, mess, batch, fromDate, username, toDate } = req.query;
 
     const where = {};
 
@@ -25,8 +25,8 @@ export const filterMiddleware = asyncHandler(async (req, res, next) => {
 
     if (date) {
         where.createdAt = {
-            gte: new Date(date),
-            lt: new Date(date).setDate(new Date(date).getDate() + day),
+            gte: new Date(fromDate),
+            lt: new Date(toDate),
         };
     }
 

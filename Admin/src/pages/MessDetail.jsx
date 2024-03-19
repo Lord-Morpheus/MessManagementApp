@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "./sidebar";
 import Eating1 from "../images/eatingImg1.svg";
 import Eating2 from "../images/eatingImg2.svg";
-import Slider from "./swiper";
+import Slider from "../components/swiper";
 
 export default function Mess() {
   return (
