@@ -10,9 +10,9 @@ const StudentCard = ({ name, username, mess, hostel, email, id }) => {
           <div className="font-light ml-2">{name}</div>
           <div className="font-light text-gray-500 ml-2">{username}</div>
         </div>
-        <div className="text-lg font-bold py-2">Mess - {mess}</div>
-        <div className="text-lg font-bold py-2">Email - {email}</div>
-        <div className="text-lg font-bold py-2">Mess - {hostel}</div>
+        <div className="text-md py-2">Mess - {mess}</div>
+        <div className="text-md py-2">Email - {email}</div>
+        <div className="text-md py-2">Mess - {hostel}</div>
         <hr className="border-gray-200"></hr>
       </div>
     </Link>

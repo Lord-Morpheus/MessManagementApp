@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Form from "./pages/formPage";
 import Navbar from "./pages/Navbar";
@@ -19,18 +19,20 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="form" element={<Form />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="getOTP" element={<GetOTP />} />
-            <Route path="mess" element={<Mess />} />
-            <Route path="cards" element={<Cards />} />
-            <Route path="feedback" element={<Feedback />} />
-            <Route path="student" element={<StudentsPage />} />
-          </Route>
+          {/* <Route path="/" element={<Navbar />}> */}
+
+          <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="form" element={<Form />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="getOTP" element={<GetOTP />} />
+          <Route path="mess" element={<Mess />} />
+          <Route path="cards" element={<Cards />} />
+          <Route path="feedback" element={<Feedback />} />
+          <Route path="student" element={<StudentsPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
     </>

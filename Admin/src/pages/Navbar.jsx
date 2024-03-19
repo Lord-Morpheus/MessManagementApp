@@ -1,7 +1,8 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <>
       <nav
@@ -51,37 +52,37 @@ export default function Navbar() {
                 className="my-4 ml-3 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
                 data-twe-nav-item-ref
               >
-                <Link to='/home'>
-                  Home
-                </Link>
+                <Link to="/home">Home</Link>
               </div>
               <div
                 className="mb-4 ml-3 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
                 data-twe-nav-item-ref
               >
-                <Link to='/login'>
-                  Login
-                </Link>
-                
+                <Link to="/login">Login</Link>
               </div>
               <div
                 className="mb-4 ml-3 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
                 data-twe-nav-item-ref
               >
-                <Link to='/signup'>
-                  signup
-                </Link>
+                <Link to="/signup">signup</Link>
               </div>
               <div
                 className="mb-4 ml-3 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
                 data-twe-nav-item-ref
               >
-                <Link to='/cards'>
-                  cards
-                </Link>
+                <Link to="/cards">cards</Link>
               </div>
-              
             </div>
+            <button
+              type="button"
+              className="text-black bg-peachette hover:bg-darkPeach focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={() => {
+                window.localStorage.removeItem("token");
+                navigate("/login");
+              }}
+            >
+              Log out
+            </button>
           </div>
         </div>
       </nav>

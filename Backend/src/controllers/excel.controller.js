@@ -35,6 +35,6 @@ export const exportUser = asyncHandler(async (req, res) => {
         "attachment; filename=" + "users.xlsx"
     );
 
-    res.send(buffer);
+    return res.status(200).json(buffer);
 }
 );
