@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { deleteStudent, filterStudents, getAllStudents, getStudent, signIn, signUp } from '../controllers/admin.controller.js';
+import { addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getStudent, signIn, signUp } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/common.controller.js';
 import { exportUser } from '../controllers/excel.controller.js';
@@ -17,5 +17,7 @@ router.post('/reset/password', forgotPassword);
 router.put('/reset/password/', resetPassword);
 router.post('/send/otp', sendSignupOTP);
 router.get('/export', adminAuthMiddleware, filterMiddleware, exportUser);
+router.post('/add/vendor', adminAuthMiddleware, addVendor);
+router.post('/add/mess', adminAuthMiddleware, addMess);
 
 export default router;

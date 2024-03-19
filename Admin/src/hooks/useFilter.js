@@ -1,29 +1,30 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "../utils/getToken";
 
-export const useFilter = ({ hostel, mess, batch, date, username, day }) => {
+export const useFilter = ({ hostel, mess, batch, fromDate, username, toDate }) => {
     const [loading, setLoading] = useState(true);
     const [students, setStudents] = useState([]);
 
-    axios.get(`${import.meta.env.VITE_BACKEND_URI}/admin/filter`, {
-        data: {
-            hostel,
-            mess,
-            batch,
-            date,
-            username,
-            day,
-        },
-        headers: {
-            Authorization: getToken(),
-        }
-    })
-        .then((res) => {
-            setStudents(res.data);
-            console.log(res.data);
-            setLoading(false);
+    useEffect(() => {
+        axios.get(`${import.meta.env.VITE_BACKEND_URI}/admin/filter`, {
+            params: {
+                hostel,
+                mess,
+                batch,
+                fromDate,
+                username,
+                toDate,
+            },
+            headers: {
+                Authorization: `Admin ${getToken()}`,
+            }
         })
+            .then((res) => {
+                setStudents(res.data.data);
+                setLoading(false);
+            })
+    }, [hostel, mess, batch, fromDate, username, toDate]);
 
     return { students, loading };
 }

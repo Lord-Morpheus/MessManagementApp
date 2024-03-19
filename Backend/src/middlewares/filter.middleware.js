@@ -23,7 +23,7 @@ export const filterMiddleware = asyncHandler(async (req, res, next) => {
         where.batch = batch;
     }
 
-    if (date) {
+    if (fromDate && toDate) {
         where.createdAt = {
             gte: new Date(fromDate),
             lt: new Date(toDate),

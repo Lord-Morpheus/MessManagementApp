@@ -1,11 +1,13 @@
 import { useState } from "react";
 import logimg from "../images/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../handlers/handleLogin";
+import { getToken } from "../utils/getToken";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div className="bg-aliceblue h-lvh flex justify-center items-center">
@@ -79,17 +81,18 @@ export default function Login() {
             </div>
 
             <div className="w-full flex justify-center my-5">
-              <Link className="w-48 flex justify-center" to="/home">
-                <button
-                  type="button"
-                  className="w-full h-9 bg-peachette rounded-md"
-                  onClick={async () =>
-                    await handleLogin({ username, password })
+              <button
+                type="button"
+                className="w-48 h-9 bg-peachette rounded-md"
+                onClick={async () => {
+                  await handleLogin({ username, password });
+                  if (getToken()) {
+                    navigate("/home");
                   }
-                >
-                  Login
-                </button>
-              </Link>
+                }}
+              >
+                Login
+              </button>
             </div>
           </form>
           <p className="flex justify-center w-4/5 border-t-4 border-dashed p-4">

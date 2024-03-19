@@ -53,7 +53,7 @@ model Mess {
   Menu            Menu[]
   MessForm        MessForm?  @relation(fields: [messFormId], references: [id])
   messFormId      String?
-  Vendor          Vendor[]
+  vendors         Vendor[]
 }
 
 model Hostel {
@@ -114,6 +114,5 @@ model Vendor {
   phone     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Mess      Mess?    @relation(fields: [messId], references: [id])
-  messId    String?
+  mess      Mess[]
 }

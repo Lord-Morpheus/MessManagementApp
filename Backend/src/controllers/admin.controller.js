@@ -256,12 +256,12 @@ export const addMess = asyncHandler(async (req, res) => {
         const mess = await client.mess.create({
             data: {
                 name,
-                vendorId,
+                vendors: { connect: { id: vendorId } },
             },
             select: {
                 id: true,
                 name: true,
-                vendor: {
+                vendors: {
                     select: {
                         id: true,
                         name: true,

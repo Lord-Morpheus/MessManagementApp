@@ -15,7 +15,7 @@ export const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
         const payload = jwt.verify(token, process.env.ADMIN_JWT_SECRET);
         const userId = payload.id;
 
-        const user = await client.admin.findUnique({
+        const user = await client.admin.findFirst({
             where: {
                 id: userId,
             },

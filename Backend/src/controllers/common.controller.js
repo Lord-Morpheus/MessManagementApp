@@ -32,9 +32,9 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: "Invalid Input" });
     }
 
-    if (!email.endsWith("iitmandi.ac.in")) {
-        return res.status(400).json({ message: "Please use institute email ID" });
-    }
+    // if (!email.endsWith("iitmandi.ac.in")) {
+    //     return res.status(400).json({ message: "Please use institute email ID" });
+    // }
 
     try {
         const user1 = await client.student.findUnique({

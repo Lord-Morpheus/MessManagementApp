@@ -4,14 +4,21 @@ import { handleFilter } from "../handlers/handleFilter";
 
 // hostel, mess, batch, date, username, day
 
-export const Filter = () => {
-  const [hostel, setHostel] = useState(null);
-  const [mess, setMess] = useState(null);
-  const [batch, setBatch] = useState(null);
-  const [fromDate, setFromDate] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [toDate, setToDate] = useState(null);
-
+export const Filter = ({
+  setHostel,
+  setMess,
+  setBatch,
+  setFromDate,
+  setUsername,
+  setToDate,
+  hostel,
+  mess,
+  batch,
+  fromDate,
+  username,
+  toDate,
+  setStudents,
+}) => {
   return (
     <div>
       <div className="m-10 w-screen max-w-screen-md">
@@ -79,10 +86,10 @@ export const Filter = () => {
                     className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     onChange={(e) => setMess(() => e.target.value)}
                   >
-                    <option>Mess 1</option>
-                    <option>Mess 2</option>
-                    <option>Mess 3</option>
-                    <option>Mess 4</option>
+                    <option value="Mess 1">Mess 1</option>
+                    <option value="Mess 2">Mess 2</option>
+                    <option value="Mess 3">Mess 3</option>
+                    <option value="Mess 4">Mess 4</option>
                   </select>
                 </div>
                 <div className="flex flex-col">
@@ -97,10 +104,10 @@ export const Filter = () => {
                     className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     onChange={(e) => setBatch(() => e.target.value)}
                   >
-                    <option>2024</option>
-                    <option>2023</option>
-                    <option>2022</option>
-                    <option>2021</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
                   </select>
                 </div>
 
@@ -116,6 +123,7 @@ export const Filter = () => {
                     id="date"
                     className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     onChange={(e) => setFromDate(() => e.target.value)}
+                    defaultValue={null}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -130,6 +138,7 @@ export const Filter = () => {
                     id="date"
                     className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     onChange={(e) => setToDate(() => e.target.value)}
+                    defaultValue={null}
                   />
                 </div>
 
@@ -145,11 +154,12 @@ export const Filter = () => {
                     id="status"
                     className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     onChange={(e) => setHostel(() => e.target.value)}
+                    defaultValue={null}
                   >
-                    <option>Hostel 1</option>
-                    <option>Hostel 2</option>
-                    <option>Hostel 3</option>
-                    <option>Hostel 4</option>
+                    <option value={null}>None</option>
+                    <option value="B19">B19</option>
+                    <option value="B23">B23</option>
+                    <option value="B13">B13</option>
                   </select>
                 </div>
               </div>
@@ -165,6 +175,7 @@ export const Filter = () => {
                       fromDate,
                       username,
                       toDate,
+                      setStudents,
                     })
                   }
                 >
