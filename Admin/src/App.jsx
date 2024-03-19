@@ -12,6 +12,7 @@ import Cards from "./components/MessCard";
 import GiveFeedback from "./pages/GiveFeedback";
 import ViewFeedback from "./pages/viewFeedback";
 import { StudentsPage } from "./pages/StudentsPage";
+import Sidebar from "./pages/sidebar";
 
 function App() {
   // const token = localStorage.getItem("token");

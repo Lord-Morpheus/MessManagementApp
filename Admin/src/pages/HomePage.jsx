@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 
 export default function Home() {
   return (
-    <div className="grid grid-cols-10 relative bg-peachette">
+    <div className="grid grid-cols-10 relative bg-white">
       <aside className="self-start col-span-2">
         <Sidebar />
       </aside>
