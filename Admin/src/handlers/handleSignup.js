@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setToken } from "../utils/getToken";
 
 export const handleSignup = async ({ name, username, email, password, adminSecret, OTP }) => {
     try {
@@ -9,7 +10,7 @@ export const handleSignup = async ({ name, username, email, password, adminSecre
 
         const { token } = data;
 
-        window.localStorage.setItem("token", token);
+        setToken(token);
 
         if (status === 200) {
             console.log("Data saved successfully");
