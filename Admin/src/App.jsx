@@ -21,18 +21,17 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="form" element={<Form />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="getOTP" element={<GetOTP />} />
-            <Route path="mess" element={<Mess />} />
-            <Route path="cards" element={<Cards />} />
-            <Route path="giveFeedback" element={<GiveFeedback />} />
-            <Route path="viewFeedback" element={<ViewFeedback />} />
-            <Route path="student" element={<StudentsPage />} />
+          <Route exact path="/" element={<Sidebar />}>
+            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/form" element={<Form />} />
+            <Route exact path="/signup" element={<Signup />} />
+            <Route exact path="/getOTP" element={<GetOTP />} />
+            <Route exact path="/mess" element={<Mess />} />
+            <Route exact path="/cards" element={<Cards />} />
+            <Route exact path="/giveFeedback" element={<GiveFeedback />} />
+            <Route exact path="/viewFeedback" element={<ViewFeedback />} />
+            <Route exact path="/student" element={<StudentsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
