@@ -5,14 +5,14 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
- 
-const chartConfig1 = {
+
+const chartConfig2 = {
   type: "bar",
   height: 240,
   series: [
     {
       name: "Strength",
-      data: [540, 300, 320, 500, 350, 200, 230, 500,215],
+      data: [285,1600,1270],
     },
   ],
   options: {
@@ -23,7 +23,7 @@ const chartConfig1 = {
     },
     title: {
       display: true,
-      text: 'Student Strength Distribution in Mess'
+      text: 'Food Preference Distribution in Mess'
     },
     dataLabels: {
       enabled: false,
@@ -51,15 +51,9 @@ const chartConfig1 = {
         },
       },
       categories: [
-        "Alder",
-        "Pine",
-        "Oak",
-        "Tulsi",
-        "Peepal",
-        "D3",
-        "D2",
-        "D1",
-        "Yoga",
+        "jain",
+        "veg",
+        "non-veg",
       ],
     },
     yaxis: {
@@ -94,12 +88,12 @@ const chartConfig1 = {
     },
   },
 };
- 
-export default function HomeCard1() {
+
+export default function HomeCard2() {
   return (
     <Card>
       <CardBody className="px-2 pb-0">
-        <Chart {...chartConfig1} />
+        <Chart {...chartConfig2} />
       </CardBody>
     </Card>
   );

@@ -23,6 +23,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Sidebar />}>
+            <Route index element={<Home />} />
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/form" element={<Form />} />

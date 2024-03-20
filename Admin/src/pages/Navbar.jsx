@@ -4,8 +4,8 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 export default function Navbar() {
   return (
     <>
-      <nav className="bg-[#89CFF3] h-20 w-full flex justify-end items-center">
-        <div className="flex justify-center items-center mr-3 bg-[#89CFF3] w-48 h-10">
+      <nav className="bg-[#00A9FF] h-[3.5rem] w-full flex justify-end items-center">
+        <div className="flex justify-center items-center mr-3 bg-[#A0E9FF] w-48 h-10">
           <span>Signed in as Admin</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +38,9 @@ export default function Navbar() {
             />
           </svg>
         </button>
+      </nav>
+      <nav className="bg-[#89CFF3] h-10 w-full flex justify-center items-center capitalize">
+        Welcome to IIT Mandi Admin Portal
       </nav>
     </>
   );
