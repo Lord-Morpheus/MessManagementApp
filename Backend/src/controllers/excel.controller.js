@@ -22,8 +22,8 @@ export const exportUser = asyncHandler(async (req, res) => {
 
     const buffer = await workbook.xlsx.writeBuffer();
 
-    const filePath = 'users.xlsx'; // Specify the file path where you want to save the file
-    fs.writeFileSync(filePath, buffer);
+    // const filePath = 'users.xlsx'; // Specify the file path where you want to save the file
+    // fs.writeFileSync(filePath, buffer);
 
     res.setHeader(
         "Content-Type",

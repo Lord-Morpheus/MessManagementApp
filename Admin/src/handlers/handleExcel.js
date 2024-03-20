@@ -1,14 +1,15 @@
 import axios from "axios";
 import { getToken } from "../utils/getToken";
-import fs from "fs";
+import fileDownload from 'js-file-download'
 
 export const handleExport = async ({ hostel, mess, batch, date, username, day }) => {
     try {
 
         const { status, data } = await axios.get(
             `${import.meta.env.VITE_BACKEND_URI}/admin/export`,
-            { hostel, mess, batch, date, username, day },
             {
+                responseType: 'blob',
+                params: { hostel, mess, batch, date, username, day }, // Pass parameters as query params
                 headers: {
                     Authorization: `Admin ${getToken()}`,
                 },
@@ -17,8 +18,7 @@ export const handleExport = async ({ hostel, mess, batch, date, username, day })
 
         const { buffer } = data;
 
-        const filePath = 'students.xlsx';
-        fs.writeFileSync(filePath, buffer);
+        fileDownload(buffer, 'users.xlsx');
 
         if (status === 200) {
             console.log("Data exported successfully");
