@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     <>
       <div className="flex">
-        <div className="flex flex-col items-center w-[25%] bg-white min-h-lvh">
+        <div className="flex flex-col items-center w-[25%] bg-white min-h-lvh border border-r-2 border-black">
           <div className=" mb-6 flex flex-wrap items-center border-b-2 border-gray-600 border-solid">
             <img className="w-2/5 m-3" src={profilePic} alt="not found" />
             <p className="font-bold mt-3 text-lg">Welcome Admin!</p>
@@ -108,23 +108,6 @@ export default function Sidebar() {
                 </span>
               </Link>
             </div>
-            {/* <div className="input-group flex items-center mb-2">
-          <i className="bi bi-person-fill ml-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-person-fill"
-              viewBox="0 0 16 16"
-            >
-              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-            </svg>
-          </i>
-          <Link className="text-decoration-none" to="/student">
-          <span className="ml-3 text-dark">Student Details</span>
-          </Link>
-        </div> */}
             <div
               id="dropdownButton"
               onClick={toggleDropdown}
