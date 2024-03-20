@@ -1,8 +1,5 @@
-import React from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { BiExit } from "react-icons/bi";
-import instiLogo from "../assets/instiLogo.png";
 import mainLogo from "../assets/main_logo.png";
 
 export default function Navbar() {

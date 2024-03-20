@@ -34,6 +34,7 @@ function App() {
           <Route exact path="/viewFeedback" element={<ViewFeedback />} />
           <Route exact path="/student" element={<StudentsPage />} />
           <Route path="menu" element={<MessMenu />} />
+          <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </BrowserRouter>
     </>
