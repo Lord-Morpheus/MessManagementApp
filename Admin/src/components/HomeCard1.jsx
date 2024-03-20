@@ -1,18 +1,20 @@
+import Chart from "react-apexcharts";
 import {
   Card,
-  CardBody,
+  CardContent,
+  CardDescription,
   CardHeader,
-  Typography,
-} from "@material-tailwind/react";
-import Chart from "react-apexcharts";
- 
+  CardTitle,
+} from "./ui/card";
+
 const chartConfig1 = {
   type: "bar",
   height: 240,
+  width: 420,
   series: [
     {
       name: "Strength",
-      data: [540, 300, 320, 500, 350, 200, 230, 500,215],
+      data: [540, 300, 320, 500, 350, 200, 230, 500, 215],
     },
   ],
   options: {
@@ -21,17 +23,13 @@ const chartConfig1 = {
         show: false,
       },
     },
-    title: {
-      display: true,
-      text: 'Student Strength Distribution in Mess'
-    },
     dataLabels: {
       enabled: false,
     },
-    colors: ["#020617"],
+    colors: ["#012169"],
     plotOptions: {
       bar: {
-        columnWidth: "40%",
+        columnWidth: "60%",
         borderRadius: 2,
       },
     },
@@ -94,13 +92,19 @@ const chartConfig1 = {
     },
   },
 };
- 
+
 export default function HomeCard1() {
   return (
-    <Card>
-      <CardBody className="px-2 pb-0">
+    <Card className="max-h-96 h-full">
+      <CardHeader>
+        <CardTitle>Students Count</CardTitle>
+        <CardDescription>
+          Number of students who signed up this month
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex items-center justify-center">
         <Chart {...chartConfig1} />
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }

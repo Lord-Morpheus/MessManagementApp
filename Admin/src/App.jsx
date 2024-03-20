@@ -22,20 +22,18 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Sidebar />}>
-            <Route index element={<Home />} />
-            <Route exact path="/home" element={<Home />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/form" element={<Form />} />
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/getOTP" element={<GetOTP />} />
-            <Route exact path="/mess" element={<Mess />} />
-            <Route exact path="/cards" element={<Cards />} />
-            <Route exact path="/giveFeedback" element={<GiveFeedback />} />
-            <Route exact path="/viewFeedback" element={<ViewFeedback />} />
-            <Route exact path="/student" element={<StudentsPage />} />
-            <Route path="menu" element={<MessMenu />} />
-          </Route>
+          <Route index element={<Home />} />
+          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/form" element={<Form />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/getOTP" element={<GetOTP />} />
+          <Route exact path="/mess" element={<Mess />} />
+          <Route exact path="/cards" element={<Cards />} />
+          <Route exact path="/giveFeedback" element={<GiveFeedback />} />
+          <Route exact path="/viewFeedback" element={<ViewFeedback />} />
+          <Route exact path="/student" element={<StudentsPage />} />
+          <Route path="menu" element={<MessMenu />} />
         </Routes>
       </BrowserRouter>
     </>
