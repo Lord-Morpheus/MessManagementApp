@@ -6,11 +6,16 @@ export default function ViewPDF({ pdfURL }) {
   return (
     <div className="flex flex-col h-full">
       <header className="p-8">
-        <div className="container flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Mess Menu</h1>
-          <Button size="lg" className="bg-[#012169]">
-            Upload Menu
-          </Button>
+        <div className="container items-center justify-between grid grid-cols-3">
+          <div></div>
+          <div className="flex justify-center">
+            <h1 className="text-4xl font-bold">Mess Menu</h1>
+          </div>
+          <div className="flex justify-end">
+            <Button size="lg" className="bg-[#012169]">
+              Upload Menu
+            </Button>
+          </div>
         </div>
       </header>
       <main className="flex-1">
