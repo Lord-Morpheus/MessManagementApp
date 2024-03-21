@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Logined extends StatefulWidget {
-  const Logined({Key? key}) : super(key: key);
+class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
 
   @override
-  State<Logined> createState() => _LoginedState();
+  State<Homepage> createState() => _LoginedState();
 }
 
-class _LoginedState extends State<Logined> {
+class _LoginedState extends State<Homepage> {
   String dropdownvalue='One';
 
   @override

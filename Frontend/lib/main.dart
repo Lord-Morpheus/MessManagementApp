@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mess/home_p.dart';
-import 'package:mess/logined.dart';
+import 'package:mess/Homepg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,7 +55,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home:const Logined(),
+      home:const Homepage(),
     );
   }
 }

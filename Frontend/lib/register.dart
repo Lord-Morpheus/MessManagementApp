@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mess/home_p.dart';
+import 'package:mess/login.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
