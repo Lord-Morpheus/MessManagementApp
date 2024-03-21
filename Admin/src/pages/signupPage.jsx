@@ -16,26 +16,26 @@ export default function Signup() {
     setIsPasswordVisible((prevState) => !prevState);
   }
 
-  // if (token) {
-  //   navigate("/home");
-  // }
+  if (token) {
+    navigate("/home");
+  }
 
-  // useEffect(() => {
-  //   if (!window.localStorage.getItem("user-info")) {
-  //     navigate("/getOTP");
-  //   } else {
-  //     const { username, email } = JSON.parse(
-  //       window.localStorage.getItem("user-info")
-  //     );
-  //     console.log(username, email);
-  //     setUsername(username);
-  //     setEmail(email);
-  //   }
+  useEffect(() => {
+    if (!window.localStorage.getItem("user-info")) {
+      navigate("/getOTP");
+    } else {
+      const { username, email } = JSON.parse(
+        window.localStorage.getItem("user-info")
+      );
+      console.log(username, email);
+      setUsername(username);
+      setEmail(email);
+    }
 
-  //   return () => {
-  //     window.localStorage.removeItem("user-info");
-  //   };
-  // }, []);
+    return () => {
+      window.localStorage.removeItem("user-info");
+    };
+  }, []);
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");

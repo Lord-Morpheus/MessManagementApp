@@ -5,15 +5,12 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 
 export default function GetOTP() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const token = getToken();
 
-  function togglePasswordVisibility() {
-    setIsPasswordVisible((prevState) => !prevState);
-  }
 
   if (token) {
     navigate("/home");
@@ -124,9 +121,6 @@ export default function GetOTP() {
             Already have a account?--
             <Link className="text-blue-600 underline" to="/login">
               Log in
-            </Link>
-            <Link className="text-blue-600 underline" to="/signup">
-              sign up
             </Link>
           </p>
         </div>
