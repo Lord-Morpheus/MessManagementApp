@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logimg from "../images/login.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../handlers/handleLogin";
@@ -14,6 +14,18 @@ export default function Login() {
   function togglePasswordVisibility() {
     setIsPasswordVisible((prevState) => !prevState);
   }
+
+  useEffect(() => {
+    onkeydown = async (e) => {
+      if (e.key === "Enter") {
+        setClicked(() => true);
+        await handleLogin({ username, password });
+        if (getToken()) {
+          navigate("/home");
+        }
+      }
+    };
+  }, [username, password, navigate]);
 
   return (
     <div className=" h-lvh flex justify-center items-center">

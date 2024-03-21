@@ -38,6 +38,25 @@ export default function Signup() {
     };
   }, []);
 
+  useEffect(() => {
+    onkeydown = async (e) => {
+      if (e.key === "Enter") {
+        setClicked(() => true);
+        await handleSignup({
+          name,
+          username,
+          email,
+          password,
+          adminSecret,
+          OTP,
+        });
+        if (getToken()) {
+          navigate("/home");
+        }
+      }
+    };
+  }, [username, password, navigate, OTP, adminSecret, name, email]);
+
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [adminSecret, setadminSecret] = useState("");

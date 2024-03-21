@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Security from "../images/otp.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { getToken } from "../utils/getToken";
 
@@ -45,6 +45,18 @@ export default function GetOTP() {
       console.error("Error:", error);
     }
   };
+
+  // useEffect(() => {
+  //   onkeydown = async (e) => {
+  //     if (e.key === "Enter") {
+  //       setClicked(() => true);
+  //       await handleSubmit();
+  //       if (getToken()) {
+  //         navigate("/home");
+  //       }
+  //     }
+  //   };
+  // }, [username, email, navigate, handleSubmit]);
 
   return (
     <div className="bg-white h-lvh flex justify-center items-center">
