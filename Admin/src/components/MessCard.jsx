@@ -1,13 +1,14 @@
 import React from "react";
 import Messimg from "../images/mess.jpg";
+import Security from '../images/security.svg'
 
 function FrontOfCard() {
   return (
-    <div className="absolute inset-0 flex justify-center items-center bg-black transition-all duration-100 delay-200 z-20 hover:opacity-0">
+    <div className="absolute inset-0 flex justify-center items-top bg-black transition-all duration-100 delay-200 z-20 hover:opacity-0">
       <div class="relative max-w-xl mx-auto">
         <img
           class="h-64 w-full object-cover rounded-md blur"
-          src={Messimg}
+          src={Security}
           alt="Random image"
         />
         <div class="absolute inset-0 bg-gray-700 opacity-60 rounded-md"></div>
@@ -87,7 +88,7 @@ function BackOfCard() {
 
 export default function MessCard1() {
   return (
-    <div className="relative w-72 h-60 rounded-2xl text-white overflow-hidden cursor-pointer transition-all duration-700 card">
+    <div className="relative w-72 h-96 rounded-2xl text-white overflow-hidden cursor-pointer transition-all duration-700 card">
       <FrontOfCard/>
       <BackOfCard/>
     </div>

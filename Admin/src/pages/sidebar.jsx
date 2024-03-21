@@ -12,7 +12,7 @@ export default function Sidebar(props) {
   return (
     <>
       <div
-        className={`flex flex-col bg-gray-100 p-5 pt-8 min-h-full h-screen duration-300 ${
+        className={`flex flex-col bg-gray-100 p-5 pt-8 min-h-screen duration-300 ${
           Open ? "w-72" : "w-20"
         } duration-300 relative`}
       >

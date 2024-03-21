@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from "react-router-dom";
+
 import { Filter } from "../components/Filter";
 import StudentCard from "../components/StudentCard";
 import { getToken } from "../utils/getToken";
@@ -8,13 +8,13 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import Sidebar from "./sidebar";
 
-// eslint-disable-next-line react/prop-types
+
 export const StudentsPage = () => {
-  const token = getToken();
-  const navigate = useNavigate();
-  if (!token) {
-    navigate("/login");
-  }
+  // const token = getToken();
+  // const navigate = useNavigate();
+  // if (!token) {
+  //   navigate("/login");
+  // }
 
   const [hostel, setHostel] = useState(null);
   const [mess, setMess] = useState(null);

@@ -23,7 +23,7 @@ export default function Home() {
         <div className="row-span-1">
           <Navbar />
         </div>
-        <Card className="flex flex-shrink flex-col p-2 m-12 md:p-2">
+        <Card className="flex flex-col p-2 m-12 md:p-2 rounded-xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           <div>
             <h1 className="text-4xl font-bold text-center m-4">Analytics</h1>
           </div>

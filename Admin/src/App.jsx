@@ -29,11 +29,8 @@ function App() {
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/getOTP" element={<GetOTP />} />
           <Route exact path="/mess" element={<Mess />} />
-          <Route exact path="/cards" element={<Cards />} />
-          <Route exact path="/giveFeedback" element={<GiveFeedback />} />
           <Route exact path="/viewFeedback" element={<ViewFeedback />} />
           <Route exact path="/student" element={<StudentsPage />} />
-          <Route path="menu" element={<MessMenu />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </BrowserRouter>
