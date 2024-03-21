@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+  const Homepage({super.key});
 
   @override
   State<Homepage> createState() => _LoginedState();
@@ -20,13 +20,13 @@ class _LoginedState extends State<Homepage> {
           children: [
             IconButton(
               color: Colors.white,
-              icon: Icon(Icons.density_medium_rounded),
+              icon: const Icon(Icons.density_medium_rounded),
               onPressed: () {
                 // Handle icon button action here
               },
             ),
             const SizedBox(width:1),
-            Container(
+            const SizedBox(
               height: 50,
               child: VerticalDivider(
                 color: Colors.white,
@@ -34,7 +34,7 @@ class _LoginedState extends State<Homepage> {
               ),
             ),
             const SizedBox(width: 2),
-            Text('Welcome \n user',
+            const Text("Welcome \n user",
               style: TextStyle(color:Colors.white),
             ),
           ],
@@ -42,12 +42,12 @@ class _LoginedState extends State<Homepage> {
         actions: [
           IconButton(
             color: Colors.white,
-            icon: Icon(Icons.logout_outlined),
+            icon: const Icon(Icons.logout_outlined),
             onPressed: () {
               // Handle logout action here
             },
           ),
-          Padding(
+          const Padding(
             padding:EdgeInsets.only(right:20),
             child: Text(
               'LOGOUT',
@@ -67,7 +67,7 @@ class _LoginedState extends State<Homepage> {
             fit: BoxFit.cover,
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ class _LoginedState extends State<Homepage> {
             ),
             const SizedBox(height:10),
             Container(
-              padding: EdgeInsets.symmetric(horizontal:10),
+              padding: const EdgeInsets.symmetric(horizontal:10),
               width:double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -98,14 +98,14 @@ class _LoginedState extends State<Homepage> {
               child: DropdownButton<String>(
                 isExpanded: true,
                 value: dropdownvalue,
-                icon: Icon(Icons.arrow_drop_down),
+                icon: const Icon(Icons.arrow_drop_down),
                 style: Theme.of(context).textTheme.titleMedium,
                 onChanged: (String? newValue){
                   setState(() {
                     dropdownvalue=newValue!;
                   });
                 },
-                items:[
+                items:const [
                   DropdownMenuItem(
                     value: 'One',
                     child: Text('One'),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mess/register.dart';
+import 'package:mess/register_login/otp.dart';
 
-class OTP extends StatefulWidget {
-  const OTP({super.key});
+class Emailid extends StatefulWidget {
+  const Emailid({super.key});
 
   @override
-  State<OTP> createState() => _OTPState();
+  State<Emailid> createState() => _EmailidState();
 }
 
-class _OTPState extends State<OTP> {
+class _EmailidState extends State<Emailid> {
   @override
   Widget build(BuildContext context) {
     const border=OutlineInputBorder(
@@ -34,7 +34,7 @@ class _OTPState extends State<OTP> {
                 const SizedBox(height:150),
                 const Center(
                   child: Text(
-                    'ENTER OTP',
+                    'ENTER EMAIL ID',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
@@ -43,7 +43,7 @@ class _OTPState extends State<OTP> {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  'A verification code has been sent to your email address',
+                  '*Enter institute email id',
                   style:Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 20),
@@ -51,8 +51,8 @@ class _OTPState extends State<OTP> {
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Verification Code',
-                    hintText: 'Ex: abc123',
+                    labelText: 'Email id',
+                    hintText: 'Ex:example@iitmandi.ac.in',
                     labelStyle:Theme.of(context).textTheme.titleMedium,
                     border:border,
                     enabledBorder: border,
@@ -70,11 +70,11 @@ class _OTPState extends State<OTP> {
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return const Registration();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                      return const OTP();
                     }));
                   },
-                  child: const Text('Create Account',
+                  child: const Text('Send OTP',
                     style:TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

@@ -1,30 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mess/email.dart';
+import 'package:mess/register_login/login.dart';
 
-class Homepg extends StatefulWidget {
-  const Homepg({super.key});
+class Registration extends StatefulWidget {
+  const Registration({super.key});
 
   @override
-  State<Homepg> createState() => _HomepgState();
+  State<Registration> createState() => _RegistrationState();
 }
 
-class _HomepgState extends State<Homepg> {
-  String roll='';
-  String pass='';
-  final TextEditingController textEditingController1=TextEditingController();
-  final TextEditingController textEditingController2=TextEditingController();
-  assign(){
-    setState(() {
-      roll=textEditingController1.text;
-      pass=textEditingController2.text;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
     const border=OutlineInputBorder(
@@ -36,7 +20,7 @@ class _HomepgState extends State<Homepg> {
     
     return Scaffold(
       body: Container(
-        decoration:const  BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image:  AssetImage("assets/images/rect.png"),
             fit: BoxFit.cover,
@@ -50,24 +34,18 @@ class _HomepgState extends State<Homepg> {
                 const SizedBox(height:125),
                 const Center(
                   child: Text(
-                    'LOGIN',
+                    'REGISTER',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  'Login with your credentials',
-                  style:Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 30),
                 TextField(
-                  controller: textEditingController1,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                    contentPadding:const EdgeInsets.symmetric(vertical:10,horizontal:10),
                     labelText: 'Roll Number',
                     hintText: 'Ex: B2XXXX',
                     labelStyle:Theme.of(context).textTheme.titleMedium,
@@ -76,13 +54,12 @@ class _HomepgState extends State<Homepg> {
                     focusedBorder: border,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 25),
                 TextField(
-                  controller: textEditingController2,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Password',
+                    labelText: 'Enter Password',
                     prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
                     labelStyle:Theme.of(context).textTheme.titleMedium,
                     border:border,
@@ -91,17 +68,21 @@ class _HomepgState extends State<Homepg> {
                   ),
                   obscureText: true,
                 ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return const Emailid();
-                    }));
-                  },
-                  child: Text('Forgot Password?',
-                    style:Theme.of(context).textTheme.titleSmall,
+                const SizedBox(height: 25),
+                TextField(
+                  style:Theme.of(context).textTheme.titleMedium,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                    labelText: 'Confirm Password',
+                    prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
+                    labelStyle:Theme.of(context).textTheme.titleMedium,
+                    border:border,
+                    enabledBorder: border,
+                    focusedBorder: border,
                   ),
+                  obscureText: true,
                 ),
+                const SizedBox(height: 25),
                 ElevatedButton(
                   style:ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
@@ -112,9 +93,11 @@ class _HomepgState extends State<Homepg> {
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   onPressed: () {
-                    assign();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                    return const Homepg();
+                    }));
                   },
-                  child: const Text('Login',
+                  child: const Text('Register',
                     style:TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -122,20 +105,20 @@ class _HomepgState extends State<Homepg> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Don’t have an account?',
+                    Text('Already have an account?',
                       style:Theme.of(context).textTheme.bodySmall,
                     ),
                     TextButton(
                       onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return const Emailid();
-                    }));
-                  },
-                      child: Text('Register', style:Theme.of(context).textTheme.titleSmall,),
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return const Homepg();
+                      }));
+                      },
+                      child: Text('Login', style:Theme.of(context).textTheme.titleSmall,),
                     ),
                   ],
                 ),

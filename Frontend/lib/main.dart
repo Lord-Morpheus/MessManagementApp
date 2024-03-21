@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mess/Homepg.dart';
+import 'package:mess/register_login/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home:const Homepage(),
+      home:const Homepg(),
     );
   }
 }

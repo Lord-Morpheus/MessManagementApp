@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:mess/login.dart';
+import 'package:mess/register_login/email.dart';
+import 'package:mess/studentpages/studenthomepg.dart';
 
-class Registration extends StatefulWidget {
-  const Registration({super.key});
+class Homepg extends StatefulWidget {
+  const Homepg({super.key});
 
   @override
-  State<Registration> createState() => _RegistrationState();
+  State<Homepg> createState() => _HomepgState();
 }
 
-class _RegistrationState extends State<Registration> {
+class _HomepgState extends State<Homepg> {
+  String roll='';
+  String pass='';
+  final TextEditingController textEditingController1=TextEditingController();
+  final TextEditingController textEditingController2=TextEditingController();
+  assign(){
+    setState(() {
+      roll=textEditingController1.text;
+      pass=textEditingController2.text;
+    });  
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     const border=OutlineInputBorder(
@@ -20,7 +37,7 @@ class _RegistrationState extends State<Registration> {
     
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration:const  BoxDecoration(
           image: DecorationImage(
             image:  AssetImage("assets/images/rect.png"),
             fit: BoxFit.cover,
@@ -34,18 +51,24 @@ class _RegistrationState extends State<Registration> {
                 const SizedBox(height:125),
                 const Center(
                   child: Text(
-                    'REGISTER',
+                    'LOGIN',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
+                Text(
+                  'Login with your credentials',
+                  style:Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 16),
                 TextField(
+                  controller: textEditingController1,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
-                    contentPadding:const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
                     labelText: 'Roll Number',
                     hintText: 'Ex: B2XXXX',
                     labelStyle:Theme.of(context).textTheme.titleMedium,
@@ -54,12 +77,13 @@ class _RegistrationState extends State<Registration> {
                     focusedBorder: border,
                   ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 16),
                 TextField(
+                  controller: textEditingController2,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Enter Password',
+                    labelText: 'Password',
                     prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
                     labelStyle:Theme.of(context).textTheme.titleMedium,
                     border:border,
@@ -68,21 +92,17 @@ class _RegistrationState extends State<Registration> {
                   ),
                   obscureText: true,
                 ),
-                const SizedBox(height: 25),
-                TextField(
-                  style:Theme.of(context).textTheme.titleMedium,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Confirm Password',
-                    prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
-                    labelStyle:Theme.of(context).textTheme.titleMedium,
-                    border:border,
-                    enabledBorder: border,
-                    focusedBorder: border,
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                      return const Emailid();
+                    }));
+                  },
+                  child: Text('Forgot Password?',
+                    style:Theme.of(context).textTheme.titleSmall,
                   ),
-                  obscureText: true,
                 ),
-                const SizedBox(height: 25),
                 ElevatedButton(
                   style:ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
@@ -92,8 +112,13 @@ class _RegistrationState extends State<Registration> {
                     backgroundColor:const Color.fromARGB(255, 44, 7, 251),
                     minimumSize: const Size(double.infinity, 50),
                   ),
-                  onPressed: () {},
-                  child: const Text('Register',
+                  onPressed: () {
+                    assign();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                    return const Studenthomepage();
+                    }));
+                  },
+                  child: const Text('Login',
                     style:TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -101,20 +126,20 @@ class _RegistrationState extends State<Registration> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Already have an account?',
+                    Text('Don’t have an account?',
                       style:Theme.of(context).textTheme.bodySmall,
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                        return const Homepg();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                      return const Emailid();
                     }));
-                      },
-                      child: Text('Login', style:Theme.of(context).textTheme.titleSmall,),
+                  },
+                      child: Text('Register', style:Theme.of(context).textTheme.titleSmall,),
                     ),
                   ],
                 ),
