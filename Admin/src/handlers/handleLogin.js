@@ -20,5 +20,7 @@ export const handleLogin = async ({ username, password }) => {
         }
     } catch (error) {
         console.error("Error:", error);
+        alert(error.response.data.message);
+        window.location.reload();
     }
 };
