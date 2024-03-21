@@ -5,16 +5,19 @@ import StudentCard from "../components/StudentCard";
 import { getToken } from "../utils/getToken";
 import { useFilter } from "../hooks/useFilter";
 import Navbar from "./Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
-
+import { useNavigate } from "react-router-dom";
 
 export const StudentsPage = () => {
-  // const token = getToken();
-  // const navigate = useNavigate();
-  // if (!token) {
-  //   navigate("/login");
-  // }
+  const token = getToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
 
   const [hostel, setHostel] = useState(null);
   const [mess, setMess] = useState(null);
@@ -23,6 +26,7 @@ export const StudentsPage = () => {
   const [username, setUsername] = useState(null);
   const [toDate, setToDate] = useState(null);
 
+  // eslint-disable-next-line no-unused-vars
   const { loading, students } = useFilter({
     hostel,
     mess,
