@@ -194,6 +194,5 @@ export const Filter = ({
           </div>
         </div>
       </div>
-    </div>
   );
 };
