@@ -1,10 +1,11 @@
+import Chart from "react-apexcharts";
 import {
   Card,
-  CardBody,
+  CardContent,
+  CardDescription,
   CardHeader,
-  Typography,
-} from "@material-tailwind/react";
-import Chart from "react-apexcharts";
+  CardTitle,
+} from "./ui/card";
 
 const chartConfig2 = {
   type: "bar",
@@ -22,13 +23,12 @@ const chartConfig2 = {
       },
     },
     title: {
-      display: true,
-      text: 'Food Preference Distribution in Mess'
+      display: false,
     },
     dataLabels: {
       enabled: false,
     },
-    colors: ["#020617"],
+    colors: ["#012169"],
     plotOptions: {
       bar: {
         columnWidth: "40%",
@@ -91,10 +91,16 @@ const chartConfig2 = {
 
 export default function HomeCard2() {
   return (
-    <Card>
-      <CardBody className="px-2 pb-0">
+    <Card className="max-h-96 h-full">
+      <CardHeader>
+        <CardTitle>Students Count</CardTitle>
+        <CardDescription>
+          Number of students with Food Preference
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex items-center justify-center">
         <Chart {...chartConfig2} />
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }

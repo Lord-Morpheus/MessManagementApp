@@ -1,76 +1,62 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { BsShop } from "react-icons/bs";
 import { LuUser } from "react-icons/lu";
 import { VscFeedback } from "react-icons/vsc";
+import { BsArrowBarLeft, BsArrowLeftShort } from "react-icons/bs";
 
 export default function Sidebar(props) {
+  const [Open, setOpen] = useState(false);
   return (
     <>
-      <div className="flex flex-col items-center h-full w-full bg-gray-100 min-h-lvh ">
-        <div className="mb-6 py-6 flex flex-wrap items-center border-b-2 border-gray-600 border-solid">
+      <div className={`flex flex-col bg-gray-100 p-5 pt-8 min-h-full duration-300 ${
+          Open ? "w-72" : "w-20"
+        } duration-300 relative`}>
+      <BsArrowLeftShort
+          className={`bg-white text-black text-3xl rounded-full absolute -right-3 top-9 border border-black cursor-pointer ${
+            !open && "rotate-180"
+          }`}
+          onClick={() => setOpen(!Open)}
+        />
+        <div className={`mb-6 py-6 flex items-center border-b-2 border-gray-600 border-solid ${!Open}`}>
           <Avatar name={props.username} size={20} textSize={"3xl"} />
-          <p className="ml-4 font-bold text-xl text-center">
+          <p className={`ml-4 font-bold text-xl text-center ${!Open && "scale-0"}`}>
             Welcome
             <br />
             {props.username || "Admin "}!
           </p>
         </div>
         <div className="flex flex-col justify-center items-start">
-          {/* <div className="flex items-center justify-end border mb-6 border-gray-500 rounded-md">
-              <input
-                className="w-full h-9 rounded text-center "
-                type="search"
-                name="search"
-                id="search"
-                placeholder="Search"
-              />
-              <button type="submit" className=" border-l-2 border-gray-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6 mx-2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                  />
-                </svg>
-              </button>
-            </div> */}
-          <nav className="grid items-start px-4 text-sm font-medium">
+          <nav className={`grid items-start text-sm font-medium ${!Open ? "px-2":"px-4"}`}>
             <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 hover:bg-[#012169] hover:text-white"
+              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400   ${!Open ? "hover:text-[#012169]" : "px-3 hover:bg-[#012169] hover:text-white"}`}
               to={"/home"}
             >
               <GoHome className="h-6 w-6" />
-              Home
+              <span className={`${!Open&& "scale-0"}`}>Home</span>
             </Link>
             <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 hover:bg-[#012169] hover:text-white"
+              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${!Open ? "hover:text-[#012169]" : "px-3 hover:bg-[#012169] hover:text-white"}`}
               to={"/mess"}
             >
               <BsShop className="h-6 w-6" />
-              Mess Details
+              <span className={`${!Open&& "scale-0"}`}>Mess Details</span>
             </Link>
             <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 hover:bg-[#012169] hover:text-white"
+              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${!Open ? "hover:text-[#012169]" : "px-3 hover:bg-[#012169] hover:text-white"}`}
               to={"/student"}
             >
-              <LuUser className="h-6 w-6" />
-              Registration Details
+              <LuUser className="h-8 w-8" />
+              <span className={`${!Open&& "scale-0"}`}>Registration Details</span>
             </Link>
             <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 hover:bg-[#012169] hover:text-white"
+              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${!Open ? "hover:text-[#012169]" : "px-3 hover:bg-[#012169] hover:text-white"}`}
               to={"/viewFeedback"}
             >
               <VscFeedback className="h-6 w-6" />
-              Feedbacks
+              <span className={`${!Open&& "scale-0"}`}>Feedback</span>
             </Link>
           </nav>
         </div>
