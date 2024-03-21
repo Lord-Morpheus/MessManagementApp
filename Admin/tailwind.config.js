@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const withMT = require("@material-tailwind/react/utils/withMT");
+const {nextui} = require("@nextui-org/react");
 
 module.exports = withMT({
   content: [
@@ -10,6 +11,7 @@ module.exports = withMT({
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -20,7 +22,7 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [],
+  plugins: [nextui()],
 });
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).

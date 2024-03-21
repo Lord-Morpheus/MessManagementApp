@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { Filter } from "../components/Filter";
+import StudentCard2 from "../components/StudentCard2";
 import StudentCard from "../components/StudentCard";
 import { getToken } from "../utils/getToken";
 import { useFilter } from "../hooks/useFilter";
@@ -62,21 +63,22 @@ export const StudentsPage = () => {
               setToDate={setToDate}
             />
           </div>
-              <div className="my-10 flex justify-start flex-wrap mx-24 gap-10 ">
-                {students.map((student) => {
-                  return (
-                    <StudentCard
-                      key={student.id}
-                      id={student.id}
-                      name={student.name}
-                      username={student.username}
-                      mess={student.mess}
-                      hostel={student.hostel}
-                      email={student.email}
-                    />
-                  );
-                })}
-              </div>
+          <div className="my-10 flex justify-start flex-wrap mx-24 gap-10 ">
+            <StudentCard2/>
+            {/* {students.map((student) => {
+              return (
+                <StudentCard
+                  key={student.id}
+                  id={student.id}
+                  name={student.name}
+                  username={student.username}
+                  mess={student.mess}
+                  hostel={student.hostel}
+                  email={student.email}
+                />
+              );
+            })} */}
+          </div>
         </div>
       </div>
     </div>

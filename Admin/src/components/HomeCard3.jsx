@@ -14,7 +14,7 @@ const chartConfig1 = {
   series: [
     {
       name: "Strength",
-      data: [250, 153, 112, 384, 191, 126, 92, 148, 62],
+      data: [250, 153, 112, 184, 191, 126, 92, 148, 62],
     },
   ],
   options: {
