@@ -66,7 +66,6 @@ const FeedbackTable = () => {
                 <TableHead>Mess</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead className="w-[150px]">Timestamp</TableHead>
-                <TableHead className="w-[150px]">Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -81,7 +80,6 @@ const FeedbackTable = () => {
                 <TableCell>Oak Mess</TableCell>
                 <TableCell>Hygine</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
-                <TableCell>Hygiene</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-semibold">Bob Smith</TableCell>
@@ -95,7 +93,6 @@ const FeedbackTable = () => {
                 <TableCell>Pine Mess</TableCell>
                 <TableCell>Food Quality</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
-                <TableCell>Food Quality</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-semibold">Eva Brown</TableCell>
@@ -135,7 +132,6 @@ const FeedbackTable = () => {
                 <TableCell>Oak Mess</TableCell>
                 <TableCell>Others</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
-                <TableCell>Others</TableCell>
               </TableRow>
             </TableBody>
           </Table>

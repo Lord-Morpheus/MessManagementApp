@@ -62,7 +62,7 @@ export default function Sidebar(props) {
               }`}
               to={"/home"}
             >
-              <GoHome className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              <GoHome className="h-6 w-6 transition-transform duration-300 ease-in-out transform hover:scale-110" />
               {!Open ? (
                 <></>
               ) : (
@@ -80,7 +80,7 @@ export default function Sidebar(props) {
               }`}
               to={"/mess"}
             >
-              <BsShop className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              <BsShop className="h-6 w-6 transition-transform duration-300 ease-in-out transform hover:scale-110" />
               {!Open ? (
                 <></>
               ) : (
@@ -97,7 +97,7 @@ export default function Sidebar(props) {
               }`}
               to={"/student"}
             >
-              <LuUser className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              <LuUser className="h-6 w-6 transition-transform duration-300 ease-in-out transform hover:scale-110" />
               {!Open ? (
                 <></>
               ) : (
@@ -114,7 +114,7 @@ export default function Sidebar(props) {
               }`}
               to={"/viewFeedback"}
             >
-              <VscFeedback className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              <VscFeedback className="h-6 w-6 transition-transform duration-300 ease-in-out transform hover:scale-110" />
               {!Open ? (
                 <></>
               ) : (
@@ -131,7 +131,7 @@ export default function Sidebar(props) {
               }`}
               to={"/menu"}
             >
-              <MdOutlineRestaurantMenu className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              <MdOutlineRestaurantMenu className="h-6 w-6 transition-transform duration-300 ease-in-out transform hover:scale-110" />
               {!Open ? (
                 <></>
               ) : (

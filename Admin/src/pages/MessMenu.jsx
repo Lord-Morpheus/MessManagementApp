@@ -21,7 +21,7 @@ export const MessMenu = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full ">
         <div className="row-span-1">
           <Navbar />
         </div>

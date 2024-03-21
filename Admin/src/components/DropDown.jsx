@@ -94,18 +94,6 @@ export const DropDown = ({ username, name, email }) => {
             </a>
           </li>
         </ul>
-        <div className="py-2">
-          <button
-            href="#"
-            className="block px-4 py-2 w-full text-start text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            onClick={() => {
-              localStorage.removeItem("token");
-              navigate("/login");
-            }}
-          >
-            Sign out
-          </button>
-        </div>
       </div>
     </div>
   );
