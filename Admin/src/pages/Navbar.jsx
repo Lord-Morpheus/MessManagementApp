@@ -1,9 +1,11 @@
-import { RiArrowDropDownLine } from "react-icons/ri";
+
 import { BiExit } from "react-icons/bi";
 import mainLogo from "../assets/main_logo.png";
 import { DropDown } from "../components/DropDown";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <>
       <nav className="bg-[#012169] w-full flex justify-between items-center py-2 px-4">
@@ -12,7 +14,13 @@ export default function Navbar() {
           <div className="mr-4">
             <DropDown username="Admin" name="Admin" email="admin@example.com" />
           </div>
-          <button className="mr-6">
+          <button
+            className="mr-6"
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}
+          >
             <BiExit color="white" className="h-8 w-8" />
           </button>
         </div>
