@@ -11,6 +11,14 @@ import { Link } from "react-router-dom";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { Input } from "./ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
+import { ChevronDownIcon } from "./StudentTable";
 
 const FeedbackTable = () => {
   return (
@@ -19,15 +27,32 @@ const FeedbackTable = () => {
         <div className="flex-1">
           <h1 className="font-semibold text-lg">Feedbacks</h1>
         </div>
-        
+
         <form className="flex-initial">
-          <div className="relative">
-            <IoSearchOutline className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400 border-r-2 border-gray-200 mr-2" />
-            <Input
-              className="pl-8 bg-white shadow-none appearance-none sm:w-[300px] md:w-[200px] lg:w-[300px]"
-              placeholder="Search feedback..."
-              type="search"
-            />
+          <div className="flex">
+            <div className="mr-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="bg-[#012169]">
+                    Filter Options
+                    <ChevronDownIcon className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-36">
+                  <DropdownMenuItem>Food Quality</DropdownMenuItem>
+                  <DropdownMenuItem>Hygiene</DropdownMenuItem>
+                  <DropdownMenuItem>Others</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="relative">
+              <IoSearchOutline className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
+              <Input
+                className="pl-8 bg-white shadow-none appearance-none sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                placeholder="Search feedback..."
+                type="search"
+              />
+            </div>
           </div>
         </form>
       </header>
@@ -42,6 +67,7 @@ const FeedbackTable = () => {
                 <TableHead>Mess</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead className="w-[150px]">Timestamp</TableHead>
+                <TableHead className="w-[150px]">Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -56,6 +82,7 @@ const FeedbackTable = () => {
                 <TableCell>Oak Mess</TableCell>
                 <TableCell>Hygine</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
+                <TableCell>Hygiene</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-semibold">Bob Smith</TableCell>
@@ -69,6 +96,7 @@ const FeedbackTable = () => {
                 <TableCell>Pine Mess</TableCell>
                 <TableCell>Food Quality</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
+                <TableCell>Food Quality</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-semibold">Eva Brown</TableCell>
@@ -108,6 +136,7 @@ const FeedbackTable = () => {
                 <TableCell>Oak Mess</TableCell>
                 <TableCell>Others</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
+                <TableCell>Others</TableCell>
               </TableRow>
             </TableBody>
           </Table>

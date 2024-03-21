@@ -9,6 +9,8 @@ import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import { useNavigate } from "react-router-dom";
+import { TableComponent } from "../components/StudentTable";
+import { Card } from "../components/ui/card";
 
 export const StudentsPage = () => {
   const token = getToken();
@@ -44,42 +46,11 @@ export const StudentsPage = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="h-full w-full">
+      <div className="flex flex-col h-full w-full">
         <Navbar />
-        <div>
-          <div className="flex justify-center">
-            <Filter
-              hostel={hostel}
-              mess={mess}
-              batch={batch}
-              fromDate={fromDate}
-              username={username}
-              toDate={toDate}
-              setHostel={setHostel}
-              setMess={setMess}
-              setBatch={setBatch}
-              setFromDate={setFromDate}
-              setUsername={setUsername}
-              setToDate={setToDate}
-            />
-          </div>
-          <div className="my-10 flex justify-start flex-wrap mx-24 gap-10 ">
-            <StudentCard2/>
-            {/* {students.map((student) => {
-              return (
-                <StudentCard
-                  key={student.id}
-                  id={student.id}
-                  name={student.name}
-                  username={student.username}
-                  mess={student.mess}
-                  hostel={student.hostel}
-                  email={student.email}
-                />
-              );
-            })} */}
-          </div>
-        </div>
+        <Card className="m-8 h-full">
+          <TableComponent students={students} />
+        </Card>
       </div>
     </div>
   );

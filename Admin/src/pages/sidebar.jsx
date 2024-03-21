@@ -55,60 +55,90 @@ export default function Sidebar(props) {
             }`}
           >
             <Link
-              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400   ${
+              className={`w-full h-full flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400   ${
                 !Open
                   ? "hover:text-[#012169]"
                   : "px-3 hover:bg-[#012169] hover:text-white"
               }`}
               to={"/home"}
             >
-              <GoHome className="h-6 w-6" />
-              {!Open ? (<></>):(<><span>Home</span></>)}
+              <GoHome className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              {!Open ? (
+                <></>
+              ) : (
+                <>
+                  <span>Home</span>
+                </>
+              )}
               {/* <span className={`${!Open && "scale-0"}`}>Home</span> */}
             </Link>
             <Link
-              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
+              className={`w-full h-full flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
                 !Open
                   ? "hover:text-[#012169]"
                   : "px-3 hover:bg-[#012169] hover:text-white"
               }`}
               to={"/mess"}
             >
-              <BsShop className='h-6 w-6' />
-              {!Open ? (<></>):(<><span>Mess Details</span></>)}
+              <BsShop className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              {!Open ? (
+                <></>
+              ) : (
+                <>
+                  <span>Mess Details</span>
+                </>
+              )}
             </Link>
             <Link
-              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
+              className={`w-full h-full flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
                 !Open
                   ? "hover:text-[#012169] "
                   : "px-3 hover:bg-[#012169] hover:text-white"
               }`}
               to={"/student"}
             >
-              <LuUser className='h-7 w-7' />
-              {!Open ? (<></>):(<><span>Registration Details</span></>)}
+              <LuUser className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              {!Open ? (
+                <></>
+              ) : (
+                <>
+                  <span>Registration Details</span>
+                </>
+              )}
             </Link>
             <Link
-              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
+              className={`w-full h-full flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
                 !Open
                   ? "hover:text-[#012169]"
                   : "px-3 hover:bg-[#012169] hover:text-white"
               }`}
               to={"/viewFeedback"}
             >
-              <VscFeedback className="h-6 w-6" />
-              {!Open ? (<></>):(<><span>Feedback</span></>)}
+              <VscFeedback className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              {!Open ? (
+                <></>
+              ) : (
+                <>
+                  <span>Feedback</span>
+                </>
+              )}
             </Link>
             <Link
-              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
+              className={`w-full h-full flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
                 !Open
                   ? "hover:text-[#012169]"
                   : "px-3 hover:bg-[#012169] hover:text-white"
               }`}
               to={"/menu"}
             >
-              <MdOutlineRestaurantMenu className='h-6 w-6'/>
-              {!Open ? (<></>):(<><span>Mess Menu</span></>)}
+              <MdOutlineRestaurantMenu className="h-full w-full transition-transform duration-300 ease-in-out transform hover:scale-110" />
+              {!Open ? (
+                <></>
+              ) : (
+                <>
+                  <span>Mess Menu</span>
+                </>
+              )}
             </Link>
           </nav>
         </div>
