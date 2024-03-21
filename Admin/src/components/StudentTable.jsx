@@ -114,7 +114,7 @@ export function TableComponent() {
           Export to Excel
         </Button>
       </div>
-      <Card>
+      {/* <Card>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table className="min-w-[800px]">
@@ -167,7 +167,7 @@ export function TableComponent() {
             </Table>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

@@ -50,6 +50,7 @@ export const StudentsPage = () => {
         <Navbar />
         <Card className="m-8 h-full">
           <TableComponent students={students} />
+          <StudentCard2/>
         </Card>
       </div>
     </div>

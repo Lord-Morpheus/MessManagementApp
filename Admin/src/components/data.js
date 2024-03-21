@@ -56,7 +56,7 @@ const users = [
     rollno: "b22025",
     team: "Sales",
     status: "studying",
-    mess: "D3",
+    mess: "D3 Mess",
     email: "kishan@example.com",
   },
 ];

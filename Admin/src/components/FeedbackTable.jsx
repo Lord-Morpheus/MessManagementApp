@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { Link } from "react-router-dom";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { Input } from "./ui/input";
