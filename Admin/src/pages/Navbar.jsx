@@ -1,4 +1,3 @@
-
 import { BiExit } from "react-icons/bi";
 import mainLogo from "../assets/main_logo.png";
 import { DropDown } from "../components/DropDown";
@@ -21,7 +20,10 @@ export default function Navbar() {
               navigate("/login");
             }}
           >
-            <BiExit color="white" className="h-8 w-8" />
+            <BiExit
+              color="white"
+              className="h-8 w-8 transition-transform duration-300 ease-in-out transform hover:scale-110"
+            />
           </button>
         </div>
       </nav>

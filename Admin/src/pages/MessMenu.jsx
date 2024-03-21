@@ -5,6 +5,8 @@ import { getToken } from "../utils/getToken";
 import Sidebar from "./sidebar";
 import Navbar from "./Navbar";
 import { LuPlus } from "react-icons/lu";
+import ViewPDF from "../components/ViewPDF";
+import { Card } from "../components/ui/card";
 
 export const MessMenu = () => {
   const token = getToken();
@@ -23,19 +25,9 @@ export const MessMenu = () => {
         <div className="row-span-1">
           <Navbar />
         </div>
-        <div className="flex justify-end">
-          <button
-            type="button"
-            className="text-white my-4 w-36 bg-[#012169] hover:bg-[#012169] focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={() => {}}
-          >
-            <div className="flex justify-between items-center">
-              <LuPlus className="stroke-white h-5 w-5" />
-              New Menu
-            </div>
-          </button>
-        </div>
-        <PDFViewer pdfURL="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" />
+        <Card className="m-8">
+          <ViewPDF pdfURL="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" />
+        </Card>
       </div>
     </div>
   );

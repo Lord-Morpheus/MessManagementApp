@@ -53,7 +53,7 @@ export const DropDown = ({ username, name, email }) => {
       <button
         id="dropdownInformationButton"
         onClick={toggleDropDown}
-        className="text-black bg-white hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="text-black bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-transform duration-300 ease-in-out transform hover:scale-105"
         type="button"
       >
         Signed in as{` ${username}`}
