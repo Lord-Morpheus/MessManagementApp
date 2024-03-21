@@ -14,7 +14,7 @@ const chartConfig1 = {
   series: [
     {
       name: "Strength",
-      data: [540, 300, 320, 500, 350, 200, 230, 500, 215],
+      data: [250, 153, 112, 384, 191, 126, 92, 148, 62],
     },
   ],
   options: {
@@ -93,13 +93,13 @@ const chartConfig1 = {
   },
 };
 
-export default function HomeCard1() {
+export default function HomeCard3() {
   return (
     <Card className="max-h-96 h-full">
       <CardHeader>
-        <CardTitle>Students Count</CardTitle>
+        <CardTitle>Feedback Count</CardTitle>
         <CardDescription>
-          Number of students who signed up this month
+          Number of students who sent feedback this month
         </CardDescription>
       </CardHeader>
       <CardContent className="flex items-center justify-center">

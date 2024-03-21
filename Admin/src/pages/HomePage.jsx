@@ -3,10 +3,9 @@ import Sidebar from "./sidebar";
 import { DropDown } from "../components/DropDown";
 import HomeCard1 from "../components/HomeCard1";
 import HomeCard2 from "../components/HomeCard2";
-import { BsArrowBarLeft, BsArrowLeftShort } from "react-icons/bs";
-import { SidebarDrawer } from "../components/SidebarDrawer";
+import HomeCard3 from "../components/HomeCard3";
 import { Card } from "../components/ui/card";
-import { TbArrowBigRightLineFilled } from "react-icons/tb";
+
 
 import Navbar from "./Navbar";
 import { getToken } from "../utils/getToken";
@@ -41,6 +40,7 @@ export default function Home() {
             <div className="grid gap-12 md:grid-cols-2">
               <HomeCard1 />
               <HomeCard2 />
+              <HomeCard3 />
             </div>
           </main>
         </Card>
