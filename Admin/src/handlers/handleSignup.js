@@ -14,10 +14,13 @@ export const handleSignup = async ({ name, username, email, password, adminSecre
 
         if (status === 200) {
             console.log("Data saved successfully");
+            window.location.href = "/home";
         } else {
             console.error("Failed Siging up the user");
         }
     } catch (error) {
         console.error("Error:", error);
+        alert(error.response.data.message);
+        window.location.reload();
     }
 };
