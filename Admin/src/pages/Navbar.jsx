@@ -1,6 +1,7 @@
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { BiExit } from "react-icons/bi";
 import mainLogo from "../assets/main_logo.png";
+import { DropDown } from "../components/DropDown";
 
 export default function Navbar() {
   return (
@@ -8,9 +9,8 @@ export default function Navbar() {
       <nav className="bg-[#012169] w-full flex justify-between items-center py-2 px-4">
         <img src={mainLogo} alt="IIT Mandi Logo" className="h-12 w-auto" />
         <div className="flex">
-          <div className="flex justify-center rounded-lg mr-6 items-center bg-white w-48 h-10">
-            <span className="ml-3">Signed in as Admin</span>
-            <RiArrowDropDownLine className="h-8 w-8" />
+          <div className="mr-4">
+            <DropDown username="Admin" name="Admin" email="admin@example.com" />
           </div>
           <button className="mr-6">
             <BiExit color="white" className="h-8 w-8" />

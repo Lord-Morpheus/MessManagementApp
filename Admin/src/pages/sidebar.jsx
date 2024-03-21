@@ -65,10 +65,15 @@ export default function Sidebar(props) {
   );
 }
 
-export const Avatar = ({ name = "Admin", size = 8, textSize = "base" }) => {
+export const Avatar = ({
+  name = "Admin",
+  size = 20,
+  textSize = "base",
+  bgColor = "[#012169]",
+}) => {
   return (
     <div
-      className={`relative inline-flex items-center justify-center w-20 h-20 overflow-hidden bg-[#012169] rounded-full dark:bg-gray-600`}
+      className={`relative inline-flex items-center justify-center w-${size} h-${size} overflow-hidden bg-${bgColor} rounded-full dark:bg-gray-600`}
     >
       <div
         className={`flex justify-center items-center w-full h-full text-${textSize} font-medium text-white dark:text-gray-300`}
