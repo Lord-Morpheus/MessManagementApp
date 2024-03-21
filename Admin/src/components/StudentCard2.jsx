@@ -1,9 +1,20 @@
 import React from "react";
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue} from "@nextui-org/react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  User,
+  Chip,
+  Tooltip,
+  getKeyValue,
+} from "@nextui-org/react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import {columns, users} from "./data";
+import { columns, users } from "./data";
 
 const statusColorMap = {
   studying: "success",
@@ -19,7 +30,7 @@ export default function App() {
       case "name":
         return (
           <User
-            avatarProps={{radius: "lg", src: user.avatar}}
+            avatarProps={{ radius: "lg", src: user.avatar }}
             description={user.email}
             name={cellValue}
           >
@@ -28,7 +39,12 @@ export default function App() {
         );
       case "status":
         return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+          <Chip
+            className="capitalize"
+            color={statusColorMap[user.status]}
+            size="sm"
+            variant="flat"
+          >
             {cellValue}
           </Chip>
         );
@@ -58,10 +74,17 @@ export default function App() {
   }, []);
 
   return (
-  <Table aria-label="Example table with custom cells">
+    <Table
+      color="primary"
+      selectionMode="multiple"
+      aria-label="Example table with custom cells"
+    >
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn key={column.uid} align={column.uid === "actions" ? "center" : "start"}>
+          <TableColumn
+            key={column.uid}
+            align={column.uid === "actions" ? "center" : "start"}
+          >
             {column.name}
           </TableColumn>
         )}
@@ -69,7 +92,9 @@ export default function App() {
       <TableBody items={users}>
         {(item) => (
           <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>
