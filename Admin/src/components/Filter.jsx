@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { handleExport } from "../handlers/handleExcel";
 import { handleFilter } from "../handlers/handleFilter";
@@ -166,7 +167,7 @@ export const Filter = ({
 
               <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
                 <button
-                  className="rounded-full bg-peachette px-8 py-2 font-medium text-black outline-none hover:opacity-80 focus:ring"
+                  className="rounded-full bg-[#012169] px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring"
                   onClick={async () =>
                     await handleFilter({
                       hostel,
@@ -182,7 +183,7 @@ export const Filter = ({
                   Filter
                 </button>
                 <button
-                  className="rounded-full bg-green-500 px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring"
+                  className="rounded-full bg-blue-600 px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring"
                   onClick={async () =>
                     await handleExport({
                       hostel,

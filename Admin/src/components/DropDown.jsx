@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { Avatar } from "../pages/sidebar";
 import { IoIosArrowDropdown } from "react-icons/io";
 
 // eslint-disable-next-line react/prop-types
@@ -66,7 +65,7 @@ export const DropDown = ({ username, name, email }) => {
       >
         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
           <div className="flex flex-row justify-start items-center">
-            <Avatar name={name} bgColor="[#012169]" size={8} />
+            <Avatar name={name} bgColor="gray-500" />
             <div className="ml-4">{name}</div>
           </div>
           <div className="font-medium truncate mt-2">{email}</div>
@@ -100,6 +99,24 @@ export const DropDown = ({ username, name, email }) => {
             Sign out
           </a>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const Avatar = ({
+  name = "Admin",
+  textSize = "base",
+  bgColor = "[#012169]",
+}) => {
+  return (
+    <div
+      className={`relative inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-${bgColor} rounded-full dark:bg-gray-600`}
+    >
+      <div
+        className={`flex justify-center items-center w-full h-full text-${textSize} font-medium text-white dark:text-gray-300`}
+      >
+        {name.toUpperCase()[0]}
       </div>
     </div>
   );
