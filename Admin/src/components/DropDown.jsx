@@ -59,14 +59,14 @@ export const DropDown = ({ username, name, email }) => {
       </button>
       <div
         id="dropdownInformation"
-        className={`z-10 ${
+        className={`z-10 w-[12.5%] ${
           isOpen ? "block" : "hidden"
-        } bg-white divide-y z-50 fixed divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
+        } bg-white  divide-y z-50 fixed divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
         style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
       >
         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
           <div className="flex flex-row justify-start items-center">
-            <Avatar name={name} bgColor="gray-500" size={8} />
+            <Avatar name={name} bgColor="[#012169]" size={8} />
             <div className="ml-4">{name}</div>
           </div>
           <div className="font-medium truncate mt-2">{email}</div>

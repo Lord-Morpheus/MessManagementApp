@@ -15,12 +15,12 @@ export default function Sidebar(props) {
           Open ? "w-72" : "w-20"
         } duration-300 relative`}>
       <BsArrowLeftShort
-          className={`bg-white text-black text-3xl rounded-full absolute -right-3 top-9 border border-black cursor-pointer ${
+          className={`bg-white text-black text-3xl rounded-full absolute -right-3 top-9 border border-[#012169] cursor-pointer ${
             !open && "rotate-180"
           }`}
           onClick={() => setOpen(!Open)}
         />
-        <div className={`mb-6 py-6 flex items-center border-b-2 border-gray-600 border-solid ${!Open}`}>
+        <div className={`mb-6 h-40 py-6 flex items-center border-b-2 border-gray-600 border-solid `}>
           <Avatar name={props.username} size={20} textSize={"3xl"} />
           <p className={`ml-4 font-bold text-xl text-center ${!Open && "scale-0"}`}>
             Welcome
