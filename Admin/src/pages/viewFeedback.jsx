@@ -1,12 +1,21 @@
-import React from "react";
+import { useEffect } from "react";
 import Sidebar from "./sidebar";
 import Navbar from "./Navbar";
-import Eating1 from "../images/eatingImg1.svg";
-import Eating2 from "../images/eatingImg2.svg";
 import FeedbackTable from "../components/FeedbackTable";
 import { Card } from "../components/ui/card";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../utils/getToken";
 
 export default function Home() {
+  const token = getToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
+
   return (
     <div className="flex">
       <Sidebar />

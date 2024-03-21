@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GoHome } from "react-icons/go";
-import { CiLogin } from "react-icons/ci";
-import { BsArrowRight, BsArrowRightShort, BsShop } from "react-icons/bs";
+import { BsArrowRightShort, BsShop } from "react-icons/bs";
 import { LuUser } from "react-icons/lu";
 import { VscFeedback } from "react-icons/vsc";
-import { BsArrowBarLeft, BsArrowLeftShort } from "react-icons/bs";
+import { BsArrowLeftShort } from "react-icons/bs";
+import { MdOutlineRestaurantMenu } from "react-icons/md";
 
 export default function Sidebar(props) {
   const [Open, setOpen] = useState(false);
@@ -97,6 +97,17 @@ export default function Sidebar(props) {
               to={"/viewFeedback"}
             >
               <VscFeedback className="h-6 w-6" />
+              <span className={`${!Open && "scale-0"}`}>Feedback</span>
+            </Link>
+            <Link
+              className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
+                !Open
+                  ? "hover:text-[#012169]"
+                  : "px-3 hover:bg-[#012169] hover:text-white"
+              }`}
+              to={"/menu"}
+            >
+              <MdOutlineRestaurantMenu className="h-6 w-6" />
               <span className={`${!Open && "scale-0"}`}>Feedback</span>
             </Link>
           </nav>

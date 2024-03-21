@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import { DropDown } from "../components/DropDown";
 import HomeCard1 from "../components/HomeCard1";
@@ -9,15 +9,25 @@ import { Card } from "../components/ui/card";
 import { TbArrowBigRightLineFilled } from "react-icons/tb";
 
 import Navbar from "./Navbar";
+import { getToken } from "../utils/getToken";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-
   // const toggleDrawer = () => {
   //   setDrawerOpen(!drawerOpen);
   // };
 
+  const token = getToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
+
   return (
-    <div className="flex">  
+    <div className="flex">
       <Sidebar />
       <div className="flex flex-col w-full">
         <div className="row-span-1">
