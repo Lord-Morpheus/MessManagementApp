@@ -6,6 +6,7 @@ import { getToken } from "../utils/getToken";
 import { useFilter } from "../hooks/useFilter";
 import Navbar from "./Navbar";
 import { useState } from "react";
+import Sidebar from "./sidebar";
 
 // eslint-disable-next-line react/prop-types
 export const StudentsPage = () => {
@@ -31,46 +32,49 @@ export const StudentsPage = () => {
     toDate,
   });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
-    <div>
-      <Navbar />
-      <div>
-        <div className="flex justify-center">
-          <Filter
-            hostel={hostel}
-            mess={mess}
-            batch={batch}
-            fromDate={fromDate}
-            username={username}
-            toDate={toDate}
-            setHostel={setHostel}
-            setMess={setMess}
-            setBatch={setBatch}
-            setFromDate={setFromDate}
-            setUsername={setUsername}
-            setToDate={setToDate}
-          />
-        </div>
-        <div className="flex justify-center">
-          <div className="max-w-3xl">
-            <div className="m-10 w-screen max-w-screen-md">
-              {students.map((student) => {
-                return (
-                  <StudentCard
-                    key={student.id}
-                    id={student.id}
-                    name={student.name}
-                    username={student.username}
-                    mess={student.mess}
-                    hostel={student.hostel}
-                    email={student.email}
-                  />
-                );
-              })}
+    <div className="flex">
+      <Sidebar />
+      <div className="h-full w-full">
+        <Navbar />
+        <div>
+          <div className="flex justify-center">
+            <Filter
+              hostel={hostel}
+              mess={mess}
+              batch={batch}
+              fromDate={fromDate}
+              username={username}
+              toDate={toDate}
+              setHostel={setHostel}
+              setMess={setMess}
+              setBatch={setBatch}
+              setFromDate={setFromDate}
+              setUsername={setUsername}
+              setToDate={setToDate}
+            />
+          </div>
+          <div className="flex justify-center">
+            <div className="max-w-3xl">
+              <div className="m-10 w-screen max-w-screen-md">
+                {students.map((student) => {
+                  return (
+                    <StudentCard
+                      key={student.id}
+                      id={student.id}
+                      name={student.name}
+                      username={student.username}
+                      mess={student.mess}
+                      hostel={student.hostel}
+                      email={student.email}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
