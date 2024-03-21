@@ -62,9 +62,7 @@ export const StudentsPage = () => {
               setToDate={setToDate}
             />
           </div>
-          <div className="flex justify-center">
-            <div className="max-w-3xl">
-              <div className="m-10 w-screen max-w-screen-md">
+              <div className="my-10 flex justify-start flex-wrap mx-24 gap-10 ">
                 {students.map((student) => {
                   return (
                     <StudentCard
@@ -79,8 +77,6 @@ export const StudentsPage = () => {
                   );
                 })}
               </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

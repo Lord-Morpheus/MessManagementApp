@@ -49,8 +49,8 @@ export default function Sidebar(props) {
         </div>
         <div className="flex flex-col justify-center items-start">
           <nav
-            className={`grid items-start text-sm font-medium ${
-              !Open ? "px-2" : "px-4"
+            className={`flex flex-col items-start text-sm font-medium ${
+              !Open ? "px-2 w-10" : "px-4"
             }`}
           >
             <Link
@@ -62,7 +62,8 @@ export default function Sidebar(props) {
               to={"/home"}
             >
               <GoHome className="h-6 w-6" />
-              <span className={`${!Open && "scale-0"}`}>Home</span>
+              {!Open ? (<></>):(<><span>Home</span></>)}
+              {/* <span className={`${!Open && "scale-0"}`}>Home</span> */}
             </Link>
             <Link
               className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
@@ -72,21 +73,19 @@ export default function Sidebar(props) {
               }`}
               to={"/mess"}
             >
-              <BsShop className="h-6 w-6" />
-              <span className={`${!Open && "scale-0"}`}>Mess Details</span>
+              <BsShop className='h-6 w-6' />
+              {!Open ? (<></>):(<><span>Mess Details</span></>)}
             </Link>
             <Link
               className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
                 !Open
-                  ? "hover:text-[#012169]"
+                  ? "hover:text-[#012169] "
                   : "px-3 hover:bg-[#012169] hover:text-white"
               }`}
               to={"/student"}
             >
-              <LuUser className="h-8 w-8" />
-              <span className={`${!Open && "scale-0"}`}>
-                Registration Details
-              </span>
+              <LuUser className='h-7 w-7' />
+              {!Open ? (<></>):(<><span>Registration Details</span></>)}
             </Link>
             <Link
               className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
@@ -97,7 +96,7 @@ export default function Sidebar(props) {
               to={"/viewFeedback"}
             >
               <VscFeedback className="h-6 w-6" />
-              <span className={`${!Open && "scale-0"}`}>Feedback</span>
+              {!Open ? (<></>):(<><span>Feedback</span></>)}
             </Link>
             <Link
               className={`flex items-center gap-3 rounded-lg py-2 mb-2 text-base text-black transition-all  dark:text-gray-400 ${
@@ -107,8 +106,8 @@ export default function Sidebar(props) {
               }`}
               to={"/menu"}
             >
-              <MdOutlineRestaurantMenu className="h-6 w-6" />
-              <span className={`${!Open && "scale-0"}`}>Mess Menu</span>
+              <MdOutlineRestaurantMenu className='h-6 w-6'/>
+              {!Open ? (<></>):(<><span>Mess Menu</span></>)}
             </Link>
           </nav>
         </div>

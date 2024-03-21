@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const StudentCard = ({ name, username, mess, hostel, email, id }) => {
   return (
-    <Link to={`/student/${id}`}>
+    <Link className='flex flex-col w-96 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]' to={`/student/${id}`}>
       <div className="p-4 cursor-pointer bg-white">
         <div className="flex items-center">
           <Avatar name={name} />
@@ -13,7 +13,6 @@ const StudentCard = ({ name, username, mess, hostel, email, id }) => {
         <div className="text-md py-2">Mess - {mess}</div>
         <div className="text-md py-2">Email - {email}</div>
         <div className="text-md py-2">Hostel - {hostel}</div>
-        <hr className="border-gray-200"></hr>
       </div>
     </Link>
   );
