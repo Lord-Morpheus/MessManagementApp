@@ -1,11 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export const DropDown = ({ username, name, email }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
@@ -92,12 +95,16 @@ export const DropDown = ({ username, name, email }) => {
           </li>
         </ul>
         <div className="py-2">
-          <a
+          <button
             href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            className="block px-4 py-2 w-full text-start text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}
           >
             Sign out
-          </a>
+          </button>
         </div>
       </div>
     </div>
