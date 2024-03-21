@@ -5,10 +5,15 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 
 export default function GetOTP() {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const token = getToken();
+
+  function togglePasswordVisibility() {
+    setIsPasswordVisible((prevState) => !prevState);
+  }
 
   if (token) {
     navigate("/home");
@@ -45,9 +50,9 @@ export default function GetOTP() {
   };
 
   return (
-    <div className="bg-aliceblue h-lvh flex justify-center items-center">
-      <div className="bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded-3xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
-        <div className="image w-1/2 bg-peachette flex justify-center items-center ml-4">
+    <div className="bg-white h-lvh flex justify-center items-center">
+      <div className="bg-white w-4/6 h-5/6 w-70 flex flex-row justify-space-between items-center rounded shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+        <div className="image w-1/2 bg-[#012169] flex justify-center items-center ml-4">
           <img className="w-full" src={Security} alt="not found" />
         </div>
         <div className="h-full w-1/2 flex flex-col justify-center items-center">
@@ -108,7 +113,7 @@ export default function GetOTP() {
             <div className="w-full flex justify-center my-5">
               <button
                 type="button"
-                className=" h-9 bg-peachette rounded-md w-48"
+                className=" h-9 bg-[#012169] rounded-md w-48 text-white"
                 onClick={async () => await handleSubmit()}
               >
                 Send OTP
@@ -119,6 +124,9 @@ export default function GetOTP() {
             Already have a account?--
             <Link className="text-blue-600 underline" to="/login">
               Log in
+            </Link>
+            <Link className="text-blue-600 underline" to="/signup">
+              sign up
             </Link>
           </p>
         </div>

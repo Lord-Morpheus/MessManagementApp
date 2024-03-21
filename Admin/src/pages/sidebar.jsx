@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { GoHome } from "react-icons/go";
+import { CiLogin } from "react-icons/ci";
 import { BsArrowRight, BsArrowRightShort, BsShop } from "react-icons/bs";
 import { LuUser } from "react-icons/lu";
 import { VscFeedback } from "react-icons/vsc";

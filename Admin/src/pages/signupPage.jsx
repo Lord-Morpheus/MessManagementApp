@@ -6,31 +6,36 @@ import { handleSignup } from "../handlers/handleSignup";
 import { getToken } from "../utils/getToken";
 
 export default function Signup() {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const token = getToken();
 
-  if (token) {
-    navigate("/home");
+  function togglePasswordVisibility() {
+    setIsPasswordVisible((prevState) => !prevState);
   }
 
-  useEffect(() => {
-    if (!window.localStorage.getItem("user-info")) {
-      navigate("/getOTP");
-    } else {
-      const { username, email } = JSON.parse(
-        window.localStorage.getItem("user-info")
-      );
-      console.log(username, email);
-      setUsername(username);
-      setEmail(email);
-    }
+  // if (token) {
+  //   navigate("/home");
+  // }
 
-    return () => {
-      window.localStorage.removeItem("user-info");
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (!window.localStorage.getItem("user-info")) {
+  //     navigate("/getOTP");
+  //   } else {
+  //     const { username, email } = JSON.parse(
+  //       window.localStorage.getItem("user-info")
+  //     );
+  //     console.log(username, email);
+  //     setUsername(username);
+  //     setEmail(email);
+  //   }
+
+  //   return () => {
+  //     window.localStorage.removeItem("user-info");
+  //   };
+  // }, []);
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -38,9 +43,9 @@ export default function Signup() {
   const [OTP, setOTP] = useState("");
 
   return (
-    <div className="bg-aliceblue h-lvh flex justify-center items-center">
-      <div className="bg-white w-4/6 h-5/6 flex flex-row justify-space-between items-center rounded-3xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
-        <div className="image w-1/2 bg-peachette flex justify-center items-center ml-4">
+    <div className="bg-white h-lvh flex justify-center items-center">
+      <div className="bg-white w-4/6 h-5/6 flex flex-row justify-space-between items-center rounded shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+        <div className="image w-1/2 bg-[#012169] flex justify-center items-center ml-4">
           <img className="w-full" src={Authimg} alt="not found" />
         </div>
         <div className="h-full w-1/2 flex flex-col justify-center items-center">
@@ -127,22 +132,50 @@ export default function Signup() {
               Password <br />
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i className="bi bi-eye-fill">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-eye-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                    </svg>
+                  <i
+                    className="bi bi-eye-fill"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {isPasswordVisible ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                    )}
                   </i>
                 </span>
                 <input
-                  type="text"
+                  type={isPasswordVisible ? "text" : "password"}
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
                   onChange={(e) => setPassword(() => e.target.value)}
@@ -154,21 +187,50 @@ export default function Signup() {
               <br />
               <div className="flex rounded-lg shadow-sm">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i className="bi bi-key-fill">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-key-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                    </svg>
+                <i
+                    className="bi bi-eye-fill"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {isPasswordVisible ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                    )}
                   </i>
                 </span>
                 <input
-                  type="text"
+                  type={isPasswordVisible ? "text" : "password"}
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
                   onChange={(e) => setadminSecret(() => e.target.value)}
@@ -180,21 +242,37 @@ export default function Signup() {
               <br />
               <div className="flex rounded-lg shadow-sm mb-5">
                 <span className="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
-                  <i className="bi bi-key-fill">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-lock-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
-                    </svg>
+                  <i
+                    className="bi bi-eye-fill"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {isPasswordVisible ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-unlock-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-lock-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
+                      </svg>
+                    )}
                   </i>
                 </span>
                 <input
-                  type="text"
+                  type={isPasswordVisible ? "text" : "password"}
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="••••••••••"
                   onChange={(e) => setOTP(() => e.target.value)}
@@ -205,7 +283,7 @@ export default function Signup() {
               <Link className="w-48 flex justify-center" to="/home">
                 <button
                   type="button"
-                  className="w-full h-9 bg-peachette rounded-md"
+                  className="w-full h-9 bg-[#012169] rounded-md text-white"
                   onClick={async () =>
                     await handleSignup({
                       name,
