@@ -108,7 +108,7 @@ export default function Sidebar(props) {
               to={"/menu"}
             >
               <MdOutlineRestaurantMenu className="h-6 w-6" />
-              <span className={`${!Open && "scale-0"}`}>Feedback</span>
+              <span className={`${!Open && "scale-0"}`}>Mess Menu</span>
             </Link>
           </nav>
         </div>

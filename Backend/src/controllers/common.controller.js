@@ -77,7 +77,7 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
         We can't wait to serve you!
         
         Best regards,
-        III Mandi Mess Service Team`
+        IIT Mandi Mess Service Team`
         });
 
         return res.status(200).json({ username, email, message: `OTP send to email ${email}` });
