@@ -4,6 +4,7 @@ import { DropDown } from "../components/DropDown";
 import HomeCard1 from "../components/HomeCard1";
 import HomeCard2 from "../components/HomeCard2";
 import HomeCard3 from "../components/HomeCard3";
+import HomeCard4 from "../components/HomeCard4";
 import { Card } from "../components/ui/card";
 
 
@@ -41,6 +42,7 @@ export default function Home() {
               <HomeCard1 />
               <HomeCard2 />
               <HomeCard3 />
+              <HomeCard4 />
             </div>
           </main>
         </Card>

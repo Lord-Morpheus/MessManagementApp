@@ -19,9 +19,10 @@ const FeedbackTable = () => {
         <div className="flex-1">
           <h1 className="font-semibold text-lg">Feedbacks</h1>
         </div>
+        
         <form className="flex-initial">
           <div className="relative">
-            <IoSearchOutline className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
+            <IoSearchOutline className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400 border-r-2 border-gray-200 mr-2" />
             <Input
               className="pl-8 bg-white shadow-none appearance-none sm:w-[300px] md:w-[200px] lg:w-[300px]"
               placeholder="Search feedback..."
@@ -38,6 +39,8 @@ const FeedbackTable = () => {
                 <TableHead className="w-[100px]">Student</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Feedback</TableHead>
+                <TableHead>Mess</TableHead>
+                <TableHead>Category</TableHead>
                 <TableHead className="w-[150px]">Timestamp</TableHead>
               </TableRow>
             </TableHeader>
@@ -50,6 +53,8 @@ const FeedbackTable = () => {
                   significantly over the past few weeks. The variety of dishes
                   offered is also commendable. Keep up the good work!
                 </TableCell>
+                <TableCell>Oak Mess</TableCell>
+                <TableCell>Hygine</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
               </TableRow>
               <TableRow>
@@ -61,6 +66,8 @@ const FeedbackTable = () => {
                   notice board or digital platform where such information is
                   regularly updated.
                 </TableCell>
+                <TableCell>Pine Mess</TableCell>
+                <TableCell>Food Quality</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
               </TableRow>
               <TableRow>
@@ -72,6 +79,34 @@ const FeedbackTable = () => {
                   better lighting, comfortable seating, and a clean ambiance
                   would make a difference.
                 </TableCell>
+                <TableCell>D3 Mess</TableCell>
+                <TableCell>Others</TableCell>
+                <TableCell>2023-03-16 10:24 AM</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Bob Smith</TableCell>
+                <TableCell>bob@example.com</TableCell>
+                <TableCell>
+                  I've noticed a lack of communication regarding changes in the
+                  menu or special meal events. It would be helpful to have a
+                  notice board or digital platform where such information is
+                  regularly updated.
+                </TableCell>
+                <TableCell>Alder Mess</TableCell>
+                <TableCell>Food Quality</TableCell>
+                <TableCell>2023-03-16 10:24 AM</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Eva Brown</TableCell>
+                <TableCell>eva@example.com</TableCell>
+                <TableCell>
+                  The mess environment could be made more inviting and
+                  comfortable for students to dine in. Simple enhancements like
+                  better lighting, comfortable seating, and a clean ambiance
+                  would make a difference.
+                </TableCell>
+                <TableCell>Oak Mess</TableCell>
+                <TableCell>Others</TableCell>
                 <TableCell>2023-03-16 10:24 AM</TableCell>
               </TableRow>
             </TableBody>

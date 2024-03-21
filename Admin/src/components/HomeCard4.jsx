@@ -7,14 +7,14 @@ import {
   CardTitle,
 } from "./ui/card";
 
-const chartConfig3 = {
+const chartConfig1 = {
   type: "bar",
   height: 240,
   width: 420,
   series: [
     {
-      name: "Strength",
-      data: [250, 153, 112, 184, 191, 126, 92, 148, 62],
+      name: "Revenue",
+      data: [67500, 37500, 40000, 62500, 43750, 25000, 28750, 62500, 26875],
     },
   ],
   options: {
@@ -93,17 +93,17 @@ const chartConfig3 = {
   },
 };
 
-export default function HomeCard3() {
+export default function HomeCard1() {
   return (
     <Card className="max-h-96 h-full">
       <CardHeader>
-        <CardTitle>Feedback Count</CardTitle>
+        <CardTitle>Revenue Generated</CardTitle>
         <CardDescription>
-          Number of students who sent feedback this month
+          Total revenue from each Mess this month
         </CardDescription>
       </CardHeader>
       <CardContent className="flex items-center justify-center">
-        <Chart {...chartConfig3} />
+        <Chart {...chartConfig1} />
       </CardContent>
     </Card>
   );
