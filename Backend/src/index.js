@@ -13,6 +13,9 @@ app.use(cors({
 app.use(express.json({ limit: "16kb" }));
 
 // routes
+app.get('/health', (req, res) => {
+    res.send('Heath OK');
+});
 app.use('/api/v1', router);
 
 app.listen(PORT, () => {

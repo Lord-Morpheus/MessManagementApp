@@ -11,6 +11,10 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [clicked, setClicked] = useState(false);
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [adminSecret, setadminSecret] = useState("");
+  const [OTP, setOTP] = useState("");
   const token = getToken();
 
   function togglePasswordVisibility() {
@@ -56,11 +60,6 @@ export default function Signup() {
       }
     };
   }, [username, password, navigate, OTP, adminSecret, name, email]);
-
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [adminSecret, setadminSecret] = useState("");
-  const [OTP, setOTP] = useState("");
 
   return (
     <div className="bg-white h-lvh flex justify-center items-center">
