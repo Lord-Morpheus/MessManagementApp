@@ -14,7 +14,7 @@ export default function MessCard2() {
       <CardBody className="overflow-visible py-2">
         <Image
           alt="Card background"
-          className="object-cover rounded-xl h-60"
+          className="object-cover rounded-xl"
           src={MessImage}
           width={270}
         />
