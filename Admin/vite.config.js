@@ -8,8 +8,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(() => {
   return {
     define: {
-      // eslint-disable-next-line no-undef
-      __APP_ENV__: process.env.VITE_BACKEND_URI,
+      __APP_ENV__: process.env.VITE_VERCEL_ENV,
     },
     plugins: [react()],
   };

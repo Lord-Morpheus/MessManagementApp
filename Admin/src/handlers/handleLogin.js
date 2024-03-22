@@ -4,6 +4,7 @@ import { setToken } from "../utils/getToken";
 export const handleLogin = async ({ username, password }) => {
 
     try {
+        console.log(import.meta.env.VITE_BACKEND_URI)
         const { status, data } = await axios.post(
             `${import.meta.env.VITE_BACKEND_URI}/admin/signin`,
             { username, password }
