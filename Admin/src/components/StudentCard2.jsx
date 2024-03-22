@@ -17,9 +17,9 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { columns, users } from "./data";
 
 const statusColorMap = {
-  studying: "success",
-  passed: "danger",
-  leave: "warning",
+  dining: "success",
+  pass_Out: "danger",
+  mess_Off: "warning",
 };
 
 export default function App() {
