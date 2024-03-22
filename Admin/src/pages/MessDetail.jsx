@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import MessCard1 from "../components/MessCard";
+import MessCard2 from "../components/MessCard2";
 import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import { getToken } from "../utils/getToken";
@@ -27,12 +28,12 @@ export default function Mess() {
             <div className="flex flex-col justify-start items-center w-[95%] mt-6 rounded">
               <span className="my-4 text-3xl font-bold ">Mess Details</span>
               <div className="flex flex-wrap justify-between w-[90%] gap-4 mb-3">
-                <MessCard1 />
-                <MessCard1 />
-                <MessCard1 />
-                <MessCard1 />
-                <MessCard1 />
-                <MessCard1 />
+                <MessCard2 />
+                <MessCard2 />
+                <MessCard2 />
+                <MessCard2 />
+                <MessCard2 />
+                <MessCard2 />
               </div>
             </div>
           </div>
