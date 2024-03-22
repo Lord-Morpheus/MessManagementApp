@@ -10,11 +10,11 @@ export default function Home() {
   const token = getToken();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  });
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/login");
+  //   }
+  // });
 
   return (
     <div className="flex">

@@ -16,11 +16,11 @@ export const StudentsPage = () => {
   const token = getToken();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  });
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/login");
+  //   }
+  // });
 
   const [hostel, setHostel] = useState(null);
   const [mess, setMess] = useState(null);

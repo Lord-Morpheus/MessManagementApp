@@ -7,14 +7,14 @@ import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
 
 export default function Mess() {
-  const token = getToken();
-  const navigate = useNavigate();
+  // const token = getToken();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  });
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/login");
+  //   }
+  // });
 
   return (
     <div className="flex">

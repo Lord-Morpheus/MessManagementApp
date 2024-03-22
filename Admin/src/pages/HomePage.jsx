@@ -17,14 +17,14 @@ export default function Home() {
   //   setDrawerOpen(!drawerOpen);
   // };
 
-  const token = getToken();
-  const navigate = useNavigate();
+  // const token = getToken();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  });
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/login");
+  //   }
+  // });
 
   return (
     <div className="flex">
