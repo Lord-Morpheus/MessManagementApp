@@ -4,7 +4,7 @@ import MessImage from '../images/Oakmess.jpg'
 
 export default function MessCard2() {
   return (
-    <Card className="py-4 ">
+    <Card className="py-4">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
         <h4 className="font-bold text-large uppercase">Oak Mess</h4>
         <p className=" text-medium font-bold">Vendor Name</p>
@@ -14,7 +14,7 @@ export default function MessCard2() {
       <CardBody className="overflow-visible py-2">
         <Image
           alt="Card background"
-          className="object-cover rounded-xl"
+          className="object-cover rounded-xl h-52"
           src={MessImage}
           width={270}
         />
