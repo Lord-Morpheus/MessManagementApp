@@ -7,7 +7,6 @@ import HomeCard3 from "../components/HomeCard3";
 import HomeCard4 from "../components/HomeCard4";
 import { Card } from "../components/ui/card";
 
-
 import Navbar from "./Navbar";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
@@ -17,14 +16,14 @@ export default function Home() {
   //   setDrawerOpen(!drawerOpen);
   // };
 
-  // const token = getToken();
-  // const navigate = useNavigate();
+  const token = getToken();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate("/login");
-  //   }
-  // });
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
 
   return (
     <div className="flex">

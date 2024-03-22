@@ -21,9 +21,9 @@ export default function Signup() {
     setIsPasswordVisible((prevState) => !prevState);
   }
 
-  // if (token) {
-  //   navigate("/home");
-  // }
+  if (token) {
+    navigate("/home");
+  }
 
   useEffect(() => {
     if (!window.localStorage.getItem("user-info")) {

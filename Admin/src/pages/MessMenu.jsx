@@ -10,13 +10,13 @@ import { Card } from "../components/ui/card";
 
 export const MessMenu = () => {
   const token = getToken();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate("/login");
-  //   }
-  // });
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
 
   return (
     <div className="flex">
