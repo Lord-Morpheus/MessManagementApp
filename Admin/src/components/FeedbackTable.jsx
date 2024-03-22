@@ -33,7 +33,7 @@ const FeedbackTable = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="bg-[#012169]">
-                    Filter Options
+                    Select Category
                     <ChevronDownIcon className="w-4 h-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -41,6 +41,21 @@ const FeedbackTable = () => {
                   <DropdownMenuItem>Food Quality</DropdownMenuItem>
                   <DropdownMenuItem>Hygiene</DropdownMenuItem>
                   <DropdownMenuItem>Others</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="mr-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="bg-[#012169]">
+                    Select Mess
+                    <ChevronDownIcon className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-36">
+                  <DropdownMenuItem>Oak Mess</DropdownMenuItem>
+                  <DropdownMenuItem>Pine Mess</DropdownMenuItem>
+                  <DropdownMenuItem>D3 Mess</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
