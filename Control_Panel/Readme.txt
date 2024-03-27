@@ -1,1 +1,0 @@
-Programs for the control panel which provides Extensive features for admins.
