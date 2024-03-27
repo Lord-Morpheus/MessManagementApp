@@ -1,6 +1,7 @@
 import excelJS from "exceljs";
 import asyncHandler from "../utils/asyncHandler.js";
 import fs from "fs";
+import csv from "csvtojson"
 
 export const exportUser = asyncHandler(async (req, res) => {
     const workbook = new excelJS.Workbook();
@@ -36,5 +37,15 @@ export const exportUser = asyncHandler(async (req, res) => {
     );
 
     return res.status(200).json(buffer);
+}
+);
+
+export const importUser = asyncHandler(async (req, res) => {
+    console.log(req.file.path);
+    const jsonArray = await csv().fromFile(req.file.path);
+    // console.log(jsonArray);
+    // const workbook = new excelJS.Workbook();
+    // const data = await workbook.xlsx.readFile(req.file.path);
+    // console.log(data);
 }
 );
