@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class FeedbackForm extends StatefulWidget {
+  final formKey=GlobalKey<FormState>();
   @override
   _FeedbackFormState createState() => _FeedbackFormState();
 }
@@ -32,7 +33,9 @@ class _FeedbackFormState extends State<FeedbackForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Feedback Form'),
+        title: Text('Feedback Form', style:TextStyle(fontWeight:FontWeight.w800)),
+        backgroundColor: Colors.grey,
+
       ),
         body: Container(
           height: double.infinity,
@@ -155,7 +158,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 ],
               ),
               SizedBox(height: 20),
-              ElevatedButton(
+                Center(child:ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                        backgroundColor:Colors.green,
+                    ),
                 onPressed: () {
                   // Here you can handle the submission of the feedback form
 
@@ -164,12 +170,14 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   print('Description: $_description');
                   print('Rating: $_rating');
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return menu();
+                    return Menu();
                   })
                   );
                 },
-                child: Text('Submit'),
+                child: Text('Submit', style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,)),
               ),
+                ),
+
             ],
           ),
         ),

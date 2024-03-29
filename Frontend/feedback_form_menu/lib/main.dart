@@ -50,6 +50,7 @@ class _StudentFormState extends State<StudentForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Student Preferences Form'),
+        backgroundColor: Colors.grey,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -87,7 +88,7 @@ class _StudentFormState extends State<StudentForm> {
                         });
                       },
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     Text('Preference 1:'),
                     DropdownButton(
                         value: _selectedPreference1,
@@ -100,7 +101,7 @@ class _StudentFormState extends State<StudentForm> {
                             _selectedPreference1=val as String;
                           });
                         }),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Text('Preference 2:'),
                     DropdownButton(
                         value: _selectedPreference2,
@@ -113,7 +114,7 @@ class _StudentFormState extends State<StudentForm> {
                             _selectedPreference2=val as String;
                           });
                         }),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Text('Preference 3:'),
                     DropdownButton(
                         value: _selectedPreference3,
@@ -126,7 +127,7 @@ class _StudentFormState extends State<StudentForm> {
                             _selectedPreference3=val as String;
                           });
                         }),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Text('Preference 4:'),
                     DropdownButton(
                         value: _selectedPreference4,
@@ -139,7 +140,7 @@ class _StudentFormState extends State<StudentForm> {
                             _selectedPreference4=val as String;
                           });
                         }),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Text('Preference 5:'),
                     DropdownButton(
                       value: _selectedPreference5,
@@ -147,11 +148,11 @@ class _StudentFormState extends State<StudentForm> {
                             (e)=>DropdownMenuItem(child:Text(e),value:e,)
 
                     ).toList()
-                        , onChanged:(val){
-                        setState(() {
-                          _selectedPreference5=val as String;
-                        });
-                      },
+                        , onChanged:(val) {
+                      setState(() {
+                        _selectedPreference5 = val as String;
+                      });
+                    },
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(onPressed:(){
