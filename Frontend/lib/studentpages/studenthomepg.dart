@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mess/Mess_menu.dart';
+import 'package:mess/qr.dart';
 import 'package:mess/register_login/login.dart';
 import 'package:mess/studentForm.dart';
 import 'package:mess/studentpages/global_vari.dart';
@@ -93,7 +94,7 @@ class _StudenthomepageState extends State<Studenthomepage> {
               }
               else{
                 Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return const Homepg();
+                return QRViewExample();
                 }));
               }
             },
