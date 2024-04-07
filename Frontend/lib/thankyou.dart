@@ -4,7 +4,7 @@ class thankyou extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body:Center(
 
         child:Text("Your response has been recorded.", textAlign: TextAlign.center,style: TextStyle(fontSize: 40,fontWeight: FontWeight.w700),),

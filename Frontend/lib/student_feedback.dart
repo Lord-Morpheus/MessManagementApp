@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
 import 'Mess_menu.dart';
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Feedback Form',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FeedbackForm(),
-    );
-  }
-}
 
 class FeedbackForm extends StatefulWidget {
   final formKey=GlobalKey<FormState>();
@@ -33,13 +17,13 @@ class _FeedbackFormState extends State<FeedbackForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Feedback Form', style:TextStyle(fontWeight:FontWeight.w800)),
+        title: const Text('Feedback Form', style:TextStyle(fontWeight:FontWeight.w800)),
         backgroundColor: Colors.grey,
 
       ),
         body: Container(
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
     image: DecorationImage(
     image: AssetImage('assets/background.png',), // Adjust the path to your background image
     fit: BoxFit.fill,
@@ -51,7 +35,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Feedback Type:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
@@ -71,13 +55,13 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Subject:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter subject',
                 ),
                 onChanged: (value) {
@@ -86,13 +70,13 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   });
                 },
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Description:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter description',
                 ),
                 onChanged: (value) {
@@ -102,8 +86,8 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 },
                 maxLines: null, // Allow multiple lines for description
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Rating:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
@@ -157,7 +141,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
                 Center(child:ElevatedButton(
                     style:ElevatedButton.styleFrom(
                         backgroundColor:Colors.green,
@@ -170,11 +154,11 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   print('Description: $_description');
                   print('Rating: $_rating');
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return Menu();
+                    return const Menu();
                   })
                   );
                 },
-                child: Text('Submit', style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,)),
+                child: const Text('Submit', style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,)),
               ),
                 ),
 

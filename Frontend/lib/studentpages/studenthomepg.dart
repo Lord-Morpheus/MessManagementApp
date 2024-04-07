@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mess/Mess_menu.dart';
 import 'package:mess/register_login/login.dart';
 import 'package:mess/studentForm.dart';
 import 'package:mess/studentpages/global_vari.dart';
@@ -80,10 +81,21 @@ class _StudenthomepageState extends State<Studenthomepage> {
           final opt=options[index];
           return GestureDetector(
             onTap: (){
-              Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return StudentForm() ;
-                          }));
+              if(opt['title']=='MESS MENU'){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return const Menu();
+                }));
+              }
+              else if(opt['title']=='MESS PREFERENCE FORM'){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return StudentForm();
+                }));
+              }
+              else{
+                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return const Homepg();
+                }));
+              }
             },
             child: Maker(
               title:opt['title'] as String,

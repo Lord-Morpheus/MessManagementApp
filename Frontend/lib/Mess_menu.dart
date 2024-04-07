@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
@@ -8,12 +7,12 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mess Menu',style:TextStyle(fontWeight:FontWeight.w800)),
+        title: const Text('Mess Menu',style:TextStyle(fontWeight:FontWeight.w800)),
         backgroundColor: Colors.grey,
       ),
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/background.png'),
               fit: BoxFit.fill,
@@ -26,7 +25,7 @@ class Menu extends StatelessWidget {
                 border: TableBorder.all(color: Colors.black),
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: [
-                  TableRow(children: [
+                  const TableRow(children: [
                     Text(''),
                     Text(
                       'Breakfast',
@@ -46,7 +45,7 @@ class Menu extends StatelessWidget {
                     ),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Monday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -59,7 +58,7 @@ class Menu extends StatelessWidget {
                         'Rajma, Mix Veg (gajar+paneer or mushroom+bean+gobhi+matar, Gulab Jamun, Roti, Rice, Pickle, Green Salad, Lemon'),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Tuesday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -72,7 +71,7 @@ class Menu extends StatelessWidget {
                         'Loki Chana, Yellow Moong, Kheer, Roti, Rice, Pickle, Green Salad, Lemon'),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Wednesday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -85,7 +84,7 @@ class Menu extends StatelessWidget {
                         'Kadhai Paneer/Mushroom Masala And Chicken Curry, Red Masoor Dal, Besan Ladoo, Roti, Rice, Green Salad, Lemon'),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Thursday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -98,7 +97,7 @@ class Menu extends StatelessWidget {
                         'Sarson Ka Saag, Dal Fry, Rasgulla, Roti, Rice , Pickle, Green Salad, Lemon'),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Friday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -111,7 +110,7 @@ class Menu extends StatelessWidget {
                         'Matar Paneer/. Mushroom & Egg Curry, Mix Dal, Gajar Ka Halwa, Roti Rice, Pickle, Green Salad, Lemon'),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Saturday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -124,7 +123,7 @@ class Menu extends StatelessWidget {
                         'Aalo matar, Black Urad Dal, Jalebi, Roti, Rice, Pickle, Green Salad, Lemon'),
                   ]),
                   TableRow(children: [
-                    Text(
+                    const Text(
                       'Sunday',
                       style: TextStyle(fontWeight: FontWeight.w800),
                     ),
@@ -147,8 +146,8 @@ class Menu extends StatelessWidget {
 
   Widget _buildCell(String text) {
     return Container(
-      padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(8.0),
+      decoration: const BoxDecoration(
 
       ),
       child: Text(
