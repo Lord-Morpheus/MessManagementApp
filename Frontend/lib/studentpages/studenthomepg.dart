@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mess/register_login/login.dart';
+import 'package:mess/studentForm.dart';
 import 'package:mess/studentpages/global_vari.dart';
 import 'package:mess/studentpages/options.dart';
 
@@ -78,7 +79,12 @@ class _StudenthomepageState extends State<Studenthomepage> {
         itemBuilder: (BuildContext context, int index) {
           final opt=options[index];
           return GestureDetector(
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return StudentForm() ;
+                          }));
+            },
             child: Maker(
               title:opt['title'] as String,
               image:opt['image'] as String
