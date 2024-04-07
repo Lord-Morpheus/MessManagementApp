@@ -22,7 +22,7 @@ class _OTPState extends State<OTP> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image:  AssetImage("assets/images/rect.png"),
+            image:  AssetImage("assets/images/background.png"),
             fit: BoxFit.cover,
             ),
         ),
