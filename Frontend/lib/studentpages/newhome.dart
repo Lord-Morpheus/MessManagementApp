@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
-import 'package:mess/Mess_menu.dart';
-import 'package:mess/qr.dart';
-import 'package:mess/studentForm.dart';
+import 'package:mess/studentpages/Mess_menu.dart';
 import 'package:mess/studentpages/global_vari.dart';
 import 'package:mess/studentpages/options.dart';
+import 'package:mess/studentpages/qr.dart';
+import 'package:mess/studentpages/studentForm.dart';
 
 class Newhome extends StatefulWidget {
   const Newhome({super.key});
