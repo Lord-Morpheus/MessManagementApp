@@ -25,7 +25,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
           height: double.infinity,
           decoration: const BoxDecoration(
     image: DecorationImage(
-    image: AssetImage('assets/background.png',), // Adjust the path to your background image
+    image: AssetImage('assets/images/background.png',), // Adjust the path to your background image
     fit: BoxFit.fill,
     ),
     ),
@@ -148,11 +148,6 @@ class _FeedbackFormState extends State<FeedbackForm> {
                     ),
                 onPressed: () {
                   // Here you can handle the submission of the feedback form
-
-                  print('Feedback Type: $_feedbackType');
-                  print('Subject: $_subject');
-                  print('Description: $_description');
-                  print('Rating: $_rating');
                   Navigator.push(context, MaterialPageRoute(builder: (context){
                     return const Menu();
                   })

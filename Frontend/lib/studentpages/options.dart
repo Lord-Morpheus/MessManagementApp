@@ -28,7 +28,7 @@ class Maker extends StatelessWidget {
               height: 200,
             ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 0,),
           Text(title,
             style:Theme.of(context).textTheme.titleMedium,
           ),

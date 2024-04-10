@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
+        // dropdownMenuTheme: DropdownMenuThemeData(inputDecorationTheme: InputDecorationTheme()),
         inputDecorationTheme: const InputDecorationTheme(
           hintStyle: TextStyle(
             fontWeight: FontWeight.bold,

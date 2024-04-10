@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mess/Mess_menu.dart';
-import 'package:mess/qr.dart';
 import 'package:mess/register_login/login.dart';
-import 'package:mess/studentForm.dart';
-import 'package:mess/studentpages/global_vari.dart';
-import 'package:mess/studentpages/options.dart';
+import 'package:mess/student_feedback.dart';
+import 'package:mess/studentpages/newhome.dart';
+import 'package:mess/thankyou.dart';
 
 class Studenthomepage extends StatefulWidget {
   const Studenthomepage({super.key});
@@ -14,6 +12,16 @@ class Studenthomepage extends StatefulWidget {
 }
 
 class _StudenthomepageState extends State<Studenthomepage> {
+
+  int currpage=0;
+
+  final PageController _pageController=PageController();
+
+  List<Widget> pages=[
+    const Newhome(),
+    FeedbackForm(),
+    const thankyou()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -69,44 +77,51 @@ class _StudenthomepageState extends State<Studenthomepage> {
           ),
         ],
       ),
-      body: Container(
-        decoration:const  BoxDecoration(
-          image: DecorationImage(
-            image:  AssetImage("assets/images/background.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-      child:ListView.builder(
-        itemCount: options.length,
-        itemBuilder: (BuildContext context, int index) {
-          final opt=options[index];
-          return GestureDetector(
-            onTap: (){
-              if(opt['title']=='MESS MENU'){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return const Menu();
-                }));
-              }
-              else if(opt['title']=='MESS PREFERENCE FORM'){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return StudentForm();
-                }));
-              }
-              else{
-                Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return QRViewExample();
-                }));
-              }
-            },
-            child: Maker(
-              title:opt['title'] as String,
-              image:opt['image'] as String
-            ),
-          );
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index){
+          setState(() {
+            currpage=index;
+          });
         },
-        
+        children:pages,
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        iconSize: 27,
+        onTap: (index){
+          setState(() {
+            currpage=index;
+          });
+          _pageController.animateToPage(index, duration: const Duration(milliseconds: 10), curve: Curves.easeOut);
+        },
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+        currentIndex: currpage,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        items:const [
+          BottomNavigationBarItem(
+            label:"Home",
+            icon:Icon(Icons.home_outlined,),
+            activeIcon: Icon(Icons.home,)
+          ),
+          BottomNavigationBarItem(
+            label:"Feedback",
+            icon:Icon(Icons.sms_outlined,),
+            activeIcon: Icon(Icons.sms,),
+          ),
+          BottomNavigationBarItem(
+            label:"Profile",
+            icon:Icon(Icons.person_2_outlined,),
+            activeIcon: Icon(Icons.person,),
+          ),
+        ],
       ),
-    );
+    ); 
   }
 }
