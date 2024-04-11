@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   Table,
   TableHeader,
@@ -14,7 +14,8 @@ import {
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { columns, users } from "./data";
+import { columns, messOptions, users } from "./data";
+import { TableComponent } from "./StudentTable";
 
 const statusColorMap = {
   dining: "success",
@@ -23,7 +24,49 @@ const statusColorMap = {
 };
 
 export default function App() {
-  const renderCell = React.useCallback((user, columnKey) => {
+  const [filterValue, setFilterValue] = useState("");
+  const [messFilter, setMessFilter] = useState("all");
+  const [hostelFilter, setHostelFilter] = useState("all");
+  const [batchFilter, setBatchFilter] = useState("all");
+
+  const hasSearchFilter = Boolean(filterValue);
+
+  const filteredItems = useMemo(() => {
+    let filteredUsers = [...users];
+
+    if (hasSearchFilter) {
+      filteredUsers = filteredUsers.filter(
+        (user) =>
+          user.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+          user.rollno.toLowerCase().includes(filterValue.toLowerCase())
+      );
+    }
+
+    if (messFilter !== "all") {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.mess.toLowerCase().includes(messFilter.toLowerCase())
+      );
+    }
+    if (hostelFilter !== "all") {
+      console.log("hostelFilter");
+      filteredUsers = filteredUsers.filter((user) =>
+        user.hostel.toLowerCase().includes(hostelFilter.toLowerCase())
+      );
+    }
+
+    if (batchFilter !== "all") {
+      filteredUsers = filteredUsers.filter(
+        (user) =>
+          user.rollno.substring(1, 3) ==
+          batchFilter.substring(batchFilter.length - 2)
+      );
+    }
+
+    return filteredUsers;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users, filterValue, messFilter, hostelFilter, batchFilter]);
+
+  const renderCell = useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
@@ -73,11 +116,31 @@ export default function App() {
     }
   }, []);
 
+  const topContent = useMemo(() => {
+    return TableComponent({
+      setFilterValue,
+      setMessFilter,
+      setHostelFilter,
+      setBatchFilter,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    filterValue,
+    setFilterValue,
+    messFilter,
+    setMessFilter,
+    hostelFilter,
+    setHostelFilter,
+    batchFilter,
+    setBatchFilter,
+  ]);
+
   return (
     <Table
       color="primary"
       selectionMode="multiple"
       aria-label="Example table with custom cells"
+      topContent={topContent}
     >
       <TableHeader columns={columns}>
         {(column) => (
@@ -89,7 +152,7 @@ export default function App() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={users}>
+      <TableBody emptyContent={"No users found"} items={filteredItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (

@@ -1,11 +1,11 @@
 import React from "react";
 const columns = [
-  {name: "NAME", uid: "name"},
-  {name: "MESS", uid: "mess"},
-  {name: "ROLL NO", uid: "rollno"},
-  {name: "HOSTEL", uid: "hostel"},
-  {name: "STATUS", uid: "status"},
-  {name: "ACTIONS", uid: "actions"},
+  { name: "NAME", uid: "name" },
+  { name: "MESS", uid: "mess" },
+  { name: "ROLL NO", uid: "rollno" },
+  { name: "HOSTEL", uid: "hostel" },
+  { name: "STATUS", uid: "status" },
+  { name: "ACTIONS", uid: "actions" },
 ];
 
 const users = [
@@ -61,4 +61,8 @@ const users = [
   },
 ];
 
-export {columns, users};
+export const messOptions = [{ mess: "Pine", key: 1 }, { mess: "Oak", key: 2 }, { mess: "Alder", key: 3 }];
+export const hostelOptions = [{ hostel: "B11", key: 1 }, { hostel: "B12", key: 2 }, { hostel: "B13", key: 3 }];
+export const batchOptions = [{ batch: "2024", key: 1 }, { batch: "2023", key: 2 }, { batch: "2022", key: 3 }, { batch: "2021", key: 4 }];
+
+export { columns, users };

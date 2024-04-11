@@ -48,12 +48,9 @@ export const StudentsPage = () => {
       <Sidebar />
       <div className="flex flex-col h-full w-full">
         <Navbar />
-        <Card className="m-8 h-full">
-          <TableComponent students={students} />
-          <div className="px-6 pb-6">
-            <StudentCard2 />
-          </div>
-        </Card>
+        <div className="px-6 pb-6 pt-6">
+          <StudentCard2 />
+        </div>
       </div>
     </div>
   );
