@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -18,8 +18,71 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { ChevronDownIcon } from "./StudentTable";
+import { categoryOptions, feedbacks, messOptions } from "./data";
 
 const FeedbackTable = () => {
+  const [messFilter, setMessFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [searchFilter, setSearchFilter] = useState("");
+  const hasSearchFilter = Boolean(searchFilter);
+
+  const onMessChange = useCallback((value) => {
+    if (value) {
+      setMessFilter(value);
+    } else {
+      setMessFilter("");
+    }
+  }, []);
+
+  const onCategoryChange = useCallback((value) => {
+    if (value) {
+      setCategoryFilter(value);
+    } else {
+      setCategoryFilter("");
+    }
+  }, []);
+
+  const onSearchChange = useCallback((value) => {
+    if (value) {
+      setSearchFilter(value);
+    } else {
+      setSearchFilter("");
+    }
+  }, []);
+
+  const onClear = useCallback(() => {
+    setSearchFilter("");
+  }, []);
+
+  const filteredFeedbacks = useMemo(() => {
+    let filteredFeedbacks = [...feedbacks];
+
+    if (hasSearchFilter) {
+      filteredFeedbacks = filteredFeedbacks.filter(
+        (feedback) =>
+          feedback.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+          feedback.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
+          feedback.description
+            .toLowerCase()
+            .includes(searchFilter.toLowerCase())
+      );
+    }
+
+    if (messFilter !== "all") {
+      filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
+        feedback.mess.toLowerCase().includes(messFilter.toLowerCase())
+      );
+    }
+
+    if (categoryFilter !== "all") {
+      filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
+        feedback.category.toLowerCase().includes(categoryFilter.toLowerCase())
+      );
+    }
+
+    return filteredFeedbacks;
+  }, [messFilter, categoryFilter, hasSearchFilter, searchFilter]);
+
   return (
     <div className="flex flex-col">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
@@ -38,9 +101,14 @@ const FeedbackTable = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-36">
-                  <DropdownMenuItem>Food Quality</DropdownMenuItem>
-                  <DropdownMenuItem>Hygiene</DropdownMenuItem>
-                  <DropdownMenuItem>Others</DropdownMenuItem>
+                  {categoryOptions.map(({ category, key }) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onSelect={() => onCategoryChange(category)}
+                    >
+                      {category}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -53,9 +121,14 @@ const FeedbackTable = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-36">
-                  <DropdownMenuItem>Oak Mess</DropdownMenuItem>
-                  <DropdownMenuItem>Pine Mess</DropdownMenuItem>
-                  <DropdownMenuItem>D3 Mess</DropdownMenuItem>
+                  {messOptions.map(({ mess, key }) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onSelect={() => onMessChange(mess)}
+                    >
+                      {mess}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -64,7 +137,10 @@ const FeedbackTable = () => {
               <Input
                 className="pl-8 bg-white shadow-none appearance-none sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 placeholder="Search feedback..."
+                isClearable
                 type="search"
+                onChange={(e) => onSearchChange(e.target.value)}
+                onClear={() => onClear()}
               />
             </div>
           </div>
@@ -84,70 +160,18 @@ const FeedbackTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-semibold">Alice Johnson</TableCell>
-                <TableCell>alice@example.com</TableCell>
-                <TableCell>
-                  The quality of the food served in the mess has improved
-                  significantly over the past few weeks. The variety of dishes
-                  offered is also commendable. Keep up the good work!
-                </TableCell>
-                <TableCell>Oak Mess</TableCell>
-                <TableCell>Hygine</TableCell>
-                <TableCell>2023-03-16 10:24 AM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-semibold">Bob Smith</TableCell>
-                <TableCell>bob@example.com</TableCell>
-                <TableCell>
-                  I've noticed a lack of communication regarding changes in the
-                  menu or special meal events. It would be helpful to have a
-                  notice board or digital platform where such information is
-                  regularly updated.
-                </TableCell>
-                <TableCell>Pine Mess</TableCell>
-                <TableCell>Food Quality</TableCell>
-                <TableCell>2023-03-16 10:24 AM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-semibold">Eva Brown</TableCell>
-                <TableCell>eva@example.com</TableCell>
-                <TableCell>
-                  The mess environment could be made more inviting and
-                  comfortable for students to dine in. Simple enhancements like
-                  better lighting, comfortable seating, and a clean ambiance
-                  would make a difference.
-                </TableCell>
-                <TableCell>D3 Mess</TableCell>
-                <TableCell>Others</TableCell>
-                <TableCell>2023-03-16 10:24 AM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-semibold">Bob Smith</TableCell>
-                <TableCell>bob@example.com</TableCell>
-                <TableCell>
-                  I've noticed a lack of communication regarding changes in the
-                  menu or special meal events. It would be helpful to have a
-                  notice board or digital platform where such information is
-                  regularly updated.
-                </TableCell>
-                <TableCell>Alder Mess</TableCell>
-                <TableCell>Food Quality</TableCell>
-                <TableCell>2023-03-16 10:24 AM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-semibold">Eva Brown</TableCell>
-                <TableCell>eva@example.com</TableCell>
-                <TableCell>
-                  The mess environment could be made more inviting and
-                  comfortable for students to dine in. Simple enhancements like
-                  better lighting, comfortable seating, and a clean ambiance
-                  would make a difference.
-                </TableCell>
-                <TableCell>Oak Mess</TableCell>
-                <TableCell>Others</TableCell>
-                <TableCell>2023-03-16 10:24 AM</TableCell>
-              </TableRow>
+              {filteredFeedbacks.map((feedback) => (
+                <TableRow key={feedback.id}>
+                  <TableCell className="font-semibold">
+                    {feedback.name}
+                  </TableCell>
+                  <TableCell>{feedback.email}</TableCell>
+                  <TableCell>{feedback.description}</TableCell>
+                  <TableCell>{feedback.mess}</TableCell>
+                  <TableCell>{feedback.category}</TableCell>
+                  <TableCell>{feedback.timestamp}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
