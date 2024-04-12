@@ -4,18 +4,18 @@ import { getToken } from "../utils/getToken";
 
 export const useFeedback = () => {
     const [loading, setLoading] = useState(true);
-    const [feedbacks, setFeedbacks] = useState([]);
+    const [students, seStudents] = useState([]);
 
-    axios.get(`${import.meta.env.VITE_BACKEND_URI}/admin/feedback`, {
+    axios.get(`${import.meta.env.VITE_BACKEND_URI}/admin/getAll`, {
         headers: {
             Authorization: `Admin ${getToken()}`,
         }
     })
         .then((res) => {
-            setFeedbacks(res.data);
+            seStudents(res.data);
             console.log(res.data);
             setLoading(false);
         })
 
-    return { feedbacks, loading };
+    return { students, loading };
 }
