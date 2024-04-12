@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "isrc/ndex.js",
+        "src": "src/ndex.js",
         "use": "@now/node"
       }
     ],
