@@ -318,3 +318,77 @@ export const getFeedbacks = asyncHandler(async (req, res) => {
         return res.status(403).json(err);
     }
 });
+
+export const messAllocation = asyncHandler(async (req, res) => {
+    const { startDate, endDate, ratio } = req.body;
+
+    try {
+        const messOptions = await client.mess.findMany({
+            where: {},
+            select: {
+                id: true,
+                name: true,
+            }
+        });
+
+        const messForms = await client.messForm.findMany({
+            where: {
+                createdAt: {
+                    gte: startDate,
+                    lte: endDate
+                }
+            }
+        });
+
+        const remainingForms = [];
+
+        // Allocated first come first serve basis store not assigned forms
+        for (mess in messOptions) {
+            const filteredForms = messForms.filter(form => form.messId === mess.id);
+
+            filteredForms.sort((a, b) => {
+                return new Date(a.createdAt) - new Date(b.createdAt);
+            });
+
+            const capacity = mess.capacity;
+
+            const fcfsRatio = ratio * capacity;
+
+            for (form in filteredForms) {
+                if (fcfsRatio > 0) {
+                    const updatedUser = await client.student.update({
+                        where: {
+                            id: form.studentId
+                        },
+                        data: {
+                            mess: {
+                                connect: {
+                                    id: mess.id
+                                }
+                            }
+                        },
+                        select: {
+                            id: true,
+                            name: true,
+                            username: true,
+                            email: true,
+                            hostel: true,
+                            mess: true
+                        }
+                    });
+                    fcfsRatio--;
+                }
+            }
+
+            const remainingForm = filteredForms.slice(fcfsRatio);
+            remainingForms.push(...remainingForm);
+        }
+
+        // Allocated remaining forms to the mess according to proximity
+
+        return res.status(201).json({ data: user, msg: "Mess allocated successfully" })
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
+});
