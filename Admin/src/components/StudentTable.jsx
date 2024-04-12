@@ -12,12 +12,17 @@ import {
 import { TbFileExport } from "react-icons/tb";
 import { useCallback } from "react";
 import { batchOptions, hostelOptions, messOptions } from "./data";
+import { exportToExcel } from "../utils/exportToExcel";
 
 export function TableComponent({
   setFilterValue,
   setMessFilter,
+  messFilter,
   setHostelFilter,
+  hostelFilter,
   setBatchFilter,
+  batchFilter,
+  filteredItems,
 }) {
   const onMessChange = useCallback((value) => {
     if (value) {
@@ -88,7 +93,7 @@ export function TableComponent({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="bg-[#012169]">
-                Filter by Mess
+                {messFilter === "all" ? "Select Mess" : messFilter}
                 <ChevronDownIcon className="w-4 h-4 ml-2" />
               </Button>
             </DropdownMenuTrigger>
@@ -103,7 +108,7 @@ export function TableComponent({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="bg-[#012169]">
-                Filter by Hostel
+                {hostelFilter === "all" ? "Select Hostel" : hostelFilter}
                 <ChevronDownIcon className="w-4 h-4 ml-2" />
               </Button>
             </DropdownMenuTrigger>
@@ -121,7 +126,7 @@ export function TableComponent({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="bg-[#012169]">
-                Filter by Batch
+                {batchFilter === "all" ? "Select Batch" : batchFilter}
                 <ChevronDownIcon className="w-4 h-4 ml-2" />
               </Button>
             </DropdownMenuTrigger>
@@ -137,7 +142,10 @@ export function TableComponent({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Button type="submit" className="bg-green-700">
+        <Button
+          className="bg-green-700"
+          onClick={() => exportToExcel(filteredItems)}
+        >
           <TbFileExport className="mr-2 h-5 w-5" />
           Export to Excel
         </Button>

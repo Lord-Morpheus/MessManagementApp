@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -9,13 +9,13 @@ import {
   User,
   Chip,
   Tooltip,
-  getKeyValue,
 } from "@nextui-org/react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { columns, messOptions, users } from "./data";
+import { columns, users } from "./data";
 import { TableComponent } from "./StudentTable";
+import { exportToExcel } from "../utils/exportToExcel";
 
 const statusColorMap = {
   dining: "success",
@@ -120,8 +120,12 @@ export default function App() {
     return TableComponent({
       setFilterValue,
       setMessFilter,
+      messFilter,
       setHostelFilter,
+      hostelFilter,
       setBatchFilter,
+      batchFilter,
+      filteredItems,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -133,6 +137,7 @@ export default function App() {
     setHostelFilter,
     batchFilter,
     setBatchFilter,
+    filteredItems,
   ]);
 
   return (

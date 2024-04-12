@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -96,7 +96,9 @@ const FeedbackTable = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="bg-[#012169]">
-                    Select Category
+                    {categoryFilter === "all"
+                      ? "Select Category"
+                      : categoryFilter}
                     <ChevronDownIcon className="w-4 h-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -116,7 +118,7 @@ const FeedbackTable = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="bg-[#012169]">
-                    Select Mess
+                    {messFilter === "all" ? "Select Mess" : messFilter}
                     <ChevronDownIcon className="w-4 h-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
