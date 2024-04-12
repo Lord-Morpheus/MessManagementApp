@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id          String     @id @default(uuid()) @map("_id")
+  name        String
+  username    String     @unique
+  email       String     @unique
+  hostel      String
+  password    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  Feedback    Feedback[]
+  Mess        Mess?      @relation(fields: [messId], references: [id])
+  messId      String?
+  MessForm    MessForm[]
+  defaultMess String?
+}
+
+model Feedback {
+  id          String   @id @default(uuid()) @map("_id")
+  title       String
+  student     Student  @relation(fields: [studentId], references: [id])
+  studentId   String
+  mess        Mess     @relation(fields: [messId], references: [id])
+  messId      String
+  description String
+  attachmenet String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Mess {
+  id              String     @id @default(uuid()) @map("_id")
+  Students        Student[]
+  preferredHostel Hostel[]
+  name            String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  Feedback        Feedback[]
+  Menu            Menu[]
+  MessForm        MessForm?  @relation(fields: [messFormId], references: [id])
+  messFormId      String?
+  vendors         Vendor[]
+}
+
+model Hostel {
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  Mess      Mess?    @relation(fields: [messId], references: [id])
+  messId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Menu {
+  id        String   @id @default(uuid()) @map("_id")
+  mess      Mess     @relation(fields: [messId], references: [id])
+  messId    String
+  breakfast String[]
+  lunch     String[]
+  snacks    String[]
+  dinner    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MessForm {
+  id          String   @id @default(uuid()) @map("_id")
+  student     Student  @relation(fields: [studentId], references: [id])
+  studentId   String
+  preferences Mess[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Admin {
+  id          String   @id @default(uuid()) @map("_id")
+  adminSecret String
+  name        String
+  username    String   @unique
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Otp {
+  id        String   @id @default(uuid()) @map("_id")
+  key       String   @unique
+  email     String   @unique
+  expiry    DateTime
+  createdAt DateTime @default(now())
+}
+
+model Vendor {
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  username  String   @unique
+  email     String   @unique
+  password  String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  mess      Mess[]
+}
