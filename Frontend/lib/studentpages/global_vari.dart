@@ -1,10 +1,10 @@
 final options=[
   {
-    'title':'MESS  MENU',
+    'title':'MESS MENU',
     'image':'assets/images/menu.png',
   },
   {
-    'title':'MESS  PREFERENCE  FORM',
+    'title':'MESS PREFERENCE FORM',
     'image':'assets/images/feed.png',
   },
   {

@@ -6,7 +6,7 @@ import 'package:mess/studentpages/qr.dart';
 import 'package:mess/studentpages/studentForm.dart';
 
 class Newhome extends StatefulWidget {
-  const Newhome({super.key});
+  const Newhome({super.key}); 
 
   @override
   State<Newhome> createState() => _NewhomeState();

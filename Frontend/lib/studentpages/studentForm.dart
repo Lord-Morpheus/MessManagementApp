@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'thankyou.dart';
 import 'student_feedback.dart';
 final _formkey=GlobalKey<FormState>();
 
