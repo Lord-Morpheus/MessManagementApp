@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mess/register_login/otp.dart';
+import 'package:mess/register_login/register.dart';
 
-class Emailid extends StatefulWidget {
-  const Emailid({super.key});
-
+class Roll extends StatefulWidget {
+  const Roll({super.key});
   @override
-  State<Emailid> createState() => _EmailidState();
+  State<Roll> createState() => _RollState();
 }
 
-class _EmailidState extends State<Emailid> {
+class _RollState extends State<Roll> {
+
+  late String roll;
+  late String email;
+
+  final TextEditingController textEditingController1=TextEditingController();
+
+  assign3(){
+    roll=textEditingController1.text;
+    email="$roll@students.iitmandi.ac.in";
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+    return Registration(roll: roll);
+    }));
+  }
   @override
   Widget build(BuildContext context) {
     const border=OutlineInputBorder(
@@ -34,7 +46,7 @@ class _EmailidState extends State<Emailid> {
                 const SizedBox(height:150),
                 const Center(
                   child: Text(
-                    'ENTER EMAIL ID',
+                    'ROLL NUMBER',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
@@ -43,16 +55,17 @@ class _EmailidState extends State<Emailid> {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  '*Enter institute email id',
+                  '*Enter institute Roll number',
                   style:Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  controller: textEditingController1,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Email id',
-                    hintText: 'Ex:example@iitmandi.ac.in',
+                    labelText: 'Roll number',
+                    hintText: 'B2xxxx',
                     labelStyle:Theme.of(context).textTheme.titleMedium,
                     border:border,
                     enabledBorder: border,
@@ -70,9 +83,7 @@ class _EmailidState extends State<Emailid> {
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                      return const OTP();
-                    }));
+                    assign3();
                   },
                   child: const Text('Send OTP',
                     style:TextStyle(
