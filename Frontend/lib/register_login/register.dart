@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mess/register_login/login.dart';
 
 class Registration extends StatefulWidget {
   final String roll;
+  final String name;
 
   const Registration({super.key, 
-    required this.roll
+    required this.roll,
+    required this.name
   });
 
   @override
@@ -20,6 +21,7 @@ class _RegistrationState extends State<Registration> {
   late String pass;
   late String confirmpass;
   late String roll2;
+  late String name2;
 
   final TextEditingController textEditingController1=TextEditingController();
   final TextEditingController textEditingController2=TextEditingController();
@@ -33,6 +35,7 @@ class _RegistrationState extends State<Registration> {
       pass=textEditingController3.text;
       confirmpass=textEditingController4.text;
       roll2=widget.roll;
+      name2=widget.name;
 
       if(pass==confirmpass){
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
@@ -55,7 +58,7 @@ class _RegistrationState extends State<Registration> {
             actions: [
               TextButton(onPressed:(){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                  return Registration(roll: roll2);
+                  return Registration(roll: roll2,name:name2);
                 }));
               },
                child: 

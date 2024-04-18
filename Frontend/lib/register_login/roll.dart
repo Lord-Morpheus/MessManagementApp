@@ -9,16 +9,21 @@ class Roll extends StatefulWidget {
 
 class _RollState extends State<Roll> {
 
+  late String name;
   late String roll;
   late String email;
 
   final TextEditingController textEditingController1=TextEditingController();
+  final TextEditingController textEditingController2=TextEditingController();
 
   assign3(){
-    roll=textEditingController1.text;
+
+    name=textEditingController1.text;
+    roll=textEditingController2.text;
     email="$roll@students.iitmandi.ac.in";
+
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-    return Registration(roll: roll);
+    return Registration(roll: roll,name:name);
     }));
   }
   @override
@@ -43,10 +48,10 @@ class _RollState extends State<Roll> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children:[
-                const SizedBox(height:150),
+                const SizedBox(height:100),
                 const Center(
                   child: Text(
-                    'ROLL NUMBER',
+                    'Details for verification',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
@@ -55,12 +60,29 @@ class _RollState extends State<Roll> {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  '*Enter institute Roll number',
+                  '*Enter Your Name',
+                  style:Theme.of(context).textTheme.bodySmall,
+                ),
+                TextField(
+                  controller: textEditingController1,
+                  style:Theme.of(context).textTheme.titleMedium,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                    labelText: 'Name',
+                    labelStyle:Theme.of(context).textTheme.titleMedium,
+                    border:border,
+                    enabledBorder: border,
+                    focusedBorder: border,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  '*Enter Your Institute Roll no.',
                   style:Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  controller: textEditingController1,
+                  controller: textEditingController2,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
