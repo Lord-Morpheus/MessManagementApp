@@ -64,19 +64,29 @@ export default function Selection() {
             <p className="font-bold text-xl py-3">
               Release Mess Selection Form for this Month
             </p>
-            <div className="flex gap-6 justify-between items-center w-full">
-              <div className="flex gap-6 justify-center items-center">
-                <p className="ml-3">
-                  Select range of dates you want form to be opened:
-                </p>
-                <Datepicker
-                  classNames=""
-                  value={value}
-                  onChange={handleValueChange}
-                />
-                <input type="" />
+            <div className="flex justify-between items-center w-full">
+              <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="flex items-center">
+                  <p className="ml-3">
+                    Select range of dates you want form to be opened:
+                  </p>
+                  <div className="border mx-2">
+                    <Datepicker value={value} onChange={handleValueChange} />
+                  </div>
+                </div>
+                <div class="flex mb-3 w-full items-center">
+                  <p className="ml-3">Enter percentage of seats based on proximity:</p>
+                  <div class="mx-2 border" data-twe-input-wrapper-init>
+                    <input
+                      type="number"
+                      className="text-center"
+                      id="exampleFormControlInputNumber"
+                      placeholder="enter ratio eg:75 for 75%"
+                    />
+                  </div>
+                </div>
               </div>
-              <button class="bg-[#012069dd] hover:bg-[#012169] text-white font-bold m-3 px-4 rounded">
+              <button class="bg-[#012069dd] hover:bg-[#012169] text-white font-bold py-3 px-3 mx-2 rounded">
                 Open Form
               </button>
             </div>
