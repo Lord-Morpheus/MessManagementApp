@@ -4,7 +4,6 @@ import { Filter } from "../components/Filter";
 import StudentCard2 from "../components/StudentCard2";
 import StudentCard from "../components/StudentCard";
 import { getToken } from "../utils/getToken";
-import { useFilter } from "../hooks/useFilter";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
@@ -28,16 +27,6 @@ export const StudentsPage = () => {
   const [fromDate, setFromDate] = useState(null);
   const [username, setUsername] = useState(null);
   const [toDate, setToDate] = useState(null);
-
-  // eslint-disable-next-line no-unused-vars
-  const { loading, students } = useFilter({
-    hostel,
-    mess,
-    batch,
-    fromDate,
-    username,
-    toDate,
-  });
 
   // if (loading) {
   //   return <div>Loading...</div>;

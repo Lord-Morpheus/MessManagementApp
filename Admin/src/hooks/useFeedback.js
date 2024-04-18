@@ -8,7 +8,7 @@ export const useFeedback = () => {
 
     axios.get(`${import.meta.env.VITE_BACKEND_URI}/admin/feedback`, {
         headers: {
-            Authorization: getToken(),
+            Authorization: `Admin ${getToken()}`,
         }
     })
         .then((res) => {

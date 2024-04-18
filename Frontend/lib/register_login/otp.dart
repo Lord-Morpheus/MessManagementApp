@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/globalvariables.dart';
 import 'package:mess/register_login/register.dart';
 
 class OTP extends StatefulWidget {
@@ -9,6 +10,15 @@ class OTP extends StatefulWidget {
 }
 
 class _OTPState extends State<OTP> {
+
+  late String otp;
+
+  final TextEditingController textEditingController1=TextEditingController();
+
+  assign5(){
+    otp=textEditingController1.text;
+    cred["OTP"]=otp;
+  }
   @override
   Widget build(BuildContext context) {
     const border=OutlineInputBorder(
@@ -70,9 +80,9 @@ class _OTPState extends State<OTP> {
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                      return const Registration();
-                    }));
+                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                     // return const Registration();
+                   // }));
                   },
                   child: const Text('Create Account',
                     style:TextStyle(

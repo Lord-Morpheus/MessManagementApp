@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mess/register_login/login.dart';
+import 'package:mess/studentpages/dashboard.dart';
 import 'package:mess/studentpages/newhome.dart';
 import 'package:mess/studentpages/student_feedback.dart';
-import 'package:mess/studentpages/thankyou.dart';
 
 class Studenthomepage extends StatefulWidget {
   const Studenthomepage({super.key});
@@ -20,7 +20,7 @@ class _StudenthomepageState extends State<Studenthomepage> {
   List<Widget> pages=[
     const Newhome(),
     FeedbackForm(),
-    const thankyou()
+    const Dash(),
   ];
 
   @override

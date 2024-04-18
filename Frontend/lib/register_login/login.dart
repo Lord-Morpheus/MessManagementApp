@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mess/register_login/email.dart';
+import 'package:mess/register_login/roll.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 
 class Homepg extends StatefulWidget {
@@ -10,15 +10,18 @@ class Homepg extends StatefulWidget {
 }
 
 class _HomepgState extends State<Homepg> {
-  String roll='';
-  String pass='';
+  
+  late String roll;
+  late String pass;
+
   final TextEditingController textEditingController1=TextEditingController();
   final TextEditingController textEditingController2=TextEditingController();
   assign(){
-    setState(() {
       roll=textEditingController1.text;
-      pass=textEditingController2.text;
-    });  
+      pass=textEditingController2.text; 
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                    return const Studenthomepage();
+      }));
   }
 
   @override
@@ -96,7 +99,7 @@ class _HomepgState extends State<Homepg> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                      return const Emailid();
+                      return const Roll();
                     }));
                   },
                   child: Text('Forgot Password?',
@@ -114,9 +117,6 @@ class _HomepgState extends State<Homepg> {
                   ),
                   onPressed: () {
                     assign();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                    return const Studenthomepage();
-                    }));
                   },
                   child: const Text('Login',
                     style:TextStyle(
@@ -136,7 +136,7 @@ class _HomepgState extends State<Homepg> {
                     TextButton(
                       onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                      return const Emailid();
+                      return const Roll();
                     }));
                   },
                       child: Text('Register', style:Theme.of(context).textTheme.titleSmall,),
