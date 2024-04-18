@@ -44,7 +44,7 @@ class _RegistrationState extends State<Registration> {
       }
       else{
         showDialog(
-          barrierDismissible:false,
+          barrierDismissible:true,
           context: context,
          builder: (context){
           return AlertDialog(
@@ -73,7 +73,6 @@ class _RegistrationState extends State<Registration> {
             ],
           );
          }
-        
         );
       }
   }
