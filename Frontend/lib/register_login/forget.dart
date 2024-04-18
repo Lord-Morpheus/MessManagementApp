@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mess/register_login/globalvariables.dart';
-import 'package:mess/register_login/register.dart';
+import 'package:mess/register_login/resetpass.dart';
 
-class OTP extends StatefulWidget {
-  const OTP({super.key});
+class Forget extends StatefulWidget {
+  const Forget({super.key});
 
   @override
-  State<OTP> createState() => _OTPState();
+  State<Forget> createState() => _ForgetState();
 }
 
-class _OTPState extends State<OTP> {
+class _ForgetState extends State<Forget> {
 
-  late String otp;
+  late String roll;
+  late String email;
 
   final TextEditingController textEditingController1=TextEditingController();
 
   assign5(){
-    otp=textEditingController1.text;
-    cred["OTP"]=otp;
+    roll=textEditingController1.text;
+    email="$roll@students.iitmandi.ac.in";
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                      return Reset(roll : roll);
+                    }));
   }
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _OTPState extends State<OTP> {
                 const SizedBox(height:150),
                 const Center(
                   child: Text(
-                    'ENTER OTP',
+                    'Verification',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
@@ -53,16 +56,17 @@ class _OTPState extends State<OTP> {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  'A verification code has been sent to your email address',
+                  'Enter your Institute Roll No.',
                   style:Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  controller: textEditingController1,
                   style:Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Verification Code',
-                    hintText: 'Ex: abc123',
+                    labelText: 'Roll no.',
+                    hintText: 'Ex: B2XXXX',
                     labelStyle:Theme.of(context).textTheme.titleMedium,
                     border:border,
                     enabledBorder: border,
@@ -80,11 +84,9 @@ class _OTPState extends State<OTP> {
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   onPressed: () {
-                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                     // return const Registration();
-                   // }));
+                    assign5();
                   },
-                  child: const Text('Create Account',
+                  child: const Text('Reset Password',
                     style:TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

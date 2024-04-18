@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/forget.dart';
 import 'package:mess/register_login/roll.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 
@@ -99,7 +100,7 @@ class _HomepgState extends State<Homepg> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                      return const Roll();
+                      return const Forget();
                     }));
                   },
                   child: Text('Forgot Password?',
