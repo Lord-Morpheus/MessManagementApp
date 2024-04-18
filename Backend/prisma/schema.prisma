@@ -18,14 +18,15 @@ model Student {
   name        String
   username    String     @unique
   email       String     @unique
-  hostel      String
+  hostel      Hostel?    @relation(fields: [hostelId], references: [id])
+  hostelId    String?
   password    String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  Feedback    Feedback[]
-  Mess        Mess?      @relation(fields: [messId], references: [id])
+  feedback    Feedback[]
+  mess        Mess?      @relation(fields: [messId], references: [id])
   messId      String?
-  MessForm    MessForm[]
+  messForm    MessForm[]
   defaultMess String?
 }
 
@@ -50,32 +51,32 @@ model Mess {
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   Feedback        Feedback[]
-  Menu            Menu[]
   MessForm        MessForm?  @relation(fields: [messFormId], references: [id])
   messFormId      String?
   vendors         Vendor[]
 }
 
 model Hostel {
-  id        String   @id @default(uuid()) @map("_id")
+  id        String    @id @default(uuid()) @map("_id")
   name      String
-  Mess      Mess?    @relation(fields: [messId], references: [id])
+  Mess      Mess?     @relation(fields: [messId], references: [id])
   messId    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Student   Student[]
 }
 
-model Menu {
-  id        String   @id @default(uuid()) @map("_id")
-  mess      Mess     @relation(fields: [messId], references: [id])
-  messId    String
-  breakfast String[]
-  lunch     String[]
-  snacks    String[]
-  dinner    String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+// model Menu {
+//   id        String   @id @default(uuid()) @map("_id")
+//   mess      Mess     @relation(fields: [messId], references: [id])
+//   messId    String
+//   breakfast String[]
+//   lunch     String[]
+//   snacks    String[]
+//   dinner    String[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
 
 model MessForm {
   id          String   @id @default(uuid()) @map("_id")

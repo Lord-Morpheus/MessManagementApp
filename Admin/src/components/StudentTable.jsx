@@ -24,6 +24,24 @@ export function TableComponent({
   batchFilter,
   filteredItems,
 }) {
+  // const [messOptions, setMessOptions] = useState([]);
+
+  // useEffect(() => {
+  //   async function getData() {
+  //     const { data } = await axios.get(
+  //       `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+  //       {
+  //         headers: {
+  //           Authorization: `Admin ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(data);
+  //     setMessOptions(data);
+  //   }
+  //   getData();
+  // }, []);
+
   const onMessChange = useCallback((value) => {
     if (value) {
       setMessFilter(value);
@@ -98,9 +116,9 @@ export function TableComponent({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-36">
-              {messOptions.map(({ mess, key }) => (
-                <DropdownMenuItem key={key} onSelect={() => onMessChange(mess)}>
-                  {mess}
+              {messOptions.map(({ name, id }) => (
+                <DropdownMenuItem key={id} onSelect={() => onMessChange(name)}>
+                  {name.toUpperCase()}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -113,12 +131,12 @@ export function TableComponent({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-36">
-              {hostelOptions.map(({ hostel, key }) => (
+              {hostelOptions.map(({ name, id }) => (
                 <DropdownMenuItem
-                  key={key}
-                  onSelect={() => onHostelChange(hostel)}
+                  key={id}
+                  onSelect={() => onHostelChange(name)}
                 >
-                  {hostel}
+                  {name.toUpperCase()}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>

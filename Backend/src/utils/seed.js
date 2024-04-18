@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client'
-import { studentsData } from './data.js'
+import { studentsData } from '../../prisma/data.js';
 
 const prisma = new PrismaClient()
+
+console.log(process.env.DATABASE_URL);
 
 const seed = async () => {
     try {

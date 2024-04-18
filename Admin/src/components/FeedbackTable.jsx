@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import axios from "axios";
 import {
   Table,
   TableBody,
@@ -123,12 +124,12 @@ const FeedbackTable = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-36">
-                  {messOptions.map(({ mess, key }) => (
+                  {messOptions.map(({ name, id }) => (
                     <DropdownMenuItem
-                      key={key}
-                      onSelect={() => onMessChange(mess)}
+                      key={id}
+                      onSelect={() => onMessChange(name)}
                     >
-                      {mess}
+                      {name.toUpperCase()}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>

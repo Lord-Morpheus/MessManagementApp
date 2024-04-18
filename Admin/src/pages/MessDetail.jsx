@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
+import { messOptions } from "../components/data";
 
 export default function Mess() {
   const token = getToken();
@@ -28,12 +29,9 @@ export default function Mess() {
             <div className="flex flex-col justify-start items-center w-[95%] mt-6 rounded">
               <span className=" mb-8 text-4xl font-bold ">Mess Details</span>
               <div className="flex flex-wrap justify-between w-[90%] gap-4 mb-3">
-                <MessCard2 />
-                <MessCard2 />
-                <MessCard2 />
-                <MessCard2 />
-                <MessCard2 />
-                <MessCard2 />
+                {messOptions.map(({ name, id }) => (
+                  <MessCard2 key={id} mess={name} />
+                ))}
               </div>
             </div>
           </div>
