@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/forget.dart';
 import 'package:mess/register_login/roll.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'dart:convert';
@@ -12,12 +13,15 @@ class Homepg extends StatefulWidget {
 }
 
 class _HomepgState extends State<Homepg> {
-  String roll = '';
-  String pass = '';
+
+  late String roll ;
+  late String pass ;
+
   final TextEditingController textEditingController1 = TextEditingController();
   final TextEditingController textEditingController2 = TextEditingController();
   assign() {
     setState(() {
+
       roll = textEditingController1.text;
       pass = textEditingController2.text;
     });
@@ -124,7 +128,7 @@ class _HomepgState extends State<Homepg> {
               onPressed: () {
                 Navigator.of(context)
                     .pushReplacement(MaterialPageRoute(builder: (context) {
-                  return const Roll();
+                  return const Forget();
                 }));
               },
               child: Text(
@@ -145,12 +149,6 @@ class _HomepgState extends State<Homepg> {
                 assign();
                 await sendLoginRequest();
               },
-              // onPressed: () {
-              //   assign();
-              //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-              //   return const Studenthomepage();
-              //   }));
-              // },
               child: const Text(
                 'Login',
                 style: TextStyle(
@@ -169,8 +167,7 @@ class _HomepgState extends State<Homepg> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
                       return const Roll();
                     }));
                   },

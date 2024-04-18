@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
-import 'package:mess/studentpages/Mess_menu.dart';
-import 'package:mess/studentpages/global_vari.dart';
-import 'package:mess/studentpages/options.dart';
-import 'package:mess/studentpages/qr.dart';
-import 'package:mess/studentpages/studentForm.dart';
+import 'Newmenu.dart';
+import 'global_vari.dart';
+import 'options.dart';
+import 'qr.dart';
+import 'studentForm.dart';
 
 class Newhome extends StatefulWidget {
   const Newhome({super.key}); 
@@ -30,7 +30,7 @@ class _NewhomeState extends State<Newhome> {
             onTap: (){
               if(opt['title']=='MESS MENU'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return const Menu();
+                return  PDFViewerPage();
                 }));
               }
               else if(opt['title']=='MESS PREFERENCE FORM'){
@@ -38,11 +38,11 @@ class _NewhomeState extends State<Newhome> {
                 return StudentForm();
                 }));
               }
-              else{
-                Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return QRViewExample();
-                }));
-              }
+              // else{
+              //   Navigator.of(context).push(MaterialPageRoute(builder: (context){
+              //   return QRViewExample();
+              //   }));
+              // }
             },
             child: Maker(
               title:opt['title'] as String,
