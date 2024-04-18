@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import jwt from 'jsonwebtoken';
 import { deleteOtp } from "./common.controller.js";
+import { studentsData } from "../../prisma/data.js";
 
 const client = new PrismaClient()
 
@@ -122,18 +123,27 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
                 name: true,
                 username: true,
                 email: true,
-                hostel: true,
-                // mess: {
-                //     select: {
-                //         id: true,
-                //         name: true,
-                //         location: true,
-                //     }
-                // }
+                hostel: {
+                    select: {
+                        name: true,
+                    }
+                },
+                mess: {
+                    select: {
+                        name: true,
+                    }
+                }
             }
         });
 
+        for (const user of users) {
+            user.mess = user.mess.name.toUpperCase();
+            user.hostel = user.hostel.name.toUpperCase();
+        }
+
         req.users = users;
+
+        console.log(users);
 
         next(res.status(200).json({ data: users }));
     } catch (err) {
@@ -250,30 +260,84 @@ export const updateStudent = asyncHandler(async (req, res) => {
 });
 
 export const addMess = asyncHandler(async (req, res) => {
-    const { name, vendorId } = req.body;
+    const { mess } = req.body;
 
     try {
-        const mess = await client.mess.create({
+        const messData = await client.mess.create({
             data: {
-                name,
-                vendors: { connect: { id: vendorId } },
+                name: mess.toLowerCase(),
             },
             select: {
                 id: true,
                 name: true,
-                vendors: {
-                    select: {
-                        id: true,
-                        name: true,
-                        username: true,
-                        email: true,
-                        phone: true,
-                    }
-                }
             }
         });
 
-        return res.status(201).json({ data: mess, msg: "Mess added successfully" })
+        return res.status(200).json({ data: messData, msg: "Mess added successfully" })
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const seedData = asyncHandler(async (req, res) => {
+    for (const student of studentsData) {
+        const { name, username, email, password, hostelId, messId } = student
+        const existingUser = await client.student.findFirst({
+            where: {
+                username
+            }
+        });
+        if (existingUser) {
+            await client.student.delete({
+                where: {
+                    username
+                }
+            })
+        }
+        await client.student.create({
+            data: {
+                name,
+                username,
+                email,
+                password,
+                hostel: {
+                    connect: {
+                        id: hostelId
+                    }
+                },
+                mess: {
+                    connect: {
+                        id: messId
+                    }
+                }
+            }
+        })
+        console.log(`Student ${name} added`)
+    }
+    return res.status(200).json({ message: "Data seeded successfully" });
+});
+
+export const addHostel = asyncHandler(async (req, res) => {
+    const { hostel, messId } = req.body;
+
+    try {
+        const hostelData = await client.hostel.create({
+            data: {
+                name: hostel.toLowerCase(),
+                Mess: {
+                    connect: {
+                        id: messId
+                    }
+                }
+            },
+            select: {
+                id: true,
+                name: true,
+            }
+        });
+
+        return res.status(200).json({ data: hostelData, msg: "Mess added successfully" })
     }
     catch (err) {
         return res.status(403).json(err);
@@ -391,4 +455,26 @@ export const messAllocation = asyncHandler(async (req, res) => {
     catch (err) {
         return res.status(403).json(err);
     }
+});
+
+export const getMess = asyncHandler(async (req, res) => {
+    const mess = await client.mess.findMany({
+        select: {
+            id: true,
+            name: true,
+        },
+    });
+    console.log(mess);
+    return res.status(200).json(mess);
+});
+
+export const getHostel = asyncHandler(async (req, res) => {
+    const hostels = await client.hostel.findMany({
+        select: {
+            id: true,
+            name: true,
+        },
+    });
+    console.log(hostels);
+    return res.status(200).json(hostels);
 });

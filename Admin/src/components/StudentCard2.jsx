@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   Table,
   TableHeader,
@@ -15,7 +15,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { columns, users } from "./data";
 import { TableComponent } from "./StudentTable";
-import { exportToExcel } from "../utils/exportToExcel";
 
 const statusColorMap = {
   dining: "success",
@@ -24,6 +23,23 @@ const statusColorMap = {
 };
 
 export default function App() {
+  // const [users, setUsers] = useState([]);
+
+  // useEffect(() => {
+  //   async function getData() {
+  //     const { data } = await axios.get(
+  //       `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
+  //       {
+  //         headers: {
+  //           Authorization: `Admin ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     setUsers(data.data);
+  //   }
+  //   getData();
+  // }, []);
+
   const [filterValue, setFilterValue] = useState("");
   const [messFilter, setMessFilter] = useState("all");
   const [hostelFilter, setHostelFilter] = useState("all");
