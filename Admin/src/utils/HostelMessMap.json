@@ -1,0 +1,115 @@
+{
+  "North_Campus": [
+    {
+      "hostel": "B13",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B14",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B23",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B15",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B22",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B21",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B19",
+      "mess": "Pine Mess"
+    },
+    {
+      "hostel": "B20",
+      "mess": "Oak Mess"
+    },
+    {
+      "hostel": "B8",
+      "mess": "Oak Mess"
+    },
+    {
+      "hostel": "B11",
+      "mess": "Oak Mess"
+    },
+    {
+      "hostel": "B9",
+      "mess": "Oak Mess"
+    },
+    {
+      "hostel": "B17",
+      "mess": "Oak Mess"
+    },
+    {
+      "hostel": "B16",
+      "mess": "Oak Mess"
+    },
+    {
+      "hostel": "B12",
+      "mess": "Alder Mess"
+    },
+    {
+      "hostel": "B10",
+      "mess": "Alder Mess"
+    },
+    {
+      "hostel": "B26",
+      "mess": "Alder Mess"
+    },
+    {
+      "hostel": "B18",
+      "mess": "Alder Mess"
+    }
+  ],
+
+  "South_Campus":[
+    {
+      "hostel": "B2",
+      "mess": "D1 Mess"
+    },
+    {
+      "hostel": "B4",
+      "mess": "D1 Mess"
+    },
+    {
+      "hostel": "G3",
+      "mess": "D1 Mess"
+    },
+    {
+      "hostel": "G2",
+      "mess": "D1 Mess"
+    },
+    {
+      "hostel": "B6",
+      "mess": "D2 Mess"
+    },
+    {
+      "hostel": "B5",
+      "mess": "D2 Mess"
+    },
+    {
+      "hostel": "B7",
+      "mess": "D2 Mess"
+    },
+    {
+      "hostel": "G4",
+      "mess": "D2 Mess"
+    },
+    {
+      "hostel": "B8",
+      "mess": "D3 Mess"
+    },
+    {
+      "hostel": "B9",
+      "mess": "D3 Mess"
+    }
+  ]
+}
