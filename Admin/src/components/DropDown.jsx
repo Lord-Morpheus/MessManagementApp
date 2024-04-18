@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export const DropDown = ({ username, name, email }) => {
@@ -92,6 +93,14 @@ export const DropDown = ({ username, name, email }) => {
             >
               Settings
             </a>
+          </li>
+          <li>
+            <Link
+              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              to={'/messSelect'}
+            >
+              Release Form
+            </Link>
           </li>
         </ul>
       </div>
