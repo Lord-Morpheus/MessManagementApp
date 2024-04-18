@@ -83,7 +83,6 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
         return res.status(200).json({ username, email, message: `OTP send to email ${email}` });
     } catch (err) {
         await deleteOtp(email);
-
         return res.status(403).json(err);
     }
 });
