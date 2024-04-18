@@ -64,6 +64,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 export const loginUser = asyncHandler(async (req, res) => {
     const loginData = req.body;
+    console.log(loginData);
     const { success } = loginSchema.safeParse(loginData);
 
     if (!success) {
@@ -71,6 +72,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     }
 
     const { username, password } = loginData;
+    console.log(username, password)
 
     try {
         const user = await client.student.findUnique({
