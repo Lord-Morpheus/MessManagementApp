@@ -47,7 +47,7 @@ export default function Selection() {
     return (
       <div className="flex justify-between items-center font-bold text-lg">
         <p className="text-2xl">Responses</p>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-1 px-4 rounded">
+        <button class="bg-[#012069dd] hover:bg-[#012169] text-white font-bold my-1 py-1 px-4 rounded">
           Begin allocation
         </button>
       </div>
@@ -64,16 +64,19 @@ export default function Selection() {
             <p className="font-bold text-xl py-3">
               Release Mess Selection Form for this Month
             </p>
-            <div className="flex gap-6 justify-center items-center">
-              <p className="ml-3">
-                Select range of dates you want form to be opened:
-              </p>
-              <Datepicker
-                classNames=""
-                value={value}
-                onChange={handleValueChange}
-              />
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-3 px-4 rounded">
+            <div className="flex gap-6 justify-between items-center w-full">
+              <div className="flex gap-6 justify-center items-center">
+                <p className="ml-3">
+                  Select range of dates you want form to be opened:
+                </p>
+                <Datepicker
+                  classNames=""
+                  value={value}
+                  onChange={handleValueChange}
+                />
+                <input type="" />
+              </div>
+              <button class="bg-[#012069dd] hover:bg-[#012169] text-white font-bold m-3 px-4 rounded">
                 Open Form
               </button>
             </div>
