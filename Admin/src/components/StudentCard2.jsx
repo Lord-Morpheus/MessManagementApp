@@ -54,7 +54,7 @@ export default function App() {
       filteredUsers = filteredUsers.filter(
         (user) =>
           user.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-          user.rollno.toLowerCase().includes(filterValue.toLowerCase())
+          user.username.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
@@ -73,7 +73,7 @@ export default function App() {
     if (batchFilter !== "all") {
       filteredUsers = filteredUsers.filter(
         (user) =>
-          user.rollno.substring(1, 3) ==
+          user.username.substring(1, 3) ==
           batchFilter.substring(batchFilter.length - 2)
       );
     }

@@ -9,9 +9,12 @@ import { authMiddleware } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
+router.get('/authenticate', adminAuthMiddleware, (req, res) => {
+    res.status(200).json({ message: 'Authenticated' });
+});
 router.post('/signup', signUp);
 router.post('/signin', signIn);
-router.get('/students', adminAuthMiddleware, getAllStudents);
+router.get('/students', getAllStudents);
 router.get('/get/:id', adminAuthMiddleware, getStudent);
 router.get('/filter', adminAuthMiddleware, filterMiddleware, filterStudents)
 router.delete('/delete/:id', adminAuthMiddleware, deleteStudent);
@@ -22,7 +25,7 @@ router.get('/export', adminAuthMiddleware, filterMiddleware, exportUser);
 router.post('/add/vendor', adminAuthMiddleware, addVendor);
 router.post('/add/mess', adminAuthMiddleware, addMess);
 router.post('/add/hostel', adminAuthMiddleware, addHostel);
-router.get('/hostels', adminAuthMiddleware, getHostel);
+router.get('/hostels', getHostel);
 router.post('/import/users', upload.single('excelFile'), importUser)
 router.post('/seeddata', seedData);
 router.get('/mess', getMess)

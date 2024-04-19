@@ -10,16 +10,41 @@ import Sidebar from "./sidebar";
 import { useNavigate } from "react-router-dom";
 import { TableComponent } from "../components/StudentTable";
 import { Card } from "../components/ui/card";
+import axios from "axios";
 
 export const StudentsPage = () => {
-  const token = getToken();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
+    async function authenticate() {
+      const token = getToken();
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const data = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/authenticate`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        const status = error.response.status;
+        console.log(status);
+        if (status === 401) {
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
+        } else {
+          console.log("Authenticated");
+          navigate("/home");
+        }
+      }
     }
-  });
+    authenticate();
+  }, []);
 
   const [hostel, setHostel] = useState(null);
   const [mess, setMess] = useState(null);
