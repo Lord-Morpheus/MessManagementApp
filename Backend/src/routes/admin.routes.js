@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getHostel, getMess, getStudent, messAllocation, seedData, seedForms, signIn, signUp, studentID } from '../controllers/admin.controller.js';
+import { addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFormData, getHostel, getMess, getStudent, messAllocation, seedData, seedForms, signIn, signUp, studentID } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/common.controller.js';
 import { exportUser, importUser } from '../controllers/excel.controller.js';
@@ -28,10 +28,11 @@ router.post('/add/hostel', adminAuthMiddleware, addHostel);
 router.get('/hostels', getHostel);
 router.post('/import/users', upload.single('excelFile'), importUser)
 router.post('/seeddata', seedData);
-router.get('/mess', getMess)
+router.get('/mess', authMiddleware, getMess)
 router.get('/studentid', studentID);
 router.get('/seedforms', seedForms);
-router.post('/allocate', messAllocation);
+router.post('/allocate', authMiddleware, messAllocation);
+router.post('getform', authMiddleware, getFormData)
 
 
 export default router;

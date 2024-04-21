@@ -594,3 +594,30 @@ export const seedForms = asyncHandler(async (req, res) => {
     }
     return res.status(200).json({ message: "Forms seeded successfully" });
 });
+
+
+export const getFormData = asyncHandler(async (req, res) => {
+    try {
+        const forms = await client.messForm.findMany({
+            select: {
+                id: true,
+                preferences: true,
+                studentId: true,
+                alloted: true,
+                messId: true,
+                student: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            }
+        });
+
+        console.log(forms);
+        return res.status(200).json(forms);
+    }
+    catch (err) {
+        return res.status(403).json(err);
+    }
+});
