@@ -6,7 +6,7 @@ def convert_mess_name_to_id(data, mess_mapping):
         for preference in item['preferences']:
             for mess in mess_mapping:
                 if preference.lower() == mess['name'].lower():
-                    preferences.append({"id":mess['mess_id']})
+                    preferences.append(mess['mess_id'])
                     break
         item['preferences'] = preferences
     return data

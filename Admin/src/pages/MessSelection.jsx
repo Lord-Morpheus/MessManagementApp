@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import Datepicker from "react-tailwindcss-datepicker";
-import jsonData from "../utils/studentMessPreference.json";
+import jsonData from "../utils/studentPreference.json";
 import {
   Table,
   TableHeader,
