@@ -24,7 +24,7 @@ model Student {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   feedback    Feedback[]
-  mess        Mess?      @relation(fields: [messId], references: [id])
+  // mess        Mess?      @relation(fields: [messId], references: [id])
   messId      String?
   messForm    MessForm[]
   defaultMess String?
@@ -45,25 +45,27 @@ model Feedback {
 
 model Mess {
   id              String     @id @default(uuid()) @map("_id")
-  Students        Student[]
+  // Students        Student[]
   preferredHostel Hostel[]
   name            String
+  capacity        Int?
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   Feedback        Feedback[]
-  MessForm        MessForm?  @relation(fields: [messFormId], references: [id])
-  messFormId      String?
+  // MessForm        MessForm?  @relation(fields: [messFormId], references: [id])
+  // messFormId      String?
   vendors         Vendor[]
 }
 
 model Hostel {
-  id        String    @id @default(uuid()) @map("_id")
-  name      String
-  Mess      Mess?     @relation(fields: [messId], references: [id])
-  messId    String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Student   Student[]
+  id              String    @id @default(uuid()) @map("_id")
+  name            String
+  Mess            Mess?     @relation(fields: [messId], references: [id])
+  messId          String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  Student         Student[]
+  preferredMessId String?
 }
 
 // model Menu {
@@ -82,7 +84,8 @@ model MessForm {
   id          String   @id @default(uuid()) @map("_id")
   student     Student  @relation(fields: [studentId], references: [id])
   studentId   String
-  preferences Mess[]
+  preferences String[]
+  alloted     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

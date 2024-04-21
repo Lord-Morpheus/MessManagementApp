@@ -13,28 +13,26 @@ class Homepg extends StatefulWidget {
 }
 
 class _HomepgState extends State<Homepg> {
-
-  late String roll ;
-  late String pass ;
+  late String roll;
+  late String pass;
 
   final TextEditingController textEditingController1 = TextEditingController();
   final TextEditingController textEditingController2 = TextEditingController();
   assign() {
     setState(() {
-
       roll = textEditingController1.text;
       pass = textEditingController2.text;
     });
   }
 
   Future<void> sendLoginRequest() async {
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/login');
+    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/user/login');
+    final url = Uri.parse('http://192.168.11.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode({'username': roll, 'password': pass});
 
     try {
       final response = await http.post(url, headers: headers, body: body);
-      if (!mounted) return;
       if (response.statusCode == 200) {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) {
@@ -168,7 +166,8 @@ class _HomepgState extends State<Homepg> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
                       return const Roll();
                     }));
                   },
