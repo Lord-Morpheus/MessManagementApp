@@ -3,6 +3,7 @@ import logimg from "../images/login.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../handlers/handleLogin";
 import { getToken } from "../utils/getToken";
+import axios from "axios";
 
 export default function Login() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -14,6 +15,37 @@ export default function Login() {
   function togglePasswordVisibility() {
     setIsPasswordVisible((prevState) => !prevState);
   }
+
+  useEffect(() => {
+    async function authenticate() {
+      const token = getToken();
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const data = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/authenticate`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        const status = error.response.status;
+        console.log(status);
+        if (status === 401) {
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
+        } else {
+          console.log("Authenticated");
+          navigate("/home");
+        }
+      }
+    }
+    authenticate();
+  }, []);
 
   useEffect(() => {
     onkeydown = async (e) => {

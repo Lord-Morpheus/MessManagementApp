@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -13,9 +13,11 @@ import {
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { columns, users } from "./data";
+import { columns } from "./data";
 import { TableComponent } from "./StudentTable";
-
+import { getToken } from "../utils/getToken";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const statusColorMap = {
   dining: "success",
   pass_Out: "danger",
@@ -23,22 +25,37 @@ const statusColorMap = {
 };
 
 export default function App() {
-  // const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     const { data } = await axios.get(
-  //       `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
-  //       {
-  //         headers: {
-  //           Authorization: `Admin ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     setUsers(data.data);
-  //   }
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const token = getToken();
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const usersdata = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        setUsers(usersdata.data);
+      } catch (error) {
+        const status = error.response.status;
+        console.log(status);
+        if (status === 401) {
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      }
+    }
+    fetchData();
+  }, [navigate]);
 
   const [filterValue, setFilterValue] = useState("");
   const [messFilter, setMessFilter] = useState("all");

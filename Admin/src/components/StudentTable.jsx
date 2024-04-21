@@ -10,9 +10,12 @@ import {
 } from "../components/ui/dropdown-menu";
 
 import { TbFileExport } from "react-icons/tb";
-import { useCallback } from "react";
-import { batchOptions, hostelOptions, messOptions } from "./data";
+import { useCallback, useEffect, useState } from "react";
+import { batchOptions } from "./data";
 import { exportToExcel } from "../utils/exportToExcel";
+import { getToken } from "../utils/getToken";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function TableComponent({
   setFilterValue,
@@ -24,23 +27,47 @@ export function TableComponent({
   batchFilter,
   filteredItems,
 }) {
-  // const [messOptions, setMessOptions] = useState([]);
+  const [messOptions, setMessOptions] = useState([]);
+  const [hostelOptions, setHostelOptions] = useState([]);
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     const { data } = await axios.get(
-  //       `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
-  //       {
-  //         headers: {
-  //           Authorization: `Admin ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //     setMessOptions(data);
-  //   }
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const token = getToken();
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const messoptions = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        setMessOptions(messoptions.data);
+        const hosteloptions = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/hostels`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        setHostelOptions(hosteloptions.data);
+      } catch (error) {
+        const status = error.response.status;
+        console.log(status);
+        if (status === 401) {
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      }
+    }
+    fetchData();
+  }, [navigate]);
 
   const onMessChange = useCallback((value) => {
     if (value) {

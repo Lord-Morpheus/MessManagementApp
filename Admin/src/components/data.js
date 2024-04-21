@@ -10,39 +10,39 @@ const columns = [
 ];
 
 
-const messData = await axios.get(
-  `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
-  {
-    headers: {
-      Authorization: `Admin ${localStorage.getItem("token")}`,
-    },
-  }
-);
+// const messData = await axios.get(
+//   `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+//   {
+//     headers: {
+//       Authorization: `Admin ${localStorage.getItem("token")}`,
+//     },
+//   }
+// );
 
-export const messOptions = messData.data;
+// export const messOptions = messData.data;
 
-const hostelData = await axios.get(
-  `${import.meta.env.VITE_BACKEND_URI}/admin/hostels`,
-  {
-    headers: {
-      Authorization: `Admin ${localStorage.getItem("token")}`,
-    },
-  }
-);
+// const hostelData = await axios.get(
+//   `${import.meta.env.VITE_BACKEND_URI}/admin/hostels`,
+//   {
+//     headers: {
+//       Authorization: `Admin ${localStorage.getItem("token")}`,
+//     },
+//   }
+// );
 
 
-export const hostelOptions = hostelData.data;
+// export const hostelOptions = hostelData.data;
 
-const usersData = await axios.get(
-  `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
-  {
-    headers: {
-      Authorization: `Admin ${localStorage.getItem("token")}`,
-    },
-  }
-);
+// const usersData = await axios.get(
+//   `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
+//   {
+//     headers: {
+//       Authorization: `Admin ${localStorage.getItem("token")}`,
+//     },
+//   }
+// );
 
-export const users = usersData.data.data;
+// export const users = usersData.data.data;
 
 // const users = [
 //   {
