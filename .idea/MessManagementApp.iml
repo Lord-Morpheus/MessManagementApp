@@ -9,6 +9,18 @@
       <excludeFolder url="file://$MODULE_DIR$/Frontend/feedback_form_menu/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/feedback_form_menu/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/Frontend/feedback_form_menu/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/feedback_form_menu/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/feedback_form_menu/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/feedback_form_menu/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mess_secretary/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mess_secretary/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mess_secretary/build" />
+      <excludeFolder url="file://$MODULE_DIR$/secretary_feedback/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/secretary_feedback/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/secretary_feedback/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
