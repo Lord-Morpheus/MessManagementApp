@@ -4,6 +4,8 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import Datepicker from "react-tailwindcss-datepicker";
+import { getToken } from "../utils/getToken";
+import { useNavigate } from "react-router-dom";
 // import jsonData from "../utils/studentPreference.json";
 import {
   Table,
@@ -26,9 +28,49 @@ export default function Selection() {
     setValue(newValue);
   };
 
+  const token = getToken();
+  console.log(token);
+  if (!token) {
+    navigate("/login");
+  }
+
+  const fetchData = async () => {
+    const token = getToken();
+    console.log(token);
+    if (!token) {
+      navigate("/login");
+    }
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/getform`,
+        {
+          headers: {
+            Authorization: `Admin ${token}`,
+          },
+        }
+      );
+      const data = response.data.map((item) => ({
+        name: item.student.name,
+        roll_no: item.student.username,
+        preferences_1: item.preferences[0],
+        preference_2: item.preferences[1],
+        preference_3: item.preferences[2],
+        preference_4: item.preferences[3],
+        preference_5: item.preferences[4],
+        allocated: item.alloted ? "Yes" : "No",
+      }));
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   console.log(users);
-  
+
   const columns = [
     { key: "name", label: "Name" },
     { key: "roll_no", label: "Roll No" },
@@ -37,8 +79,7 @@ export default function Selection() {
     { key: "preference_3", label: "Preference 3" },
     { key: "preference_4", label: "Preference 4" },
     { key: "preference_5", label: "Preference 5" },
-    {key:"",label:"allocated"},
-    // {key:"",label:"allocated"},
+    { key: "allocated", label: "Allocated" },
   ];
 
   const rows = users.map((item, index) => ({
@@ -50,17 +91,25 @@ export default function Selection() {
     return item[key];
   };
 
-  async function beginAllocation() {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`);
-  }
+  // async function beginAllocation() {
+  //   try {
+  //     await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`, {
+  //       headers: {
+  //         Authorization: `Admin ${token}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Error starting allocation:", error);
+  //   }
+  // }
 
   const renderTopContent = () => {
     return (
       <div className="flex justify-between items-center font-bold text-lg">
         <p className="text-2xl">Responses</p>
         <button
-          class="bg-[#012069dd] hover:bg-[#012169] text-white font-bold my-1 py-1 px-4 rounded"
-          onClick={beginAllocation()}
+          className="bg-[#012069dd] hover:bg-[#012169] text-white font-bold my-1 py-1 px-4 rounded"
+          // onClick={beginAllocation()}
         >
           Begin allocation
         </button>
@@ -88,11 +137,11 @@ export default function Selection() {
                     <Datepicker value={value} onChange={handleValueChange} />
                   </div>
                 </div>
-                <div class="flex mb-3 w-full items-center">
+                <div className="flex mb-3 w-full items-center">
                   <p className="ml-3">
                     Enter percentage of seats based on proximity:
                   </p>
-                  <div class="mx-2 border" data-twe-input-wrapper-init>
+                  <div className="mx-2 border" data-twe-input-wrapper-init>
                     <input
                       type="number"
                       className="text-center"
@@ -102,7 +151,7 @@ export default function Selection() {
                   </div>
                 </div>
               </div>
-              <button class="bg-[#012069dd] hover:bg-[#012169] text-white font-bold py-3 px-3 mx-2 rounded">
+              <button className="bg-[#012069dd] hover:bg-[#012169] text-white font-bold py-3 px-3 mx-2 rounded">
                 Open Form
               </button>
             </div>
