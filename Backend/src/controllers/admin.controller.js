@@ -120,29 +120,39 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
         const users = await client.student.findMany({
             select: {
                 id: true,
-                name: true,
                 username: true,
+                name: true,
                 email: true,
                 hostel: {
                     select: {
                         name: true,
+                        preferredMessId: true,
                     }
                 },
-                mess: {
-                    select: {
-                        name: true,
-                    }
-                }
+                messId: true,
+            }
+        });
+
+        // console.log(users);
+        const messes = await client.mess.findMany({
+            select: {
+                id: true,
+                name: true
             }
         });
 
         for (const user of users) {
-            user.mess = user.mess.name.toUpperCase();
-            user.hostel = user.hostel.name.toUpperCase();
+            user.hostel = user.hostel.name;
+            if (user.messId) {
+                const mess = messes.find(mess => mess.id === user.messId);
+                user.mess = mess.name;
+            }
+            else {
+                user.mess = "Not assigned";
+            }
         }
 
         req.users = users;
-
         console.log(users);
 
         next(res.status(200).json({ data: users }));

@@ -46,6 +46,7 @@ export function TableComponent({
             },
           }
         );
+        console.log(messoptions.data);
         setMessOptions(messoptions.data);
         const hosteloptions = await axios.get(
           `${import.meta.env.VITE_BACKEND_URI}/admin/hostels`,
@@ -101,9 +102,9 @@ export function TableComponent({
     }
   }, []);
 
-  const onClear = useCallback(() => {
-    setFilterValue("");
-  }, []);
+  // const onClear = useCallback(() => {
+  //   setFilterValue("");
+  // }, []);
 
   return (
     <div key="1" className="px-4 md:px-6 py-6 md:py-8 space-y-6">
@@ -128,7 +129,7 @@ export function TableComponent({
               placeholder="Search by name or student ID"
               type="search"
               onChange={(e) => onSearchChange(e.target.value)}
-              onClear={() => onClear()}
+              // onClear={() => onClear()}
             ></Input>
           </div>
         </div>
