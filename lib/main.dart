@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:mess/register_login/login.dart';
+>>>>>>> 414d9216646f0056a1a6e2ea01104d0a4e665715
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+<<<<<<< HEAD
   const MyApp({Key? key});
+=======
+  const MyApp({super.key});
+>>>>>>> 414d9216646f0056a1a6e2ea01104d0a4e665715
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+<<<<<<< HEAD
       title: 'Dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -230,3 +239,53 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+=======
+      debugShowCheckedModeBanner: false,
+      title: 'Mess Management',
+      theme: ThemeData(
+        fontFamily: 'Lato',
+        colorScheme: ColorScheme.fromSeed(
+          seedColor:const Color.fromARGB(255, 62, 20, 167),
+          primary: const Color.fromARGB(255, 91, 65, 143),
+        ),
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16, 
+          ),
+          prefixIconColor: Color.fromRGBO(119, 119,119,1),
+        ),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 35,
+          ),
+          titleMedium: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+          bodySmall: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+          titleSmall:  TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color:Color.fromARGB(255, 36, 27, 173),
+            decoration: TextDecoration.underline,
+          ),
+        ),
+        useMaterial3: true,
+      ),
+      home:const Homepg(),
+    );
+  }
+}
+>>>>>>> 414d9216646f0056a1a6e2ea01104d0a4e665715

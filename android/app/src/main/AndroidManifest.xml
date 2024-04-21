@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+<<<<<<< HEAD
         android:label="dash"
+=======
+        android:label="mess"
+>>>>>>> 414d9216646f0056a1a6e2ea01104d0a4e665715
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
