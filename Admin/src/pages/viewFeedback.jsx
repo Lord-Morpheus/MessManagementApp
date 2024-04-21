@@ -17,6 +17,7 @@ export default function Home() {
         navigate("/login");
       }
       try {
+        console.log(token);
         const data = await axios.get(
           `${import.meta.env.VITE_BACKEND_URI}/admin/authenticate`,
           {

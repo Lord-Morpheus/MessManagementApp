@@ -28,11 +28,11 @@ router.post('/add/hostel', adminAuthMiddleware, addHostel);
 router.get('/hostels', getHostel);
 router.post('/import/users', upload.single('excelFile'), importUser)
 router.post('/seeddata', seedData);
-router.get('/mess', authMiddleware, getMess)
+router.get('/mess', adminAuthMiddleware, getMess)
 router.get('/studentid', studentID);
 router.get('/seedforms', seedForms);
-router.post('/allocate', authMiddleware, messAllocation);
-router.post('/getform', authMiddleware, getFormData)
+router.post('/allocate', adminAuthMiddleware, messAllocation);
+router.post('/getform', adminAuthMiddleware, getFormData)
 
 
 export default router;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MessCard1 from "../components/MessCard";
 import MessCard2 from "../components/MessCard2";
 import Navbar from "./Navbar";
@@ -6,10 +6,11 @@ import Sidebar from "./sidebar";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { TbUserStar } from "react-icons/tb";
 
 export default function Mess() {
   const navigate = useNavigate();
-  const [messOptions, setMessOptions] = messOptions;
+  const [messOptions, setMessOptions] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,7 +27,8 @@ export default function Mess() {
             },
           }
         );
-        setMessOptions(messoptions.data);
+        const data = messoptions.data;
+        setMessOptions(data);
       } catch (error) {
         const status = error.response.status;
         console.log(status);
@@ -52,9 +54,13 @@ export default function Mess() {
             <div className="flex flex-col justify-start items-center w-[95%] mt-6 rounded">
               <span className=" mb-8 text-4xl font-bold ">Mess Details</span>
               <div className="flex flex-wrap justify-between w-[90%] gap-4 mb-3">
-                {messOptions.map(({ name, id }) => (
-                  <MessCard2 key={id} mess={name} />
-                ))}
+                {messOptions ? (
+                  messOptions.map(({ name, id }) => (
+                    <MessCard2 key={id} mess={name} />
+                  ))
+                ) : (
+                  <div>Loading...</div>
+                )}
               </div>
             </div>
           </div>

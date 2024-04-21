@@ -19,6 +19,7 @@ export default function Login() {
   useEffect(() => {
     async function authenticate() {
       const token = getToken();
+      // console.log(token);
       if (!token) {
         navigate("/login");
       }
@@ -40,6 +41,7 @@ export default function Login() {
           navigate("/login");
         } else {
           console.log("Authenticated");
+          console.log(token);
           navigate("/home");
         }
       }
@@ -53,6 +55,7 @@ export default function Login() {
         setClicked(() => true);
         await handleLogin({ username, password });
         if (getToken()) {
+          console.log(getToken());
           navigate("/home");
         }
       }

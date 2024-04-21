@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -37,7 +38,7 @@ export default function Selection() {
     { key: "preference_4", label: "Preference 4" },
     { key: "preference_5", label: "Preference 5" },
     {key:"",label:"allocated"},
-    {key:"",label:"allocated"},
+    // {key:"",label:"allocated"},
   ];
 
   const rows = users.map((item, index) => ({
@@ -50,7 +51,7 @@ export default function Selection() {
   };
 
   async function beginAllocation() {
-    // await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`);
+    await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`);
   }
 
   const renderTopContent = () => {
