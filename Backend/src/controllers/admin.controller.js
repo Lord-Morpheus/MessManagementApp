@@ -318,6 +318,17 @@ export const seedData = asyncHandler(async (req, res) => {
     return res.status(200).json({ message: "Data seeded successfully" });
 });
 
+export const studentID = asyncHandler(async (req, res) => {
+    const users = await client.mess.findMany({
+        select: {
+            id: true,
+            name: true,
+        }
+    });
+    console.log(users);
+    return res.status(200).json(users);
+});
+
 export const addHostel = asyncHandler(async (req, res) => {
     const { hostel, messId } = req.body;
 
@@ -388,10 +399,10 @@ export const messAllocation = asyncHandler(async (req, res) => {
 
     try {
         const messOptions = await client.mess.findMany({
-            where: {},
             select: {
                 id: true,
                 name: true,
+                capacity: true,
             }
         });
 
@@ -401,14 +412,27 @@ export const messAllocation = asyncHandler(async (req, res) => {
                     gte: startDate,
                     lte: endDate
                 }
+            },
+            select: {
+                id: true,
+                createdAt: true,
+                preferences: true,
+                student: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
             }
         });
+
+        console.log(messOptions, messForms);
 
         const remainingForms = [];
 
         // Allocated first come first serve basis store not assigned forms
         for (mess in messOptions) {
-            const filteredForms = messForms.filter(form => form.messId === mess.id);
+            const filteredForms = messForms.filter(form => form.prefernces[0] === mess.id);
 
             filteredForms.sort((a, b) => {
                 return new Date(a.createdAt) - new Date(b.createdAt);
@@ -477,4 +501,24 @@ export const getHostel = asyncHandler(async (req, res) => {
     });
     console.log(hostels);
     return res.status(200).json(hostels);
+});
+
+export const seedForms = asyncHandler(async (req, res) => {
+    for (const form of formData) {
+        const { studentId, preferences } = form;
+        await client.messForm.create({
+            data: {
+                student: {
+                    connect: {
+                        id: studentId
+                    }
+                },
+                Mess: {
+                    connect: preferences
+                },
+            }
+        })
+        console.log(`Form for ${studentId} added`)
+    }
+    return res.status(200).json({ message: "Forms seeded successfully" });
 });
