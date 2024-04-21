@@ -105,7 +105,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
 export const getUser = asyncHandler(async (req, res) => {
 
-    const user = await client.student.findUnique({
+    const user = await client.student.findFirst({
         where: {
             id: req.user.id,
         },
@@ -114,19 +114,28 @@ export const getUser = asyncHandler(async (req, res) => {
             name: true,
             username: true,
             email: true,
-            hostel: true,
-            defaultMess: true,
-            // mess: {
-            //     select: {
-            //         id: true,
-            //         name: true,
-            //         location: true,
-            //     },
-            // }
+            hostel: {
+                select: {
+                    id: true,
+                    name: true,
+                },
+            },
+            messId: true,
+            feedbacks: true
         },
     });
-    // console.log(user);
-    return res.status(200).json(user);
+
+    const mess = await client.mess.findFirst({
+        where: {
+            id: user.messId,
+        },
+        select: {
+            id: true,
+            name: true,
+        },
+    });
+
+    return res.status(200).json(user, mess);
 });
 
 export const updatePassword = asyncHandler(async (req, res) => {
@@ -250,6 +259,41 @@ export const getFeedbacks = asyncHandler(async (req, res) => {
         });
 
         return res.status(200).json(feedbacks);
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const submitForm = asyncHandler(async (req, res) => {
+    const { preferences } = req.body;
+    const { success } = z.object({
+        preferences: z.array(z.string()),
+    }).safeParse(req.body);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+        const studentId = req.user.id;
+        const user = await client.student.findFirst({
+            where: {
+                id: studentId,
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const form = await client.messForm.create({
+            data: {
+                studentId,
+                preferences,
+            },
+        });
+
+        return res.status(200).json(form);
     } catch (err) {
         return res.status(403).json(err);
     }
