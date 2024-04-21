@@ -38,11 +38,11 @@ class _NewhomeState extends State<Newhome> {
                 return StudentForm();
                 }));
               }
-              // else{
-              //   Navigator.of(context).push(MaterialPageRoute(builder: (context){
-              //   return QRViewExample();
-              //   }));
-              // }
+              else{
+                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return ScanQrPage();
+                }));
+              }
             },
             child: Maker(
               title:opt['title'] as String,

@@ -34,6 +34,7 @@ class _HomepgState extends State<Homepg> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+      if (!mounted) return;
       if (response.statusCode == 200) {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) {

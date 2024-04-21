@@ -1,84 +1,77 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:http/http.dart' as http;
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:tiny_alert/tiny_alert.dart';
 
-class QRViewExample extends StatefulWidget {
+class ScanQrPage extends StatefulWidget {
+  const ScanQrPage({super.key}); 
   @override
-  _QRViewExampleState createState() => _QRViewExampleState();
+  State<ScanQrPage> createState() => _ScanQrPageState();
 }
 
-class _QRViewExampleState extends State<QRViewExample> {
-  Barcode? result;
-  QRViewController? controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  final double scanArea = 300.0; // Define your custom scan area size
+class _ScanQrPageState extends State<ScanQrPage> {
+  String? scannedData;
+  bool dataSent = false;
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
+  Future<void> sendQRData(String data) async {
+    final url = Uri.parse('http://192.168.11.166:3000/api/test');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode({'scannedMess': data});
+    print('trying to send data');
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (!mounted) return;
+      if (response.statusCode == 200) {
+        TinyAlert.success(
+          context,
+          title: "Success!",
+          message: "Your mess has been verified successfully!",
+        );
+        print('data sent successfully');
+      } else {
+        TinyAlert.error(
+          context,
+          title: "Failure!",
+          message: "Your mess verification has failed!",
+        );
+        print('Failed to send data: ${response.body}');
+      }
+    } catch (e) {
+      print('Network error: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Scanner'),
+        title: const Text('Scan QR Code'),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                _buildQrView(context),
-                _buildScanArea(context),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Result: ${result!.code}',
-                      style: TextStyle(fontSize: 20),
-                    )
-                  : Text(
-                      'Scan a QR code',
-                      style: TextStyle(fontSize: 20),
-                    ),
-            ),
-          ),
-        ],
+      body: MobileScanner(
+        controller: MobileScannerController(
+          detectionSpeed: DetectionSpeed.noDuplicates,
+        ),
+        onDetect: (capture) {
+          if (!dataSent) {
+            final List<Barcode> barcodes = capture.barcodes;
+            for (final barcode in barcodes) {
+              setState(() {
+                scannedData = barcode.rawValue;
+              });
+              print('QR Code scanned: $scannedData');
+              if (scannedData != null) {
+                sendQRData(scannedData!);
+                setState(() {
+                  dataSent = true;
+                });
+                print('data sent successfully');
+                break;
+              }
+            }
+          }
+        },
       ),
     );
-  }
-
-  Widget _buildQrView(BuildContext context) {
-    return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-    );
-  }
-
-  Widget _buildScanArea(BuildContext context) {
-    return Container(
-      width: scanArea,
-      height: scanArea,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.yellow, width: 2.0),
-      ),
-    );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-      print('scanned QR code: ${scanData.code}');
-    });
   }
 }
