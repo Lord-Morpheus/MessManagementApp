@@ -25,7 +25,7 @@ export default function Selection() {
     setValue(newValue);
   };
 
-  
+
   console.log(users);
   
   const columns = [
@@ -50,7 +50,7 @@ export default function Selection() {
   };
 
   async function beginAllocation() {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`);
+    // await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`);
   }
 
   const renderTopContent = () => {
