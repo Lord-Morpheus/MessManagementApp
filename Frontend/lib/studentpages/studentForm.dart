@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'student_feedback.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:tiny_alert/tiny_alert.dart';
 
 final _formkey = GlobalKey<FormState>();
 
@@ -56,9 +57,19 @@ class _StudentFormState extends State<StudentForm> {
       if (response.statusCode == 200) {
         // Request successful
         print('Preferences submitted successfully');
+        TinyAlert.success(
+          context,
+          title: "Success!",
+          message: "Preferences Submitted successfully!",
+        );
       } else {
         // Request failed
         print('Failed to submit preferences. Error: ${response.statusCode}');
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "Unable to submit Preferences, try again",
+        );
       }
     } catch (e) {
       // Handle exceptions
