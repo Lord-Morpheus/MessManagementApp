@@ -28,44 +28,39 @@ export default function Selection() {
     setValue(newValue);
   };
 
-  const token = getToken();
-  console.log(token);
-  if (!token) {
-    navigate("/login");
-  }
-
-  const fetchData = async () => {
-    const token = getToken();
-    console.log(token);
-    if (!token) {
-      navigate("/login");
-    }
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/admin/getform`,
-        {
-          headers: {
-            Authorization: `Admin ${token}`,
-          },
-        }
-      );
-      const data = response.data.map((item) => ({
-        name: item.student.name,
-        roll_no: item.student.username,
-        preferences_1: item.preferences[0],
-        preference_2: item.preferences[1],
-        preference_3: item.preferences[2],
-        preference_4: item.preferences[3],
-        preference_5: item.preferences[4],
-        allocated: item.alloted ? "Yes" : "No",
-      }));
-      setUsers(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const token = getToken();
+      console.log(token);
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/getform`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        const data = response.data.map((item) => ({
+          name: item.student.name,
+          roll_no: item.student.username,
+          preferences_1: item.preferences[0],
+          preference_2: item.preferences[1],
+          preference_3: item.preferences[2],
+          preference_4: item.preferences[3],
+          preference_5: item.preferences[4],
+          allocated: item.alloted ? "Yes" : "No",
+        }));
+        setUsers(data);
+        console.log("hello");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
     fetchData();
   }, []);
 
@@ -91,17 +86,22 @@ export default function Selection() {
     return item[key];
   };
 
-  // async function beginAllocation() {
-  //   try {
-  //     await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`, {
-  //       headers: {
-  //         Authorization: `Admin ${token}`,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.error("Error starting allocation:", error);
-  //   }
-  // }
+  async function beginAllocation() {
+    const token = getToken();
+    console.log(token);
+    if (!token) {
+      navigate("/login");
+    }
+    try {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`, {
+        headers: {
+          Authorization: `Admin ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("Error starting allocation:", error);
+    }
+  }
 
   const renderTopContent = () => {
     return (
@@ -109,7 +109,7 @@ export default function Selection() {
         <p className="text-2xl">Responses</p>
         <button
           className="bg-[#012069dd] hover:bg-[#012169] text-white font-bold my-1 py-1 px-4 rounded"
-          // onClick={beginAllocation()}
+          onClick={beginAllocation}
         >
           Begin allocation
         </button>
