@@ -5,7 +5,6 @@ import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/com
 import { exportUser, importUser } from '../controllers/excel.controller.js';
 import { filterMiddleware } from '../middlewares/filter.middleware.js';
 import { upload } from '../middlewares/multer.middleware.js';
-import { authMiddleware } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
@@ -28,7 +27,7 @@ router.post('/add/hostel', adminAuthMiddleware, addHostel);
 router.get('/hostels', getHostel);
 router.post('/import/users', upload.single('excelFile'), importUser)
 router.post('/seeddata', seedData);
-router.get('/mess', adminAuthMiddleware, getMess)
+router.get('/mess', getMess)
 router.get('/studentid', studentID);
 router.get('/seedforms', seedForms);
 router.post('/allocate', adminAuthMiddleware, messAllocation);

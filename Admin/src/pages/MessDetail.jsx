@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import MessCard1 from "../components/MessCard";
 import MessCard2 from "../components/MessCard2";
 import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { TbUserStar } from "react-icons/tb";
 
 export default function Mess() {
   const navigate = useNavigate();
-  const [messOptions, setMessOptions] = useState(null);
+  const [messOptions, setMessOptions] = useState([]);
 
   useEffect(() => {
     async function fetchData() {

@@ -28,6 +28,13 @@ export default function App() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  const [filterValue, setFilterValue] = useState("");
+  const [messFilter, setMessFilter] = useState("all");
+  const [hostelFilter, setHostelFilter] = useState("all");
+  const [batchFilter, setBatchFilter] = useState("all");
+
+  const hasSearchFilter = Boolean(filterValue);
+
   useEffect(() => {
     async function fetchData() {
       const token = getToken();
@@ -36,14 +43,16 @@ export default function App() {
       }
       try {
         const usersdata = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+          `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
           {
             headers: {
               Authorization: `Admin ${token}`,
             },
           }
         );
-        setUsers(usersdata.data);
+        // console.log(usersdata.data.data);
+
+        setUsers(usersdata.data.data);
       } catch (error) {
         const status = error.response.status;
         console.log(status);
@@ -57,47 +66,67 @@ export default function App() {
     fetchData();
   }, [navigate]);
 
-  const [filterValue, setFilterValue] = useState("");
-  const [messFilter, setMessFilter] = useState("all");
-  const [hostelFilter, setHostelFilter] = useState("all");
-  const [batchFilter, setBatchFilter] = useState("all");
+  const filteredItems = [...users];
 
-  const hasSearchFilter = Boolean(filterValue);
+  // const filteredItems = useMemo(() => {
+  //   let filteredUsers = [...users];
+  //   console.log(filteredUsers);
 
-  const filteredItems = useMemo(() => {
-    let filteredUsers = [...users];
+  //   if (hasSearchFilter) {
+  //     filteredUsers = filteredUsers.filter(
+  //       (user) =>
+  //         user.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+  //         user.username.toLowerCase().includes(filterValue.toLowerCase())
+  //     );
+  //   }
 
-    if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter(
-        (user) =>
-          user.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-          user.username.toLowerCase().includes(filterValue.toLowerCase())
-      );
-    }
+  //   if (messFilter !== "all") {
+  //     filteredUsers = filteredUsers.filter((user) =>
+  //       user.mess.toLowerCase().includes(messFilter.toLowerCase())
+  //     );
+  //   }
+  //   if (hostelFilter !== "all") {
+  //     // console.log("hostelFilter");
+  //     filteredUsers = filteredUsers.filter((user) =>
+  //       user.hostel.toLowerCase().includes(hostelFilter.toLowerCase())
+  //     );
+  //   }
 
-    if (messFilter !== "all") {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.mess.toLowerCase().includes(messFilter.toLowerCase())
-      );
-    }
-    if (hostelFilter !== "all") {
-      console.log("hostelFilter");
-      filteredUsers = filteredUsers.filter((user) =>
-        user.hostel.toLowerCase().includes(hostelFilter.toLowerCase())
-      );
-    }
+  //   if (batchFilter !== "all") {
+  //     filteredUsers = filteredUsers.filter(
+  //       (user) =>
+  //         user.username.substring(1, 3) ==
+  //         batchFilter.substring(batchFilter.length - 2)
+  //     );
+  //   }
 
-    if (batchFilter !== "all") {
-      filteredUsers = filteredUsers.filter(
-        (user) =>
-          user.username.substring(1, 3) ==
-          batchFilter.substring(batchFilter.length - 2)
-      );
-    }
+  //   return filteredUsers;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [users, filterValue, messFilter, hostelFilter, batchFilter]);
 
-    return filteredUsers;
+  const topContent = useMemo(() => {
+    return TableComponent({
+      setFilterValue,
+      setMessFilter,
+      messFilter,
+      setHostelFilter,
+      hostelFilter,
+      setBatchFilter,
+      batchFilter,
+      filteredItems,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users, filterValue, messFilter, hostelFilter, batchFilter]);
+  }, [
+    filterValue,
+    setFilterValue,
+    messFilter,
+    setMessFilter,
+    hostelFilter,
+    setHostelFilter,
+    batchFilter,
+    setBatchFilter,
+    filteredItems,
+  ]);
 
   const renderCell = useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -148,30 +177,6 @@ export default function App() {
         return cellValue;
     }
   }, []);
-
-  const topContent = useMemo(() => {
-    return TableComponent({
-      setFilterValue,
-      setMessFilter,
-      messFilter,
-      setHostelFilter,
-      hostelFilter,
-      setBatchFilter,
-      batchFilter,
-      filteredItems,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    filterValue,
-    setFilterValue,
-    messFilter,
-    setMessFilter,
-    hostelFilter,
-    setHostelFilter,
-    batchFilter,
-    setBatchFilter,
-    filteredItems,
-  ]);
 
   return (
     <Table
