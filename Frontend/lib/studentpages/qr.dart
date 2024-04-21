@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -11,11 +12,23 @@ class ScanQrPage extends StatefulWidget {
 }
 
 class _ScanQrPageState extends State<ScanQrPage> {
+  final player=AudioPlayer();
   String? scannedData;
   bool dataSent = false;
 
+  Future<void> playSound( bool flag) async{
+      if(flag){
+        String audiopath='audio/success.mpeg';
+        await player.play(AssetSource(audiopath));
+      }
+      else{
+        String audiopath='audio/rejection.mpeg';
+        await player.play(AssetSource(audiopath));
+      }
+    }
+
   Future<void> sendQRData(String data) async {
-    final url = Uri.parse('http://192.168.11.166:3000/api/test');
+    final url = Uri.parse('http://192.168.121.140:3000/api/test');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({'scannedMess': data});
     print('trying to send data');
@@ -23,6 +36,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
       final response = await http.post(url, headers: headers, body: body);
       if (!mounted) return;
       if (response.statusCode == 200) {
+        playSound(true);
         TinyAlert.success(
           context,
           title: "Success!",
@@ -30,6 +44,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
         );
         print('data sent successfully');
       } else {
+        playSound(false);
         TinyAlert.error(
           context,
           title: "Failure!",
