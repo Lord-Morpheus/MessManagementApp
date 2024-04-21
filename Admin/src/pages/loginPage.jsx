@@ -119,7 +119,7 @@ export default function Login() {
               </div>
             </div>
             <div className="mb-3 flex justify-end font-normal mt-2">
-              <Link className="text-blue-600 underline" to="/Signup">
+              <Link className="text-blue-600 underline" to="/signup">
                 Forgot password
               </Link>
             </div>

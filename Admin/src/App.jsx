@@ -6,6 +6,7 @@ import Home from "./pages/HomePage";
 import Signup from "./pages/signupPage";
 import GetOTP from "./pages/getOTP";
 import Mess from "./pages/MessDetail";
+import Forgot from "./pages/verifyOTP";
 import ViewFeedback from "./pages/viewFeedback";
 import { StudentsPage } from "./pages/StudentsPage";
 import { MessMenu } from "./pages/MessMenu";
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/form" element={<Form />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/getOTP" element={<GetOTP />} />
+          <Route exact path="/verifyOTP" element={<Forgot />} />
           <Route exact path="/mess" element={<Mess />} />
           <Route exact path="/viewFeedback" element={<ViewFeedback />} />
           <Route exact path="/student" element={<StudentsPage />} />
