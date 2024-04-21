@@ -19,13 +19,46 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { ChevronDownIcon } from "./StudentTable";
-import { categoryOptions, feedbacks, messOptions } from "./data";
+import { getToken } from "../utils/getToken";
+import { useNavigate } from "react-router-dom";
+import { categoryOptions, feedbacks } from "./data";
 
 const FeedbackTable = () => {
   const [messFilter, setMessFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [searchFilter, setSearchFilter] = useState("");
   const hasSearchFilter = Boolean(searchFilter);
+  const [messOptions, setMessOptions] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchData() {
+      const token = getToken();
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const messoptions = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        setMessOptions(messoptions.data);
+      } catch (error) {
+        const status = error.response.status;
+        console.log(status);
+        if (status === 401) {
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      }
+    }
+    fetchData();
+  }, [navigate]);
 
   const onMessChange = useCallback((value) => {
     if (value) {

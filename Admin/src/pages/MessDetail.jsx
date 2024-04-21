@@ -5,27 +5,28 @@ import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
-import { messOptions } from "../components/data";
 import axios from "axios";
 
 export default function Mess() {
   const navigate = useNavigate();
+  const [messOptions, setMessOptions] = messOptions;
 
   useEffect(() => {
-    async function authenticate() {
+    async function fetchData() {
       const token = getToken();
       if (!token) {
         navigate("/login");
       }
       try {
-        const data = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URI}/admin/authenticate`,
+        const messoptions = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
           {
             headers: {
               Authorization: `Admin ${token}`,
             },
           }
         );
+        setMessOptions(messoptions.data);
       } catch (error) {
         const status = error.response.status;
         console.log(status);
@@ -33,14 +34,11 @@ export default function Mess() {
           console.log("Not Authenticated");
           localStorage.removeItem("token");
           navigate("/login");
-        } else {
-          console.log("Authenticated");
-          navigate("/home");
         }
       }
     }
-    authenticate();
-  }, []);
+    fetchData();
+  }, [navigate]);
 
   return (
     <div className="flex">
