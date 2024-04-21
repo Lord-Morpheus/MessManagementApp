@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 414d9216646f0056a1a6e2ea01104d0a4e665715
 # Miscellaneous
 *.class
 *.log
@@ -42,6 +45,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+<<<<<<< HEAD
+=======
 =======
 .DS_Store
 >>>>>>> 4d1c0da791c7cd1727f93b8e981321e803363c3c
+>>>>>>> 414d9216646f0056a1a6e2ea01104d0a4e665715
