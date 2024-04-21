@@ -6,29 +6,28 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:tiny_alert/tiny_alert.dart';
 
 class ScanQrPage extends StatefulWidget {
-  const ScanQrPage({super.key}); 
+  const ScanQrPage({super.key});
   @override
   State<ScanQrPage> createState() => _ScanQrPageState();
 }
 
 class _ScanQrPageState extends State<ScanQrPage> {
-  final player=AudioPlayer();
+  final player = AudioPlayer();
   String? scannedData;
   bool dataSent = false;
 
-  Future<void> playSound( bool flag) async{
-      if(flag){
-        String audiopath='audio/success.mpeg';
-        await player.play(AssetSource(audiopath));
-      }
-      else{
-        String audiopath='audio/rejection.mpeg';
-        await player.play(AssetSource(audiopath));
-      }
+  Future<void> playSound(bool flag) async {
+    if (flag) {
+      String audiopath = 'audio/success.mpeg';
+      await player.play(AssetSource(audiopath));
+    } else {
+      String audiopath = 'audio/failure.mp3';
+      await player.play(AssetSource(audiopath));
     }
+  }
 
   Future<void> sendQRData(String data) async {
-    final url = Uri.parse('http://192.168.121.140:3000/api/test');
+    final url = Uri.parse('http://192.168.11.166:3000/api/verify');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({'scannedMess': data});
     print('trying to send data');
