@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import jwt from 'jsonwebtoken';
 import { deleteOtp } from "./common.controller.js";
-import { studentsData } from "../../prisma/data.js";
+import { formData, formData2, formData4, formData5, studentsData } from "../../prisma/data.js";
 
 const client = new PrismaClient()
 
@@ -282,7 +282,7 @@ export const addMess = asyncHandler(async (req, res) => {
 
 export const seedData = asyncHandler(async (req, res) => {
     for (const student of studentsData) {
-        const { name, username, email, password, hostelId, messId } = student
+        const { name, username, email, password, hostelId } = student
         const existingUser = await client.student.findFirst({
             where: {
                 username
@@ -306,11 +306,11 @@ export const seedData = asyncHandler(async (req, res) => {
                         id: hostelId
                     }
                 },
-                mess: {
-                    connect: {
-                        id: messId
-                    }
-                }
+                // mess: {
+                //     connect: {
+                //         id: messId
+                //     }
+                // }
             }
         })
         console.log(`Student ${name} added`)
@@ -319,10 +319,9 @@ export const seedData = asyncHandler(async (req, res) => {
 });
 
 export const studentID = asyncHandler(async (req, res) => {
-    const users = await client.mess.findMany({
+    const users = await client.student.findMany({
         select: {
             id: true,
-            name: true,
         }
     });
     console.log(users);
@@ -395,9 +394,10 @@ export const getFeedbacks = asyncHandler(async (req, res) => {
 });
 
 export const messAllocation = asyncHandler(async (req, res) => {
-    const { startDate, endDate, ratio } = req.body;
+    // const { startDate, endDate, ratio } = req.body;
 
     try {
+        const ratio = 0.75
         const messOptions = await client.mess.findMany({
             select: {
                 id: true,
@@ -406,17 +406,29 @@ export const messAllocation = asyncHandler(async (req, res) => {
             }
         });
 
-        const messForms = await client.messForm.findMany({
-            where: {
-                createdAt: {
-                    gte: startDate,
-                    lte: endDate
-                }
-            },
+        const capacities = messOptions.map(mess => {
+            if (!mess.capacity) {
+                return 1000;
+            } else {
+                return mess.capacity * ratio;
+            }
+        });
+        const allocatedForms = [0, 0, 0, 0, 0, 0, 0, 0];
+
+
+        let messForms = await client.messForm.findMany({
+            // where: {
+            //     createdAt: {
+            //         gte: startDate,
+            //         lte: endDate
+            //     }
+            // },
             select: {
                 id: true,
                 createdAt: true,
                 preferences: true,
+                studentId: true,
+                alloted: true,
                 student: {
                     select: {
                         id: true,
@@ -426,57 +438,117 @@ export const messAllocation = asyncHandler(async (req, res) => {
             }
         });
 
-        console.log(messOptions, messForms);
+        // console.log('messOPtions', messOptions);
+        // console.log('messForms', messForms);
 
-        const remainingForms = [];
+
+        // for (let i = 0; i < messForms.length; i++) {
+        //     // console.log(messForms[i])
+        //     console.log(messForms[i].student.name)
+        //     // console.log(messForms[i].preferences[0]);
+        //     console.log(messForms[i].preferences);
+
+        // }
 
         // Allocated first come first serve basis store not assigned forms
-        for (mess in messOptions) {
-            const filteredForms = messForms.filter(form => form.prefernces[0] === mess.id);
+        for (let i = 0; i < 5; i++) {
+            let idx = 0;
+            for (const mess of messOptions) {
+                // console.log(mess.name)
+                // const filteredForms = messForms.filter(form => form.preferences[i] === mess.id);
 
-            filteredForms.sort((a, b) => {
-                return new Date(a.createdAt) - new Date(b.createdAt);
-            });
+                // filteredForms.sort((a, b) => {
+                //     return new Date(a.createdAt) - new Date(b.createdAt);
+                // });
 
-            const capacity = mess.capacity;
 
-            const fcfsRatio = ratio * capacity;
+                let fcfsRatio = capacities[idx];
+                // idx++;
+                // console.log(fcfsRatio);
 
-            for (form in filteredForms) {
-                if (fcfsRatio > 0) {
-                    const updatedUser = await client.student.update({
-                        where: {
-                            id: form.studentId
-                        },
-                        data: {
-                            mess: {
-                                connect: {
-                                    id: mess.id
-                                }
+                for (const form of messForms) {
+                    if (fcfsRatio > 0 && form.preferences[i] === mess.id && !form.alloted) {
+                        const updatedUser = await client.student.update({
+                            where: {
+                                id: form.studentId
+                            },
+                            data: {
+                                messId: mess.id
+                            },
+                            select: {
+                                id: true,
+                                name: true,
+                                username: true,
+                                email: true,
+                                hostel: true,
+                                messId: true
                             }
-                        },
-                        select: {
-                            id: true,
-                            name: true,
-                            username: true,
-                            email: true,
-                            hostel: true,
-                            mess: true
-                        }
-                    });
-                    fcfsRatio--;
+                        });
+                        await client.messForm.update({
+                            where: {
+                                id: form.id
+                            },
+                            data: {
+                                alloted: true
+                            }
+                        });
+                        // console.log(updatedUser);
+                        form.alloted = true;
+                        fcfsRatio--;
+                    }
                 }
-            }
 
-            const remainingForm = filteredForms.slice(fcfsRatio);
-            remainingForms.push(...remainingForm);
+                allocatedForms[idx] += (capacities[idx] - fcfsRatio);
+
+                capacities[idx] = fcfsRatio;
+                idx++;
+                // console.log(mess.name, messForms.length);
+            }
+        }
+
+        for (const form of messForms) {
+            if (!form.alloted) {
+                const student = await client.student.findFirst({
+                    where: {
+                        id: form.studentId
+                    },
+                    select: {
+                        id: true,
+                        name: true,
+                        username: true,
+                        email: true,
+                        hostel: true,
+                        messId: true,
+                    }
+                });
+                // console.log(student)
+                await client.student.update({
+                    where: {
+                        id: form.studentId
+                    },
+                    data: {
+                        messId: student.hostel.preferredMessId
+                    }
+                })
+                await client.messForm.update({
+                    where: {
+                        id: form.id
+                    },
+                    data: {
+                        alloted: true
+                    }
+                });
+                form.alloted = true;
+            }
         }
 
         // Allocated remaining forms to the mess according to proximity
+        console.log(allocatedForms)
 
-        return res.status(201).json({ data: user, msg: "Mess allocated successfully" })
+        return res.status(201).json({ msg: "Mess allocated successfully" })
     }
     catch (err) {
+        console.log(err);
         return res.status(403).json(err);
     }
 });
@@ -504,21 +576,21 @@ export const getHostel = asyncHandler(async (req, res) => {
 });
 
 export const seedForms = asyncHandler(async (req, res) => {
-    for (const form of formData) {
+    for (const form of formData5) {
         const { studentId, preferences } = form;
-        await client.messForm.create({
+        // console.log(studentId, preferences)
+        const form1 = await client.messForm.create({
             data: {
                 student: {
                     connect: {
                         id: studentId
                     }
                 },
-                Mess: {
-                    connect: preferences
-                },
-            }
+                preferences: preferences,
+            },
         })
         console.log(`Form for ${studentId} added`)
+        console.log(form1)
     }
     return res.status(200).json({ message: "Forms seeded successfully" });
 });
