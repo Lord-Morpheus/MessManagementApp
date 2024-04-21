@@ -32,71 +32,72 @@ class _RegistrationState extends State<Registration> {
     confirmpass = textEditingController4.text;
     roll2 = widget.roll;
     name2 = widget.name;
-
-    if (pass == confirmpass) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return const Homepg();
-      }));
-    } else {
-      showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text("passwords are not matching",
-                  style: Theme.of(context).textTheme.titleMedium),
-              content: Text(
-                "Fill the Details again",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                        return Registration(roll: roll2, name: name2);
-                      }));
-                    },
-                    child: const Text(
-                      "OK",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-              ],
-            );
-          });
-    }
+    print('roll no is ' + roll2 + ' name is ' + name2);
+    // if (pass == confirmpass) {
+    //   Navigator.of(context)
+    //       .pushReplacement(MaterialPageRoute(builder: (context) {
+    //     return const Homepg();
+    //   }));
+    // } else {
+    //   showDialog(
+    //       barrierDismissible: true,
+    //       context: context,
+    //       builder: (context) {
+    //         return AlertDialog(
+    //           title: Text("passwords are not matching",
+    //               style: Theme.of(context).textTheme.titleMedium),
+    //           content: Text(
+    //             "Fill the Details again",
+    //             style: Theme.of(context).textTheme.titleMedium,
+    //           ),
+    //           actions: [
+    //             TextButton(
+    //                 onPressed: () {
+    //                   Navigator.of(context).pushReplacement(
+    //                       MaterialPageRoute(builder: (context) {
+    //                     return Registration(roll: roll2, name: name2);
+    //                   }));
+    //                 },
+    //                 child: const Text(
+    //                   "OK",
+    //                   style: TextStyle(
+    //                     color: Colors.blue,
+    //                     fontWeight: FontWeight.bold,
+    //                   ),
+    //                 )),
+    //           ],
+    //         );
+    //       });
+    // }
   }
 
-  // Future<void> sendRollNumberEmail() async {
-  //   final url = Uri.parse('http://192.168.135.166:3000/api/test');
-  //   final headers = {'Content-Type': 'Application/json'};
-  //   final body = jsonEncode({
-  //     'username': roll2,
-  //     'name': name2,
-  //     'hostel': hostel,
-  //     'otp': otp,
-  //     'password': pass,
-  //     'email': roll2.toLowerCase() + '@students.iitmandi.ac.in'
-  //   });
+  Future<void> sendRollNumberEmail() async {
+    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/signup');
+    final url = Uri.parse('http://192.168.11.166:3000/api/test');
+    final headers = {'Content-Type': 'Application/json'};
+    final body = jsonEncode({
+      'username': roll2,
+      'name': name2,
+      'hostel': hostel,
+      'otp': otp,
+      'password': pass,
+      'email': roll2.toLowerCase() + '@students.iitmandi.ac.in'
+    });
 
-  //   try {
-  //     final response = await http.post(url, headers: headers, body: body);
-  //     if (response.statusCode == 200) {
-  //       Navigator.of(context)
-  //           .pushReplacement(MaterialPageRoute(builder: (context) {
-  //         return const Homepg();
-  //       }));
-  //     } else {
-  //       print('Login failed: ${response.body}');
-  //     }
-  //   } catch (e) {
-  //     print('Network error: $e');
-  //   }
-  // }
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return const Homepg();
+        }));
+      } else {
+        print('Login failed: ${response.body}');
+      }
+    } catch (e) {
+      print('Network error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -210,6 +211,7 @@ class _RegistrationState extends State<Registration> {
               onPressed: () {
                 // sendRollNumberEmail();
                 assign2();
+                sendRollNumberEmail();
               },
               child: const Text(
                 'Register',

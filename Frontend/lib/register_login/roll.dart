@@ -22,10 +22,10 @@ class _RollState extends State<Roll> {
     roll = textEditingController2.text;
     email = "$roll@students.iitmandi.ac.in";
   }
-  // v1/users/send/otp
 
   Future<void> sendRollNumberEmail() async {
-    final url = Uri.parse('http://192.168.135.166:3000/api/test');
+    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/send/otp');
+    final url = Uri.parse('http://192.168.11.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode(
         {'email': email.toLowerCase(), 'username': roll.toLowerCase()});
