@@ -604,11 +604,11 @@ export const getFormData = asyncHandler(async (req, res) => {
                 preferences: true,
                 studentId: true,
                 alloted: true,
-                messId: true,
                 student: {
                     select: {
                         id: true,
-                        name: true
+                        name: true,
+                        username: true,
                     }
                 }
             }
