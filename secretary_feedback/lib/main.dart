@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/background.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           child: Column(
@@ -67,18 +67,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(height: 10),
-              Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(
-                    'assets/images/profile_icon.jpg',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage(
+                      'assets/images/profile_icon.jpg',
+                    ),
                   ),
-                ),
+                  SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoRow("Name:", "John"),
+                      _buildInfoRow("Email:", "john@example.com"),
+                      _buildInfoRow("Phone:", "+919234567890"),
+                    ],
+                  ),
+                ],
               ),
-              SizedBox(height: 20),
-              _buildInfoRow("Name:", "John"),
-              _buildInfoRow("Email:", "john@example.com"),
-              _buildInfoRow("Phone:", "+919234567890"),
               SizedBox(height: 20),
               Text(
                 "Student's Feedback",
@@ -164,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             label,
