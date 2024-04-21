@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Secretary feedback',
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Secretary feedback'),
     );
   }
 }
@@ -50,9 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(
-                'assets/background_image.jpg',
-              ),
+              image: AssetImage('assets/images/background.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -72,15 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
               Center(
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage(
-                    'https://www.flaticon.com/free-icon/user_9334006?term=profile+picture+male&page=1&position=12&origin=search&related_id=9334006',
+                  backgroundImage: AssetImage(
+                    'assets/images/profile_icon.jpg',
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              _buildInfoRow("Name:", "John Doe"),
-              _buildInfoRow("Email:", "johndoe@example.com"),
-              _buildInfoRow("Phone:", "+911234567890"),
+              _buildInfoRow("Name:", "John"),
+              _buildInfoRow("Email:", "john@example.com"),
+              _buildInfoRow("Phone:", "+919234567890"),
               SizedBox(height: 20),
               Text(
                 "Student's Feedback",
@@ -182,4 +180,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
