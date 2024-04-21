@@ -17,6 +17,7 @@ import { columns } from "./data";
 import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const statusColorMap = {
   dining: "success",
   pass_Out: "danger",
