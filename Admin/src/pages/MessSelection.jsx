@@ -14,6 +14,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 
 export default function Selection() {
@@ -23,6 +24,7 @@ export default function Selection() {
   });
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const handleValueChange = (newValue) => {
     console.log("newValue:", newValue);
@@ -97,6 +99,7 @@ export default function Selection() {
           allotedMess: messMapping[item.allotedMess],
         }));
         setUsers(data);
+        setLoading(false);
         console.log("hello");
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -221,6 +224,7 @@ export default function Selection() {
                 )}
               </TableBody>
             </Table>
+            {loading && <Spinner size="lg" className="py-6" />}
           </div>
         </div>
       </div>
