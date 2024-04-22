@@ -94,6 +94,7 @@ export default function Selection() {
           preference_4: messMapping[item.preferences[3]],
           preference_5: messMapping[item.preferences[4]],
           allocated: item.alloted ? "Yes" : "No",
+          allotedMess: messMapping[item.allotedMess],
         }));
         setUsers(data);
         console.log("hello");
@@ -116,6 +117,7 @@ export default function Selection() {
     { key: "preference_4", label: "Preference 4" },
     { key: "preference_5", label: "Preference 5" },
     { key: "allocated", label: "Allocated" },
+    { key: "allotedMess", label: "Allocated Mess" },
   ];
 
   const rows = users.map((item, index) => ({
