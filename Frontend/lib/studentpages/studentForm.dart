@@ -6,6 +6,10 @@ import 'studenthomepg.dart';
 import '../register_login/login.dart';
 import 'student_feedback.dart';
 import 'thankyou.dart';
+import 'package:tiny_alert/tiny_alert.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class StudentForm extends StatefulWidget {
   const StudentForm({Key? key});
 
@@ -38,6 +42,81 @@ class _StudentFormState extends State<StudentForm> {
     });
   }
 
+  List<String> getSelectedPreferenceIds() {
+    final List<String> selectedPreferenceIds = [];
+
+    final Map<String, String> messIdMap = {
+      "Pine Mess": "18e766cd-58ec-46b6-b658-f683b0519165",
+      "Oak Mess": "79287884-7794-4f5b-ac3c-7a6109f0d028",
+      "Peepal Mess(North Campus)": "c7bc1615-5208-46dc-bb7e-0b2d8765866a",
+      "Tulsi Mess(North Campus)": "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
+      "Alder Mess(S11)": "abbccc55-e1d4-40db-b41b-d4ed9ad0b23a",
+      "D1 mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
+      "D2 mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
+      "D3 mess": "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
+    };
+
+    if (_selectedPreference1 != '--None--') {
+      selectedPreferenceIds.add(messIdMap[_selectedPreference1]!);
+    }
+    if (_selectedPreference2 != '--None--') {
+      selectedPreferenceIds.add(messIdMap[_selectedPreference2]!);
+    }
+    if (_selectedPreference3 != '--None--') {
+      selectedPreferenceIds.add(messIdMap[_selectedPreference3]!);
+    }
+    if (_selectedPreference4 != '--None--') {
+      selectedPreferenceIds.add(messIdMap[_selectedPreference4]!);
+    }
+    if (_selectedPreference5 != '--None--') {
+      selectedPreferenceIds.add(messIdMap[_selectedPreference5]!);
+    }
+
+    return selectedPreferenceIds;
+  }
+
+  Future<void> submitPreferences() async {
+    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/');
+    final url = Uri.parse('http://172.16.12.133:3000/api/test');
+    final body = getSelectedPreferenceIds();
+    // final body = {
+    // 'preference1': _selectedPreference1,
+    // 'preference2': _selectedPreference2,
+    // 'preference3': _selectedPreference3,
+    // 'preference4': _selectedPreference4,
+    // 'preference5': _selectedPreference5,
+    // };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        // Request successful
+        print('Preferences submitted successfully');
+        TinyAlert.success(
+          context,
+          title: "Success!",
+          message: "Preferences Submitted successfully!",
+        );
+      } else {
+        // Request failed
+        print('Failed to submit preferences. Error: ${response.statusCode}');
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "Unable to submit Preferences, try again",
+        );
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error: $e');
+    }
+  }
+
   Widget buildDropdownBox(
       String label, String? value, void Function(String?) onChanged) {
     final List<String?> _remain = [
@@ -56,7 +135,7 @@ class _StudentFormState extends State<StudentForm> {
             child: Center(
               child: Center(
                 child: Text(
-                  label + "  *",
+                  label + " *",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w800),
                 ),
@@ -85,9 +164,6 @@ class _StudentFormState extends State<StudentForm> {
     );
   }
 
-
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +180,7 @@ class _StudentFormState extends State<StudentForm> {
                 // Handle icon button action here
               },
             ),
-            const SizedBox(width:1),
+            const SizedBox(width: 1),
             const SizedBox(
               height: 40,
               child: VerticalDivider(
@@ -113,8 +189,9 @@ class _StudentFormState extends State<StudentForm> {
               ),
             ),
             const SizedBox(width: 2),
-            const Text('Welcome \n user',
-              style: TextStyle(color:Colors.white),
+            const Text(
+              'Welcome \n user',
+              style: TextStyle(color: Colors.white),
             ),
           ],
         ),
@@ -123,18 +200,19 @@ class _StudentFormState extends State<StudentForm> {
             color: Colors.white,
             icon: const Icon(Icons.logout_outlined),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
                 return const Homepg();
               }));
               // Handle logout action here
             },
           ),
           const Padding(
-            padding:EdgeInsets.only(right:20),
+            padding: EdgeInsets.only(right: 20),
             child: Text(
               'LOGOUT',
-              style:TextStyle(
-                color:Colors.white,
+              style: TextStyle(
+                color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -159,16 +237,13 @@ class _StudentFormState extends State<StudentForm> {
                 "SELECT YOUR MESS",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
-
               ),
               Center(
                 child: IconButton(
-                  onPressed: _resetDropdowns,
-                  icon: Icon(Icons.refresh),
-                  tooltip: 'Refresh',
-                  color: Colors.green
-
-                ),
+                    onPressed: _resetDropdowns,
+                    icon: Icon(Icons.refresh),
+                    tooltip: 'Refresh',
+                    color: Colors.green),
               ),
               Center(
                 child: Form(
@@ -267,11 +342,12 @@ class _StudentFormState extends State<StudentForm> {
                               _selectedPreference3 != null &&
                               _selectedPreference4 != null &&
                               _selectedPreference5 != null) {
+                            submitPreferences();
                             print('Submitted');
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return thankyou ();
+                                return thankyou();
                               }),
                             );
                           } else {
