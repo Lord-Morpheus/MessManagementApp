@@ -29,6 +29,46 @@ export default function Selection() {
     setValue(newValue);
   };
 
+  const messData = [
+    {
+      mess_id: "18e766cd-58ec-46b6-b658-f683b0519165",
+      name: "pine mess",
+    },
+    {
+      mess_id: "79287884-7794-4f5b-ac3c-7a6109f0d028",
+      name: "oak mess",
+    },
+    {
+      mess_id: "c7bc1615-5208-46dc-bb7e-0b2d8765866a",
+      name: "peepal mess",
+    },
+    {
+      mess_id: "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
+      name: "tulsi mess",
+    },
+    {
+      mess_id: "abbccc55-e1d4-40db-b41b-d4ed9ad0b23a",
+      name: "alder mess",
+    },
+    {
+      mess_id: "9402c23e-f077-41c3-bc32-472286d8ac55",
+      name: "d1 mess",
+    },
+    {
+      mess_id: "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
+      name: "d2 mess",
+    },
+    {
+      mess_id: "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
+      name: "d3 mess",
+    },
+  ];
+
+  const messMapping = {};
+  messData.forEach((mess) => {
+    messMapping[mess.mess_id] = mess.name;
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       const token = getToken();
@@ -48,11 +88,11 @@ export default function Selection() {
         const data = response.data.map((item) => ({
           name: item.student.name,
           roll_no: item.student.username,
-          preferences_1: item.preferences[0],
-          preference_2: item.preferences[1],
-          preference_3: item.preferences[2],
-          preference_4: item.preferences[3],
-          preference_5: item.preferences[4],
+          preference_1: messMapping[item.preferences[0]],
+          preference_2: messMapping[item.preferences[1]],
+          preference_3: messMapping[item.preferences[2]],
+          preference_4: messMapping[item.preferences[3]],
+          preference_5: messMapping[item.preferences[4]],
           allocated: item.alloted ? "Yes" : "No",
         }));
         setUsers(data);
@@ -65,12 +105,12 @@ export default function Selection() {
     fetchData();
   }, []);
 
-  console.log(users);
+  // console.log(users);
 
   const columns = [
     { key: "name", label: "Name" },
     { key: "roll_no", label: "Roll No" },
-    { key: "preferences_1", label: "Preference 1" },
+    { key: "preference_1", label: "Preference 1" },
     { key: "preference_2", label: "Preference 2" },
     { key: "preference_3", label: "Preference 3" },
     { key: "preference_4", label: "Preference 4" },
@@ -94,7 +134,7 @@ export default function Selection() {
       navigate("/login");
     }
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`, {
+      await axios.get(`${import.meta.env.VITE_BACKEND_URI}/admin/allocate`, {
         headers: {
           Authorization: `Admin ${token}`,
         },

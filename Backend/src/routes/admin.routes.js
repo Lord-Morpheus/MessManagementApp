@@ -30,7 +30,7 @@ router.post('/seeddata', seedData);
 router.get('/mess', getMess)
 router.get('/studentid', studentID);
 router.get('/seedforms', seedForms);
-router.post('/allocate', adminAuthMiddleware, messAllocation);
+router.get('/allocate', adminAuthMiddleware, messAllocation);
 router.get('/getform', adminAuthMiddleware, getFormData)
 
 
