@@ -8,7 +8,10 @@ const storage = multer.diskStorage({
         if (file.originalname.endsWith('.xlsx')) {
             cb(null, file.originalname.replace('.xlsx', '.csv'))
 
-        } else {
+        } else if (file.originalname.endsWith('.pdf')) {
+            cb(null, 'menu.pdf')
+        }
+        else {
             cb(null, file.originalname)
         }
     }
