@@ -144,7 +144,8 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
         });
 
         for (const user of users) {
-            user.mess = messes.find(mess => mess.id === user.messId).name.toUpperCase();
+            if(user.messId&&messes.find(mess => mess.id === user.messId))user.mess = messes.find(mess => mess.id === user.messId).name.toUpperCase();
+            else user.mess="Not Assigned";
         }
 
         req.users = users;
@@ -153,6 +154,7 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
 
         next(res.status(200).json({ data: users }));
     } catch (err) {
+        console.log(err);
         return res.status(403).json(err);
     }
 });

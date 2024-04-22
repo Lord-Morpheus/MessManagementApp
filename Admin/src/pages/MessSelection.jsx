@@ -96,7 +96,7 @@ export default function Selection() {
           preference_4: messMapping[item.preferences[3]],
           preference_5: messMapping[item.preferences[4]],
           allocated: item.alloted ? "Yes" : "No",
-          allotedMess: messMapping[item.allotedMess],
+          allotedMess: messMapping[item.allotedMess]===''? "not allocated" :messMapping[item.allotedMess],
         }));
         setUsers(data);
         setLoading(false);

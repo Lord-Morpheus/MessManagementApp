@@ -5,8 +5,8 @@ const columns = [
   { name: "MESS", uid: "mess" },
   { name: "ROLL NO", uid: "username" },
   { name: "HOSTEL", uid: "hostel" },
-  { name: "STATUS", uid: "status" },
-  // { name: "ACTIONS", uid: "actions" },
+  // { name: "STATUS", uid: "status" },
+  { name: "ACTIONS", uid: "actions" },
 ];
 
 
