@@ -50,7 +50,7 @@ export default function App() {
             },
           }
         );
-        // console.log(usersdata.data.data);
+        console.log(usersdata.data.data);
 
         setUsers(usersdata.data.data);
       } catch (error) {

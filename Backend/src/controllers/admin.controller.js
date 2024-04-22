@@ -128,17 +128,23 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
                         name: true,
                     }
                 },
-                mess: {
-                    select: {
-                        name: true,
-                    }
-                }
+                messId: true,
             }
         });
 
         for (const user of users) {
-            user.mess = user.mess.name.toUpperCase();
             user.hostel = user.hostel.name.toUpperCase();
+        }
+
+        const messes = await client.mess.findMany({
+            select: {
+                id: true,
+                name: true,
+            }
+        });
+
+        for (const user of users) {
+            user.mess = messes.find(mess => mess.id === user.messId).name.toUpperCase();
         }
 
         req.users = users;

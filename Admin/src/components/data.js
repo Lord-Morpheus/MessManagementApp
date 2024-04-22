@@ -34,11 +34,11 @@ const columns = [
 // export const hostelOptions = hostelData.data;
 
 
-const usersData = await axios.get(
-  `${import.meta.env.VITE_BACKEND_URI}/admin/students`
-);
+// const usersData = await axios.get(
+//   `${import.meta.env.VITE_BACKEND_URI}/admin/students`
+// );
 
-export const users = usersData.data.data;
+// export const users = usersData.data.data;
 
 // const users = [
 //   {

@@ -22,6 +22,7 @@ export default function Selection() {
     endDate: new Date().setMonth(11),
   });
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   const handleValueChange = (newValue) => {
     console.log("newValue:", newValue);
@@ -36,11 +37,11 @@ export default function Selection() {
         navigate("/login");
       }
       try {
-        const response = await axios.post(
+        const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URI}/admin/getform`,
           {
             headers: {
-              Authorization: `Admin ${token}`,
+              authorization: `Admin ${token}`,
             },
           }
         );

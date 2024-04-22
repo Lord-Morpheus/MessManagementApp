@@ -31,7 +31,7 @@ router.get('/mess', getMess)
 router.get('/studentid', studentID);
 router.get('/seedforms', seedForms);
 router.post('/allocate', adminAuthMiddleware, messAllocation);
-router.post('/getform', adminAuthMiddleware, getFormData)
+router.get('/getform', adminAuthMiddleware, getFormData)
 
 
 export default router;
