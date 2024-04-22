@@ -66,6 +66,9 @@ export default function App() {
     fetchData();
   }, [navigate]);
 
+  useEffect(() => {
+    console.log("Users updated:", users);
+  }, [users]);
   const filteredItems = [...users];
 
   // const filteredItems = useMemo(() => {
