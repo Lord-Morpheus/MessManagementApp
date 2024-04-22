@@ -3,10 +3,10 @@ import axios from "axios";
 const columns = [
   { name: "NAME", uid: "name" },
   { name: "MESS", uid: "mess" },
-  { name: "ROLL NO", uid: "rollno" },
+  { name: "ROLL NO", uid: "username" },
   { name: "HOSTEL", uid: "hostel" },
   { name: "STATUS", uid: "status" },
-  { name: "ACTIONS", uid: "actions" },
+  // { name: "ACTIONS", uid: "actions" },
 ];
 
 
