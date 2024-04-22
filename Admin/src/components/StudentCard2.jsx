@@ -9,6 +9,7 @@ import {
   User,
   Chip,
   Tooltip,
+  Spinner,
 } from "@nextui-org/react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
@@ -18,6 +19,8 @@ import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUsers } from "../hooks/useUsers";
+import { Loader } from "lucide-react";
 const statusColorMap = {
   dining: "success",
   pass_Out: "danger",
@@ -25,7 +28,7 @@ const statusColorMap = {
 };
 
 export default function App() {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const [filterValue, setFilterValue] = useState("");
@@ -35,36 +38,42 @@ export default function App() {
 
   const hasSearchFilter = Boolean(filterValue);
 
-  useEffect(() => {
-    async function fetchData() {
-      const token = getToken();
-      if (!token) {
-        navigate("/login");
-      }
-      try {
-        const usersdata = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
-          {
-            headers: {
-              Authorization: `Admin ${token}`,
-            },
-          }
-        );
-        console.log(usersdata.data.data);
+  const { users, loading } = useUsers();
 
-        setUsers(usersdata.data.data);
-      } catch (error) {
-        const status = error.response.status;
-        console.log(status);
-        if (status === 401) {
-          console.log("Not Authenticated");
-          localStorage.removeItem("token");
-          navigate("/login");
-        }
-      }
-    }
-    fetchData();
-  }, [navigate]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const token = getToken();
+  //     if (!token) {
+  //       navigate("/login");
+  //     }
+  //     try {
+  //       const usersdata = await axios.get(
+  //         `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
+  //         {
+  //           headers: {
+  //             Authorization: `Admin ${token}`,
+  //           },
+  //         }
+  //       );
+  //       // console.log(usersdata.data.data);
+
+  //       return usersdata.data.data;
+  //     } catch (error) {
+  //       const status = error.response.status;
+  //       console.log(status);
+  //       if (status === 401) {
+  //         console.log("Not Authenticated");
+  //         localStorage.removeItem("token");
+  //         navigate("/login");
+  //       }
+  //     }
+  //   }
+  //   const data = fetchData().then((data) => {
+  //     console.log(data);
+  //     setUsers(data);
+  //   });
+  //   console.log("Users:", users);
+  // }, []);
 
   useEffect(() => {
     console.log("Users updated:", users);
@@ -72,7 +81,7 @@ export default function App() {
   const filteredItems = [...users];
 
   // const filteredItems = useMemo(() => {
-  //   let filteredUsers = [...users];
+  //   let filteredUsers = users;
   //   console.log(filteredUsers);
 
   //   if (hasSearchFilter) {
@@ -180,6 +189,14 @@ export default function App() {
         return cellValue;
     }
   }, []);
+
+  if (loading) {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <Table

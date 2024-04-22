@@ -120,3 +120,11 @@ model Vendor {
   updatedAt DateTime @updatedAt
   mess      Mess[]
 }
+
+model Menu {
+  id        String   @id @default(cuid())
+  filename  String
+  mimeType  String
+  data      Bytes
+  createdAt DateTime @default(now())
+}

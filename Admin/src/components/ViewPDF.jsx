@@ -5,18 +5,42 @@ import { PDFViewer } from "./PdfViewer";
 // eslint-disable-next-line react/prop-types
 export default function ViewPDF({ pdfURL }) {
   const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const handleChoose = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFile(file);
+      console.log(file);
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const formData = new FormData();
     formData.append("file", file);
     console.log(formData);
+    try {
+      setUploading(true);
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      setUploading(false);
+
+      if (response.ok) {
+        console.log("File uploaded successfully!");
+        // Optionally, you can handle success behavior here
+      } else {
+        console.error("Failed to upload file:", response.statusText);
+        // Optionally, you can handle error behavior here
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      // Optionally, you can handle error behavior here
+    }
   };
 
   return (
@@ -32,6 +56,7 @@ export default function ViewPDF({ pdfURL }) {
               <div className="relative mx-4">
                 <input
                   type="file"
+                  name="file"
                   className="hidden"
                   accept="application/pdf"
                   onChange={(e) => handleChoose(e)}
@@ -73,7 +98,7 @@ export default function ViewPDF({ pdfURL }) {
               </div>
             )}
             <Button size="lg" className="bg-[#012169]" onClick={handleUpload}>
-              Upload Menu
+              {uploading ? "Uploading..." : "Upload Menu"}
             </Button>
           </div>
         </div>
