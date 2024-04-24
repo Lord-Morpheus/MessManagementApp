@@ -5,6 +5,9 @@ import 'thankyou.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tiny_alert/tiny_alert.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class FeedbackForm extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
@@ -13,6 +16,20 @@ class FeedbackForm extends StatefulWidget {
 }
 
 class _FeedbackFormState extends State<FeedbackForm> {
+  var _token;
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  Future<void> getToken() async {
+    String? token = await storage.read(key: 'token');
+    setState(() {
+      _token = token;
+    });
+    print(_token);
+  }
+
   String? _feedbackType = null;
 
   String _description = '';
@@ -27,7 +44,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
 
   Future<void> sendFeedback() async {
     // final url = Uri.parse('http://192.168.11.166:8080/api/v1/users/login');
-    final url = Uri.parse('http://172.16.12.133:3000/api/test');
+    final url = Uri.parse('http://192.168.121.166:3000/api/test');
     final body = {
       'feedbackType': _feedbackType,
       '_description': _description,
@@ -36,7 +53,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
     try {
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Authorization': _token},
         body: jsonEncode(body),
       );
 

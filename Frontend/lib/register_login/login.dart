@@ -4,6 +4,9 @@ import 'package:mess/register_login/roll.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class Homepg extends StatefulWidget {
   const Homepg({super.key});
@@ -26,13 +29,17 @@ class _HomepgState extends State<Homepg> {
   }
 
   Future<void> sendLoginRequest() async {
-    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/user/login');
-    final url = Uri.parse('http://192.168.11.166:3000/api/test');
+    //
+    final url = Uri.parse('http://192.168.121.166:3001/api/v1/users/login');
+    // final url = Uri.parse('http://192.168.11.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode({'username': roll, 'password': pass});
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+      String token = jsonDecode(response.body)['token'];
+      token = "Bearer " + token;
+      await storage.write(key: 'token', value: token);
       if (response.statusCode == 200) {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) {

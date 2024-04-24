@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:tiny_alert/tiny_alert.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class ScanQrPage extends StatefulWidget {
   const ScanQrPage({super.key});
@@ -12,6 +15,20 @@ class ScanQrPage extends StatefulWidget {
 }
 
 class _ScanQrPageState extends State<ScanQrPage> {
+  var _token;
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  Future<void> getToken() async {
+    String? token = await storage.read(key: 'token');
+    setState(() {
+      _token = token;
+    });
+    print(_token);
+  }
+
   final player = AudioPlayer();
   String? scannedData;
   bool dataSent = false;
@@ -28,11 +45,16 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   Future<void> sendQRData(String data) async {
     final url = Uri.parse('http://192.168.11.166:3000/api/verify');
-    final headers = {'Content-Type': 'application/json'};
+    // final headers = {'Content-Type': 'application/json', 'Authorization': _token};
     final body = jsonEncode({'scannedMess': data});
     print('trying to send data');
     try {
-      final response = await http.post(url, headers: headers, body: body);
+      final response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': _token
+          },
+          body: body);
       if (!mounted) return;
       if (response.statusCode == 200) {
         playSound(true);

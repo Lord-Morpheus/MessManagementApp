@@ -9,6 +9,9 @@ import 'thankyou.dart';
 import 'package:tiny_alert/tiny_alert.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class StudentForm extends StatefulWidget {
   const StudentForm({Key? key});
@@ -18,6 +21,20 @@ class StudentForm extends StatefulWidget {
 }
 
 class _StudentFormState extends State<StudentForm> {
+  var _token;
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  Future<void> getToken() async {
+    String? token = await storage.read(key: 'token');
+    setState(() {
+      _token = token;
+    });
+    print(_token);
+  }
+
   final List<String> _preferences = [
     'Tulsi Mess(North Campus)',
     'Pine Mess',
@@ -77,7 +94,7 @@ class _StudentFormState extends State<StudentForm> {
 
   Future<void> submitPreferences() async {
     // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/');
-    final url = Uri.parse('http://172.16.12.133:3000/api/test');
+    final url = Uri.parse('http://192.168.121.166:3000/api/test');
     final body = getSelectedPreferenceIds();
     // final body = {
     // 'preference1': _selectedPreference1,
@@ -90,7 +107,7 @@ class _StudentFormState extends State<StudentForm> {
     try {
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Authorization': _token},
         body: jsonEncode(body),
       );
 

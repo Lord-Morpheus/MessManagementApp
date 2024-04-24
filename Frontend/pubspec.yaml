@@ -45,6 +45,7 @@ dependencies:
   path_provider: any
   http: ^1.2.1
   syncfusion_flutter_pdfviewer: ^25.1.39
+  flutter_secure_storage: ^4.2.1
 #  webview_flutter: ^4.7.0
 #  advance_pdf_viewer: ^2.0.5+1
 #  advance_pdf_viewer2: ^2.0.6-beta.2

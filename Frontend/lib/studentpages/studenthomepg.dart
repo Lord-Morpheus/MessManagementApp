@@ -3,6 +3,9 @@ import 'package:mess/register_login/login.dart';
 import 'package:mess/studentpages/dashboard.dart';
 import 'package:mess/studentpages/newhome.dart';
 import 'package:mess/studentpages/student_feedback.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class Studenthomepage extends StatefulWidget {
   const Studenthomepage({super.key});
@@ -12,12 +15,25 @@ class Studenthomepage extends StatefulWidget {
 }
 
 class _StudenthomepageState extends State<Studenthomepage> {
+  var _token;
+  void initState() {
+    super.initState();
+    getToken();
+  }
 
-  int currpage=0;
+  Future<void> getToken() async {
+    String? token = await storage.read(key: 'token');
+    setState(() {
+      _token = token;
+    });
+    print(_token);
+  }
 
-  final PageController _pageController=PageController();
+  int currpage = 0;
 
-  List<Widget> pages=[
+  final PageController _pageController = PageController();
+
+  List<Widget> pages = [
     const Newhome(),
     FeedbackForm(),
     const Dash(),
@@ -39,7 +55,7 @@ class _StudenthomepageState extends State<Studenthomepage> {
                 // Handle icon button action here
               },
             ),
-            const SizedBox(width:1),
+            const SizedBox(width: 1),
             const SizedBox(
               height: 40,
               child: VerticalDivider(
@@ -48,8 +64,9 @@ class _StudenthomepageState extends State<Studenthomepage> {
               ),
             ),
             const SizedBox(width: 2),
-            const Text('Welcome \n user',
-              style: TextStyle(color:Colors.white),
+            const Text(
+              'Welcome \n user',
+              style: TextStyle(color: Colors.white),
             ),
           ],
         ),
@@ -58,18 +75,19 @@ class _StudenthomepageState extends State<Studenthomepage> {
             color: Colors.white,
             icon: const Icon(Icons.logout_outlined),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-              return const Homepg();
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
+                return const Homepg();
               }));
               // Handle logout action here
             },
           ),
           const Padding(
-            padding:EdgeInsets.only(right:20),
+            padding: EdgeInsets.only(right: 20),
             child: Text(
               'LOGOUT',
-              style:TextStyle(
-                color:Colors.white,
+              style: TextStyle(
+                color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -79,21 +97,23 @@ class _StudenthomepageState extends State<Studenthomepage> {
       ),
       body: PageView(
         controller: _pageController,
-        onPageChanged: (index){
+        onPageChanged: (index) {
           setState(() {
-            currpage=index;
+            currpage = index;
           });
         },
-        children:pages,
+        children: pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         iconSize: 27,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
-            currpage=index;
+            currpage = index;
           });
-          _pageController.animateToPage(index, duration: const Duration(milliseconds: 10), curve: Curves.easeOut);
+          _pageController.animateToPage(index,
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.easeOut);
         },
         selectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
@@ -104,24 +124,35 @@ class _StudenthomepageState extends State<Studenthomepage> {
         currentIndex: currpage,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
-        items:const [
+        items: const [
           BottomNavigationBarItem(
-            label:"Home",
-            icon:Icon(Icons.home_outlined,),
-            activeIcon: Icon(Icons.home,)
+              label: "Home",
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.home,
+              )),
+          BottomNavigationBarItem(
+            label: "Feedback",
+            icon: Icon(
+              Icons.sms_outlined,
+            ),
+            activeIcon: Icon(
+              Icons.sms,
+            ),
           ),
           BottomNavigationBarItem(
-            label:"Feedback",
-            icon:Icon(Icons.sms_outlined,),
-            activeIcon: Icon(Icons.sms,),
-          ),
-          BottomNavigationBarItem(
-            label:"Profile",
-            icon:Icon(Icons.person_2_outlined,),
-            activeIcon: Icon(Icons.person,),
+            label: "Profile",
+            icon: Icon(
+              Icons.person_2_outlined,
+            ),
+            activeIcon: Icon(
+              Icons.person,
+            ),
           ),
         ],
       ),
-    ); 
+    );
   }
 }
