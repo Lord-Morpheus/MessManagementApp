@@ -131,11 +131,6 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
                 messId: true,
             }
         });
-
-        for (const user of users) {
-            user.hostel = user.hostel.name.toUpperCase();
-        }
-
         const messes = await client.mess.findMany({
             select: {
                 id: true,
@@ -144,8 +139,9 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
         });
 
         for (const user of users) {
-            if(user.messId&&messes.find(mess => mess.id === user.messId))user.mess = messes.find(mess => mess.id === user.messId).name.toUpperCase();
-            else user.mess="Not Assigned";
+            user.hostel = user.hostel.name.toUpperCase();
+            if (user.messId && messes.find(mess => mess.id === user.messId)) user.mess = messes.find(mess => mess.id === user.messId).name.toUpperCase();
+            else user.mess = "Not Assigned";
         }
 
         req.users = users;
