@@ -151,7 +151,7 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
       select: {
         id: true,
         name: true,
-        students: true,
+        // students: true,
       },
     });
 
@@ -166,7 +166,7 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
 
     req.users = users;
 
-    console.log(users);
+    // console.log(users);
 
     next(res.status(200).json({ data: users }));
   } catch (err) {
@@ -587,7 +587,7 @@ export const getMess = asyncHandler(async (req, res) => {
       name: true,
     },
   });
-  console.log(mess);
+  // console.log(mess);
   return res.status(200).json(mess);
 });
 
@@ -598,7 +598,7 @@ export const getHostel = asyncHandler(async (req, res) => {
       name: true,
     },
   });
-  console.log(hostels);
+  // console.log(hostels);
   return res.status(200).json(hostels);
 });
 

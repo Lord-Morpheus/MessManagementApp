@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import { useNavigate } from "react-router-dom";
-// import { TableComponent } from "../components/StudentTable";
+import { TableComponent } from "../components/StudentTable";
 // import { Card } from "../components/ui/card";
 import axios from "axios";
 
