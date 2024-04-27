@@ -791,7 +791,7 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
       width: 420,
       series: [
         {
-          name: "Strength",
+          name: "Revenue(in INR) ",
           data: counts.map((mess) => mess.strength*125),
         },
       ],
