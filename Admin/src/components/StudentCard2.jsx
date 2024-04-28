@@ -11,16 +11,13 @@ import {
   Tooltip,
   Spinner,
 } from "@nextui-org/react";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { columns } from "./data";
 import { TableComponent } from "./StudentTable";
-import { getToken } from "../utils/getToken";
+// import { getToken } from "../utils/getToken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
-import { Loader } from "lucide-react";
+// import { Loader } from "lucide-react";
 const statusColorMap = {
   dining: "success",
   pass_Out: "danger",
@@ -39,29 +36,6 @@ export default function App() {
   const hasSearchFilter = Boolean(filterValue);
 
   const { users, loading } = useUsers();
-
-  const [loadin, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const deleteUser = async (studentId) => {
-    try {
-      setLoading(true);
-      const response = await axios.delete(`/api/delete/${studentId}`);
-      if (response.status === 201) {
-        // Handle successful deletion
-        console.log("User deleted successfully:", response.data);
-      } else {
-        // Handle unexpected response status
-        console.error("Unexpected response:", response);
-      }
-    } catch (error) {
-      // Handle error
-      console.error("Error deleting user:", error);
-      setError(error.response.data.msg || "Error deleting user");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -196,7 +170,7 @@ export default function App() {
                 <MdOutlineRemoveRedEye />
               </span>
             </Tooltip> */}
-            <div onClick={deleteUser(user.id)}>
+            <div >
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +188,7 @@ export default function App() {
                 </svg>
               </span>
             </div>
-            <div color="danger" content="Delete user">
+            <div >
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
