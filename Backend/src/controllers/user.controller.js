@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import { deleteOtp } from "./common.controller.js";
+import { messMap } from "../utils/messId.js";
 
 const client = new PrismaClient();
 
@@ -293,7 +294,42 @@ export const submitForm = asyncHandler(async (req, res) => {
             },
         });
 
+        await sendEmail({
+            mail: req.user.email,
+            subject: '🍽️ Response recieved Successfully!',
+            text: `Hi there! Your mess prefernce response for this month recieved successfully. We will notify you once the allotment is done.:
+        
+          Prefernces you choose are: ${preferences.map((pref) => `\n- ${messMap[pref]}`).join('')}
+    
+        If you have any questions or need assistance, feel free to reach out to our support team.
+        
+        We can't wait to serve you!
+        
+        Best regards,
+        IIT Mandi Mess Service Team`
+        });
+
         return res.status(200).json(form);
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});
+
+export const verifyQR = asyncHandler(async (req, res) => {
+    const { qrMessId } = req.body;
+    const { messId } = req.user;
+    const { success } = z.object({
+        qrMessId: z.string(),
+    }).safeParse(req.body);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    try {
+        const matched = qrMessId === messId;
+
+        return res.status(200).json({ matched });
     } catch (err) {
         return res.status(403).json(err);
     }
