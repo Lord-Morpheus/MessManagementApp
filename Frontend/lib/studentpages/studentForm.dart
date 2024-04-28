@@ -277,21 +277,21 @@ class _StudentFormState extends State<StudentForm> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
               ),
-              Center(
-                  child: ElevatedButton(
-                onPressed: _resetDropdowns,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-                ),
-                child: Text(
-                  'Reset',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white, // Adjust text color as needed
-                  ),
-                ),
-              )),
+              // Center(
+              //     child: ElevatedButton(
+              //   onPressed: _resetDropdowns,
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
+              //   ),
+              //   child: Text(
+              //     'Reset',
+              //     style: TextStyle(
+              //       fontSize: 16,
+              //       fontWeight: FontWeight.w600,
+              //       color: Colors.white, // Adjust text color as needed
+              //     ),
+              //   ),
+              // )),
               Center(
                 child: Form(
                   child: Column(
@@ -369,12 +369,34 @@ class _StudentFormState extends State<StudentForm> {
                         },
                       ),
                       SizedBox(height: 20),
+                      Center(
+                          child: ElevatedButton(
+                        onPressed: _resetDropdowns,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(150, 40),
+                          backgroundColor:
+                              const Color.fromARGB(255, 44, 7, 251),
+                        ),
+                        child: Text(
+                          'Reset',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white, // Adjust text color as needed
+                          ),
+                        ),
+                      )),
+                      SizedBox(height: 20),
                       ElevatedButton(
                         child: Text(
                           "Submit",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
+                          minimumSize: Size(150, 40),
                           backgroundColor:
                               const Color.fromARGB(255, 44, 7, 251),
                           padding: EdgeInsets.symmetric(
