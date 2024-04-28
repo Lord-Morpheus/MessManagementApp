@@ -19,11 +19,20 @@ class _RegistrationState extends State<Registration> {
   late String confirmpass;
   late String roll2;
   late String name2;
+  late List<Map<String, dynamic>> hostelList;
 
   final TextEditingController textEditingController1 = TextEditingController();
   final TextEditingController textEditingController2 = TextEditingController();
   final TextEditingController textEditingController3 = TextEditingController();
   final TextEditingController textEditingController4 = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final jsonArrayString =
+        '''[{"id":"981faa72-7c38-4fd4-986f-34882806644b","name":"b13"},{"id":"e54aaa64-9e64-4d80-a11d-8d7e08845424","name":"b14"},{"id":"a7ecb2a1-4d9d-46f1-9862-fd5b512fd81e","name":"b23"},{"id":"172ddf87-1735-4d9d-8df9-daabd51491fb","name":"b15"},{"id":"ef21d395-6189-47f5-90d8-b08a467a78d2","name":"b22"},{"id":"4ee394a9-63f7-4457-bf98-184098735ab1","name":"b21"},{"id":"847802e6-2ab1-4a36-a21a-5a8aa29e41b1","name":"b19"},{"id":"4b5fd327-09fe-4dae-a52c-1bf62f894a24","name":"b20"},{"id":"e0baa884-8110-48f4-973f-fa14970307ff","name":"b8"},{"id":"b65a5eac-5ffa-4ab6-90f5-57f17057e9eb","name":"b9"},{"id":"384cb7a9-77b1-453e-ba00-61a10d1cf7cf","name":"b11"},{"id":"202d03c5-5e9a-451f-b6eb-8cf03ca2c6ee","name":"b17"},{"id":"a16e94e7-a730-4fb0-bc20-6beae0ad140f","name":"b16"},{"id":"38b9a6ad-2fe5-49db-a252-7049763b459e","name":"b10"},{"id":"62ed400c-475f-4dd7-91b8-142b5879b7e2","name":"b12"},{"id":"0ccd7a0d-2a60-4edd-81f5-54781a4eca95","name":"b26"},{"id":"ef659a8b-7e67-4d4a-8d91-e05fd7a2b5ee","name":"b18"},{"id":"bb12d466-8096-4d04-817f-a8d6e6577dd7","name":"b4"},{"id":"de76a019-0e5b-4bdd-92ea-68d1188654ac","name":"b2"},{"id":"9724fd0c-48e7-4954-bf6c-468046403e85","name":"g3"},{"id":"3d8c2100-97ca-4e0d-8622-83b732049545","name":"g2"},{"id":"0b396601-621b-4f3d-bc26-8e4752f0fe29","name":"b6"},{"id":"3e741066-d79b-46a8-a77a-149d59b88381","name":"b5"},{"id":"19acf23e-401e-4ea3-8427-13dcbc43ddcb","name":"b7"},{"id":"42cea84d-3cc2-438e-b5dd-ede58107ed12","name":"g4"},{"id":"40ef9763-3102-4d0d-b8b3-983690791113","name":"b8"},{"id":"83d3ef12-2905-4056-9827-8f1e6356464c","name":"b9"}]''';
+    hostelList = List<Map<String, dynamic>>.from(jsonDecode(jsonArrayString));
+  }
 
   assign2() {
     hostel = textEditingController1.text;
@@ -71,15 +80,25 @@ class _RegistrationState extends State<Registration> {
     // }
   }
 
+  String? getHostelIdFromName(String hostelName) {
+    for (var hostel in hostelList) {
+      if (hostel['name'] == hostelName) {
+        return hostel['id'];
+      }
+    }
+    return null; // If not found, return null
+  }
+
   Future<void> sendRollNumberEmail() async {
-    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/signup');
-    final url = Uri.parse('http://192.168.11.166:3000/api/test');
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
+    // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
+    final hostelId = getHostelIdFromName(hostel.toLowerCase());
     final body = jsonEncode({
       'username': roll2,
       'name': name2,
-      'hostel': hostel,
-      'otp': otp,
+      'hostel': hostelId,
+      'OTP': otp,
       'password': pass,
       'email': roll2.toLowerCase() + '@students.iitmandi.ac.in'
     });
@@ -139,7 +158,7 @@ class _RegistrationState extends State<Registration> {
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 labelText: 'Current Hostel',
-                hintText: 'Ex:B-18',
+                hintText: 'Ex:B18',
                 labelStyle: Theme.of(context).textTheme.titleMedium,
                 border: border,
                 enabledBorder: border,

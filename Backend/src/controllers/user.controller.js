@@ -6,18 +6,19 @@ import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import { deleteOtp } from "./common.controller.js";
 import { messMap } from "../utils/messId.js";
+import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient();
 
 export const registerUser = asyncHandler(async (req, res) => {
-    const { username, name, email, hostel, password, OTP, defaultMess } = req.body;
-    const { success } = registerSchema.safeParse(req.body);
+    const { username, name, email, hostelId, password, OTP, defaultMess } = req.body;
+    // const { success } = registerSchema.safeParse(req.body);
+    console.log(req.body);
+    // if (!success) {
+    //     return res.status(400).json({ message: "Invalid Input" });
+    // }
 
-    if (!success) {
-        return res.status(400).json({ message: "Invalid Input" });
-    }
-
-    try {
+    // try {
         const matched = await client.otp.findFirst({
             where: {
                 email,
@@ -43,7 +44,7 @@ export const registerUser = asyncHandler(async (req, res) => {
                 name,
                 username,
                 email,
-                hostel,
+                hostelId,
                 password: password ? await bcrypt.hash(password, 10) : undefined,
                 defaultMess
             },
@@ -56,11 +57,11 @@ export const registerUser = asyncHandler(async (req, res) => {
         });
 
         return res.status(200).json({ token, message: "User registered successfully" });
-    } catch (err) {
-        await deleteOtp(email);
+    // } catch (err) {
+    //     await deleteOtp(email);
 
-        return res.status(403).json(err);
-    }
+    //     return res.status(403).json(err);
+    // }
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
@@ -319,6 +320,8 @@ export const submitForm = asyncHandler(async (req, res) => {
 export const verifyQR = asyncHandler(async (req, res) => {
     const { qrMessId } = req.body;
     const { messId } = req.user;
+    console.log(qrMessId);
+    console.log(messId);
     const { success } = z.object({
         qrMessId: z.string(),
     }).safeParse(req.body);
@@ -329,6 +332,9 @@ export const verifyQR = asyncHandler(async (req, res) => {
 
     try {
         const matched = qrMessId === messId;
+        if (!matched) {
+            return res.status(404).json({msg: 'Not matched'})
+        }
 
         return res.status(200).json({ matched });
     } catch (err) {
