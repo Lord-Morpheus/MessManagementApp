@@ -30,7 +30,7 @@ class User {
       name: json['user']['name'],
       username: json['user']['username'],
       email: json['user']['email'],
-      hostel: json['user']['hostel'], // Update this line
+      hostel: json['user']['hostel'],
       messId: json['user']['messId'],
     );
   }
