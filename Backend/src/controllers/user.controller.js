@@ -11,7 +11,7 @@ import sendEmail from "../utils/email/index.js";
 const client = new PrismaClient();
 
 export const registerUser = asyncHandler(async (req, res) => {
-    const { username, name, email, hostelId, password, OTP, defaultMess } = req.body;
+    const { username, name, email, hostel, password, OTP, defaultMess } = req.body;
     // const { success } = registerSchema.safeParse(req.body);
     console.log(req.body);
     // if (!success) {
@@ -19,48 +19,48 @@ export const registerUser = asyncHandler(async (req, res) => {
     // }
 
     // try {
-        const matched = await client.otp.findFirst({
-            where: {
-                email,
-                key: OTP,
+    const matched = await client.otp.findFirst({
+        where: {
+            email,
+            key: OTP,
+        },
+    });
+
+    if (!matched) {
+        return res.status(404).json({ message: "Invalid OTP" });
+    }
+
+    const currentTime = new Date().getTime();
+    const otpExpiry = new Date(matched.expiry).getTime();
+
+    await deleteOtp(email);
+
+    if (currentTime - otpExpiry > 15 * 60 * 1000) {
+        return res.status(400).json({ message: "OTP expired" });
+    }
+
+    const user = await client.student.create({
+        data: {
+            name,
+            username,
+            email,
+            hostel: {
+                connect: {
+                    id: hostel,
+                }
             },
-        });
+            password: password ? await bcrypt.hash(password, 10) : undefined,
+            defaultMess
+        },
+    });
 
-        if (!matched) {
-            return res.status(404).json({ message: "Invalid OTP" });
-        }
+    const payload = { id: user.id };
 
-        const currentTime = new Date().getTime();
-        const otpExpiry = new Date(matched.expiry).getTime();
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: 3600 * 24 * 30,
+    });
 
-        await deleteOtp(email);
-
-        if (currentTime - otpExpiry > 15 * 60 * 1000) {
-            return res.status(400).json({ message: "OTP expired" });
-        }
-
-        const user = await client.student.create({
-            data: {
-                name,
-                username,
-                email,
-                hostel:{
-                    connect:{
-                        id:hostelId
-                    }
-                },
-                password: password ? await bcrypt.hash(password, 10) : undefined,
-                defaultMess
-            },
-        });
-
-        const payload = { id: user.id };
-
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: 3600*24*30,
-        });
-
-        return res.status(200).json({ token, message: "User registered successfully" });
+    return res.status(200).json({ token, message: "User registered successfully" });
     // } catch (err) {
     //     await deleteOtp(email);
 
@@ -100,7 +100,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         const payload = { id: user.id };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: 3600*24*30,
+            expiresIn: 3600 * 24 * 30,
         });
 
         return res.status(200).json({ token, message: "User logged in successfully" });
@@ -151,9 +151,9 @@ export const getUser = asyncHandler(async (req, res) => {
         user.messId = messMap[user.messId];
     }
 
-    console.log('controller',user)
+    console.log('controller', user)
 
-    return res.status(200).json({user});
+    return res.status(200).json({ user });
 });
 
 export const updatePassword = asyncHandler(async (req, res) => {
@@ -236,7 +236,7 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
 
 export const createFeedback = asyncHandler(async (req, res) => {
     const { title, description, attachment } = req.body;
-    console.log('zkldsjfalk',req.body);
+    console.log('zkldsjfalk', req.body);
     // const { success } = z.object({
     //     type: z.string().min(1),
     //     description: z.string(),
@@ -248,23 +248,23 @@ export const createFeedback = asyncHandler(async (req, res) => {
     // }
 
     // try {
-        const user = await client.student.findUnique({
-            where: {
-                id: req.user.id,
-            },
-        })
+    const user = await client.student.findUnique({
+        where: {
+            id: req.user.id,
+        },
+    })
 
-        const feedbackData = await client.feedback.create({
-            data: {
-                title,
-                description,
-                attachmenet: attachment,
-                studentId: user.id,
-                messId: user.messId
-            },
-        });
+    const feedbackData = await client.feedback.create({
+        data: {
+            title,
+            description,
+            attachmenet: attachment,
+            studentId: user.id,
+            messId: user.messId
+        },
+    });
 
-        return res.status(200).json(feedbackData);
+    return res.status(200).json(feedbackData);
     // } catch (err) {
     //     return res.status(403).json(err);
     // }
@@ -350,7 +350,7 @@ export const verifyQR = asyncHandler(async (req, res) => {
     try {
         const matched = qrMessId === messId;
         if (!matched) {
-            return res.status(404).json({msg: 'Not matched'})
+            return res.status(404).json({ msg: 'Not matched' })
         }
 
         return res.status(200).json({ matched });
