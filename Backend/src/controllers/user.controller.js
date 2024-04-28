@@ -220,9 +220,9 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
 export const createFeedback = asyncHandler(async (req, res) => {
     const { title, description, attachment } = req.body;
     const { success } = z.object({
-        title: z.string().min(1),
-        description: z.string().min(50),
-        attachment: z.string().optional(),
+        type: z.string().min(1),
+        description: z.string(),
+        rating: z.number().optional(),
     }).safeParse(req.body);
 
     if (!success) {
@@ -238,8 +238,9 @@ export const createFeedback = asyncHandler(async (req, res) => {
 
         const feedbackData = await client.feedback.create({
             data: {
-                title,
+                type,
                 description,
+                rating,
                 studentId: user.id,
                 messId: user.messId
             },

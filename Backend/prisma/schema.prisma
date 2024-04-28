@@ -32,12 +32,13 @@ model Student {
 
 model Feedback {
   id          String   @id @default(uuid()) @map("_id")
-  title       String
+  type        String
   student     Student  @relation(fields: [studentId], references: [id])
   studentId   String
   mess        Mess     @relation(fields: [messId], references: [id])
   messId      String
   description String
+  rating      Int?
   attachmenet String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
