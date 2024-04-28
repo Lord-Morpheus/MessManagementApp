@@ -3,6 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mess/register_login/login.dart';
+import 'package:mess/studentpages/studenthomepg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:tiny_alert/tiny_alert.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -68,9 +69,8 @@ class _ScanQrPageState extends State<ScanQrPage> {
           body: body);
       if (!mounted) return;
       if (response.statusCode == 200) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) {
-          return Homepg();
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return Studenthomepage();
         }));
         playSound(true);
         TinyAlert.success(
