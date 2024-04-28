@@ -14,6 +14,7 @@ import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 // import { useUsers } from "../hooks/useUsers";
 // import { Loader } from "lucide-react";
 const statusColorMap = {
@@ -91,8 +92,9 @@ export default function App() {
         }
       );
       if (response.status === 201) {
-        alert(`user deleted successfully: ${response.data.user.name}`);
-        window.location.reload();
+        swal("Done",`user deleted successfully: ${response.data.user.name}`,"success").then(()=>{
+          window.location.reload();
+        });
         console.log("User deleted successfully:", response.data.user.name);
       } else {
         console.error("Unexpected response:", response);

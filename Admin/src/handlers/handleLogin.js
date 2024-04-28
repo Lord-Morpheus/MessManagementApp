@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setToken } from "../utils/getToken";
+import swal from "sweetalert";
 
 export const handleLogin = async ({ username, password }) => {
 
@@ -21,7 +22,7 @@ export const handleLogin = async ({ username, password }) => {
         }
     } catch (error) {
         console.error("Error:", error);
-        alert(error.response.data.message);
+        swal(error.response.data.message);
         window.location.reload();
     }
 };

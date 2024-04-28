@@ -566,7 +566,7 @@ export const messAllocation = asyncHandler(async (req, res) => {
             // console.log(updatedUser);
             await sendEmail({
               mail: updatedUser.email,
-              subject: "Alert!! (this is a 🍽️ Test Message) ",
+              subject: "Alert!! (this is a 🍽️ Test Message)",
               text: `Hi there! you have been succesfully alloted : ${messMap[updatedUser.messId]}
           
       
@@ -856,7 +856,7 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
       series: [
         {
           name: "Revenue(in INR) ",
-          data: counts.map((mess) => mess.strength * 125),
+          data: counts.map((mess) => mess.strength * 125*30),
         },
       ],
       options: {

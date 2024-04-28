@@ -40,8 +40,10 @@ export default function GetOTP() {
         console.error("Failed to save data");
       }
     } catch (error) {
-      alert(error.response.data.message);
-      window.location.reload();
+      alert(error.response.data.message).then(()=>{
+
+        window.location.reload();
+      });
       console.error("Error:", error);
     }
   };
