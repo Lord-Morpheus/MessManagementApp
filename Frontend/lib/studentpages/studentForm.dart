@@ -113,6 +113,12 @@ class _StudentFormState extends State<StudentForm> {
 
       if (response.statusCode == 200) {
         // Request successful
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return Studenthomepage();
+          }),
+        );
         print('Preferences submitted successfully');
         TinyAlert.success(
           context,
@@ -361,12 +367,6 @@ class _StudentFormState extends State<StudentForm> {
                               _selectedPreference5 != null) {
                             submitPreferences();
                             print('Submitted');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return thankyou();
-                              }),
-                            );
                           } else {
                             // Show a message widget when preferences are not filled
                             showDialog(

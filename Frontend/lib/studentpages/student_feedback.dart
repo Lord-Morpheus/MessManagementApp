@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mess/studentpages/studenthomepg.dart';
 import 'Mess_menu.dart';
 import 'thankyou.dart';
 import 'dart:convert';
@@ -43,8 +44,8 @@ class _FeedbackFormState extends State<FeedbackForm> {
   }
 
   Future<void> sendFeedback() async {
-    final url = Uri.parse('http://10.8.90.133:3001/api/v1/users/feedback');
-    // final url = Uri.parse('http://192.168.121.166:3000/api/test');
+    // final url = Uri.parse('http://10.8.90.133:3001/api/v1/users/feedback');
+    final url = Uri.parse('http://10.8.90.133:3000/api/test');
     final body = {
       'feedbackType': _feedbackType,
       '_description': _description,
@@ -58,6 +59,9 @@ class _FeedbackFormState extends State<FeedbackForm> {
       );
 
       if (response.statusCode == 200) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const Studenthomepage();
+        }));
         TinyAlert.success(
           context,
           title: "Success!",
@@ -174,10 +178,6 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   onPressed: () {
                     // Here you can handle the submission of the feedback form
                     sendFeedback();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const thankyou();
-                    }));
                   },
                   child: const Text('Submit',
                       style: TextStyle(
