@@ -31,6 +31,8 @@ export default function ViewPDF({ pdfURL }) {
       setUploading(false);
 
       if (response.ok) {
+        alert("File uploaded successfully!");
+        window.location.reload();
         console.log("File uploaded successfully!");
         // Optionally, you can handle success behavior here
       } else {

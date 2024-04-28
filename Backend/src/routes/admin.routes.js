@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFormData, getHostel, getMess, getStudent, messAllocation, seedData, seedForms, signIn, signUp, studentID } from '../controllers/admin.controller.js';
+import { addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFormData, getHostel, getMess, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, signIn, signUp, studentID } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/common.controller.js';
 import { exportUser, importUser } from '../controllers/excel.controller.js';
@@ -35,6 +35,8 @@ router.get('/allocate', adminAuthMiddleware, messAllocation);
 router.get('/getform', adminAuthMiddleware, getFormData)
 router.post('/upload', upload.single('file'), menuUplaoder);
 router.get('/menu', getMenuPDF);
+router.get('/getMessStudentCount',getStudentsCountByMess);
+router.get('/getRevenue',getRevenueOfMess);
 
 
 export default router;

@@ -39,7 +39,7 @@ export default function Mess() {
     }
     fetchData();
   }, [navigate]);
-
+  
   return (
     <div className="flex">
       <Sidebar />

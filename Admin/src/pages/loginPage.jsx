@@ -19,7 +19,7 @@ export default function Login() {
   useEffect(() => {
     async function authenticate() {
       const token = getToken();
-      // console.log(token);
+      console.log(token);
       if (!token) {
         navigate("/login");
       }

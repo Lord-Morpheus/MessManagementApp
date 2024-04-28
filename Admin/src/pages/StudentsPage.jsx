@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 
-import { Filter } from "../components/Filter";
+// import { Filter } from "../components/Filter";
 import StudentCard2 from "../components/StudentCard2";
-import StudentCard from "../components/StudentCard";
+// import StudentCard from "../components/StudentCard";
 import { getToken } from "../utils/getToken";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import { useNavigate } from "react-router-dom";
 import { TableComponent } from "../components/StudentTable";
-import { Card } from "../components/ui/card";
+// import { Card } from "../components/ui/card";
 import axios from "axios";
 
 export const StudentsPage = () => {
@@ -46,12 +46,12 @@ export const StudentsPage = () => {
     authenticate();
   }, []);
 
-  const [hostel, setHostel] = useState(null);
-  const [mess, setMess] = useState(null);
-  const [batch, setBatch] = useState(null);
-  const [fromDate, setFromDate] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [toDate, setToDate] = useState(null);
+  // const [hostel, setHostel] = useState(null);
+  // const [mess, setMess] = useState(null);
+  // const [batch, setBatch] = useState(null);
+  // const [fromDate, setFromDate] = useState(null);
+  // const [username, setUsername] = useState(null);
+  // const [toDate, setToDate] = useState(null);
 
   // if (loading) {
   //   return <div>Loading...</div>;
