@@ -72,14 +72,14 @@ class _RegistrationState extends State<Registration> {
   }
 
   Future<void> sendRollNumberEmail() async {
-    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/signup');
-    final url = Uri.parse('http://192.168.11.166:3000/api/test');
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
+    // final url = Uri.parse('http://192.168.11.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode({
       'username': roll2,
       'name': name2,
       'hostel': hostel,
-      'otp': otp,
+      'OTP': otp,
       'password': pass,
       'email': roll2.toLowerCase() + '@students.iitmandi.ac.in'
     });
