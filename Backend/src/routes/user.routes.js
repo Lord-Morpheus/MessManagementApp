@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createFeedback, getFeedbacks, getUser, loginUser, registerUser, submitForm, updateDefaultMess, updatePassword } from "../controllers/user.controller.js";
+import { createFeedback, getFeedbacks, getUser, loginUser, registerUser, submitForm, updateDefaultMess, updatePassword, verifyQR } from "../controllers/user.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { forgotPassword, resetPassword, sendSignupOTP } from "../controllers/common.controller.js";
 import { seedData } from "../controllers/admin.controller.js";
@@ -18,5 +18,6 @@ router.post('/send/otp', sendSignupOTP);
 router.post('/feedback', authMiddleware, createFeedback);
 router.get('/feedback', authMiddleware, getFeedbacks);
 router.post('/submit', authMiddleware, submitForm);
+router.post('/verifyqr', authMiddleware, verifyQR);
 router.get('/menu', getMenuPDF);
 export default router;
