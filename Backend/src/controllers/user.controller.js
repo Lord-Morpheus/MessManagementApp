@@ -269,7 +269,7 @@ export const submitForm = asyncHandler(async (req, res) => {
     const { success } = z.object({
         preferences: z.array(z.string()),
     }).safeParse(req.body);
-
+    console.log(preferences);
     if (!success) {
         return res.status(400).json({ message: "Invalid Input" });
     }

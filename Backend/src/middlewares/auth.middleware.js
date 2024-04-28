@@ -7,7 +7,7 @@ const client = new PrismaClient();
 export const authMiddleware = asyncHandler(async (req, res, next) => {
 
     const token = req.headers.authorization?.split(" ")[1];
-
+    console.log(token);
     if (!token || req.headers.authorization?.split(" ")[0] !== "Bearer") {
         return res.status(401).json({ message: "Unauthorized" });
     }
