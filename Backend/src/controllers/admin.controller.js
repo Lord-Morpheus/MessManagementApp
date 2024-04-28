@@ -253,7 +253,7 @@ export const deleteStudent = asyncHandler(async (req, res) => {
         id: studentId
       },
     });
-    
+
     console.log('deleted');
     return res
       .status(201)
@@ -277,12 +277,12 @@ export const updateStudent = asyncHandler(async (req, res) => {
         name,
         username,
         email,
-        hostel:{
-          connect:{
-              id:hostelId
+        hostel: {
+          connect: {
+            id: hostelId
           }
-      },
-      messId,
+        },
+        messId,
       },
       select: {
         name: true,
@@ -433,30 +433,31 @@ export const addVendor = asyncHandler(async (req, res) => {
 
 export const getFeedbacks = asyncHandler(async (req, res) => {
   // try {
-    const feedbacks = await client.feedback.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        attachmenet: true,
-        createdAt:true,
-        student: {
-          select: {
-            id: true,
+  const feedbacks = await client.feedback.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      attachmenet: true,
+      createdAt: true,
+      student: {
+        select: {
+          id: true,
           name: true,
           email: true,
-        }},
-        mess: {
-          select: {
-            id: true,
+        }
+      },
+      mess: {
+        select: {
+          id: true,
           name: true,
         }
       }
-      }
-    });
-    console.log(feedbacks)
+    }
+  });
+  console.log(feedbacks)
 
-    return res.status(200).json({ data: feedbacks });
+  return res.status(200).json({ data: feedbacks });
   // } catch (err) {
   //   return res.status(403).json(err);
   // }
@@ -738,19 +739,18 @@ export const getStudentsCountByMess = asyncHandler(async (req, res, next) => {
       },
     });
 
-    const counts = await Promise.all(
-      messes.map(async (mess) => {
-        const students = await client.student.findMany({
-          where: {
-            messId: mess.id,
-          },
-        });
-        return {
-          name: mess.name.toUpperCase(),
-          strength: students.length,
-        };
-      })
-    );
+    const counts = [];
+    for (const mess of messes) {
+      const students = await client.student.findMany({
+        where: {
+          messId: mess.id,
+        },
+      });
+      counts.push({
+        name: mess.name.toUpperCase(),
+        strength: students.length,
+      });
+    }
 
     const chartConfig = {
       type: "bar",
@@ -844,19 +844,18 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
       },
     });
 
-    const counts = await Promise.all(
-      messes.map(async (mess) => {
-        const students = await client.student.findMany({
-          where: {
-            messId: mess.id,
-          },
-        });
-        return {
-          name: mess.name.toUpperCase(),
-          strength: students.length,
-        };
-      })
-    );
+    const counts = [];
+    for (const mess of messes) {
+      const students = await client.student.findMany({
+        where: {
+          messId: mess.id,
+        },
+      });
+      counts.push({
+        name: mess.name.toUpperCase(),
+        strength: students.length,
+      });
+    }
 
     const chartConfig = {
       type: "bar",

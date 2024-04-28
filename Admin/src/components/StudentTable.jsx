@@ -190,7 +190,10 @@ export function TableComponent({
         </div>
         <Button
           className="bg-green-700"
-          onClick={() => exportToExcel(filteredItems)}
+          onClick={() => {
+            exportToExcel(filteredItems);
+            console.log(filteredItems);
+          }}
         >
           <TbFileExport className="mr-2 h-5 w-5" />
           Export to Excel
