@@ -68,6 +68,10 @@ class _ScanQrPageState extends State<ScanQrPage> {
           body: body);
       if (!mounted) return;
       if (response.statusCode == 200) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return Homepg();
+        }));
         playSound(true);
         TinyAlert.success(
           context,
