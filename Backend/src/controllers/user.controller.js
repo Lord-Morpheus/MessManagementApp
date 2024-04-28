@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import { deleteOtp } from "./common.controller.js";
 import { messMap } from "../utils/messId.js";
+import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient();
 
