@@ -12,6 +12,7 @@ import {
   formData5,
   studentsData,
 } from "../../prisma/data.js";
+import sendEmail from "../utils/email/index.js";
 
 const client = new PrismaClient();
 
@@ -566,6 +567,7 @@ export const messAllocation = asyncHandler(async (req, res) => {
             alloted: true,
           },
         });
+        sendEmail
         form.alloted = true;
       }
     }
