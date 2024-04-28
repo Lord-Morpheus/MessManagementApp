@@ -142,10 +142,18 @@ class _DashState extends State<Dash> {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             const Divider(
               color: Colors.black,
               thickness: 2,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Date: ${DateFormat('dd MMMM yyyy').format(time)}",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 20),
             Container(
@@ -174,26 +182,6 @@ class _DashState extends State<Dash> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Text(
-                                  "Date: ${DateFormat('dd MMMM yyyy').format(time)}",
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(width: 30),
-                                Text(
-                                  "Time: ${DateFormat('hh:mm a').format(time)}",
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
                             const SizedBox(height: 30),
                             Text(
                               "NAME: $name",

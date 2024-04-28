@@ -153,6 +153,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 width: 300,
                 child: Center(
                   child: TextField(
+                    style:TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                     decoration: const InputDecoration(
                       hintText: 'Enter description',
                     ),
@@ -169,7 +173,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
               Center(
                 child: const Text(
                   'Rating:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style:TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                 ),
               ),
               Row(
@@ -185,7 +192,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
               SizedBox(height: 20.0),
               Text(
                 'You rated: $_rating stars',
-                style: TextStyle(fontSize: 16.0),
+                style:TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               const SizedBox(height: 20),
               Center(

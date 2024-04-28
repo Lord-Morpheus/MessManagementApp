@@ -278,11 +278,21 @@ class _StudentFormState extends State<StudentForm> {
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
               ),
               Center(
-                child: IconButton(
-                    onPressed: _resetDropdowns,
-                    icon: Icon(Icons.refresh),
-                    tooltip: 'Refresh',
-                    color: Colors.green),
+                child:ElevatedButton(
+                  onPressed: _resetDropdowns,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 44, 7, 251),
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  child: Text(
+                    'Reset',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white, // Adjust text color as needed
+                    ),
+                  ),
+                )
               ),
               Center(
                 child: Form(
