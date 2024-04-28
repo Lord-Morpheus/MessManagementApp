@@ -44,7 +44,11 @@ export const registerUser = asyncHandler(async (req, res) => {
                 name,
                 username,
                 email,
-                hostelId,
+                hostel:{
+                    connect:{
+                        id:hostelId
+                    }
+                },
                 password: password ? await bcrypt.hash(password, 10) : undefined,
                 defaultMess
             },
@@ -53,7 +57,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         const payload = { id: user.id };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: 3600,
+            expiresIn: 3600*24*30,
         });
 
         return res.status(200).json({ token, message: "User registered successfully" });
@@ -96,7 +100,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         const payload = { id: user.id };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: 3600,
+            expiresIn: 3600*24*30,
         });
 
         return res.status(200).json({ token, message: "User logged in successfully" });

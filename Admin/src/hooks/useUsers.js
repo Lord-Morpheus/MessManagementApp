@@ -1,39 +1,49 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
 
 export const useUsers = () => {
-    const [loading, setLoading] = useState(true);
-    const [users, setUsers] = useState([]);
-    const navigate = useNavigate();
-    const token = getToken();
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
-    if (!token) {
+  useEffect(() => {
+    async function fetchData() {
+      const token = getToken();
+
+      if (!token) {
         navigate("/login");
-    }
+      }
 
-    try {
-        axios
-            .get(`${import.meta.env.VITE_BACKEND_URI}/admin/students`, {
-                headers: {
-                    Authorization: `Admin ${getToken()}`,
-                },
-            })
-            .then((res) => {
-                console.log(res.data.data);
-                setUsers(res.data.data);
-                setLoading(false);
-            });
+      try {
+        await axios
+          .get(`${import.meta.env.VITE_BACKEND_URI}/admin/students`, {
+            headers: {
+              Authorization: `Admin ${getToken()}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data.data);
+            // res.data.data.map((user) => user.hostel = user.hostel.name);
+            setUsers(res.data.data);
+            setLoading(false);
+          });
 
         return { users, loading };
-    } catch (error) {
+      } catch (error) {
         const status = error.response.status;
         console.log(status);
         if (status === 401) {
-            console.log("Not Authenticated");
-            localStorage.removeItem("token");
-            navigate("/login");
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
         }
+      }
     }
+    fetchData();
+  },[users,loading,navigate]);
+  return { users, loading };
 };
+
+

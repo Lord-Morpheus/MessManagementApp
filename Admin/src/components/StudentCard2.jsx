@@ -8,15 +8,14 @@ import {
   TableCell,
   User,
   Chip,
-  Tooltip,
   Spinner,
 } from "@nextui-org/react";
 import { columns } from "./data";
 import { TableComponent } from "./StudentTable";
-// import { getToken } from "../utils/getToken";
+import { getToken } from "../utils/getToken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useUsers } from "../hooks/useUsers";
+// import { useUsers } from "../hooks/useUsers";
 // import { Loader } from "lucide-react";
 const statusColorMap = {
   dining: "success",
@@ -33,49 +32,78 @@ export default function App() {
   const [hostelFilter, setHostelFilter] = useState("all");
   const [batchFilter, setBatchFilter] = useState("all");
 
-  const hasSearchFilter = Boolean(filterValue);
+  // const hasSearchFilter = Boolean(filterValue);
 
-  const { users, loading } = useUsers();
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const token = getToken();
-  //     if (!token) {
-  //       navigate("/login");
-  //     }
-  //     try {
-  //       const usersdata = await axios.get(
-  //         `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
-  //         {
-  //           headers: {
-  //             Authorization: `Admin ${token}`,
-  //           },
-  //         }
-  //       );
-  //       // console.log(usersdata.data.data);
-
-  //       return usersdata.data.data;
-  //     } catch (error) {
-  //       const status = error.response.status;
-  //       console.log(status);
-  //       if (status === 401) {
-  //         console.log("Not Authenticated");
-  //         localStorage.removeItem("token");
-  //         navigate("/login");
-  //       }
-  //     }
-  //   }
-  //   const data = fetchData().then((data) => {
-  //     console.log(data);
-  //     setUsers(data);
-  //   });
-  //   console.log("Users:", users);
-  // }, []);
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    console.log("Users updated:", users);
-  }, [users]);
+    async function fetchData() {
+      const token = getToken();
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        await axios
+          .get(`${import.meta.env.VITE_BACKEND_URI}/admin/students`, {
+            headers: {
+              Authorization: `Admin ${getToken()}`,
+            },
+          })
+          .then((res) => {
+            // console.log(res.data.data);
+            // res.data.data.map((user) => user.hostel = user.hostel.name);
+            setUsers(res.data.data);
+            setLoading(false);
+          });
+
+        return { users, loading };
+      } catch (error) {
+        const status = error.response.status;
+        // console.log(status);
+        if (status === 401) {
+          console.log("Not Authenticated");
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      }
+    }
+    fetchData();
+  }, [loading, navigate]);
+
+  const handleDelete = async (studentId) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/delete`,
+
+        {
+          data:{studentId},
+          headers: {
+            Authorization: `Admin ${getToken()}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+
+        alert(`user deleted successfully: ${response.data.user.name}`)
+        window.location.reload();
+        console.log("User deleted successfully:", response.data.user.name);
+      } else {
+        console.error("Unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+  // useEffect(() => {
+  //   console.log("Users updated:", users);
+  // }, [users]);
   const filteredItems = [...users];
+
+  // const filteredItems = useMemo(() => {
+  //   let filteredUsers = users;
+  //   return filteredUsers;
+  // }, [users])
 
   // const filteredItems = useMemo(() => {
   //   let filteredUsers = users;
@@ -138,6 +166,7 @@ export default function App() {
   ]);
 
   const renderCell = useCallback((user, columnKey) => {
+    // console.log(user);
     const cellValue = user[columnKey];
 
     switch (columnKey) {
@@ -170,7 +199,7 @@ export default function App() {
                 <MdOutlineRemoveRedEye />
               </span>
             </Tooltip> */}
-            <div >
+            <div>
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +217,7 @@ export default function App() {
                 </svg>
               </span>
             </div>
-            <div >
+            <div onClick={() => handleDelete(user.id)}>
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

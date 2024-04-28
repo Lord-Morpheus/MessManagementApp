@@ -21,7 +21,8 @@ import { Button } from "./ui/button";
 import { ChevronDownIcon } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import { useNavigate } from "react-router-dom";
-import { categoryOptions, feedbacks } from "./data";
+import { categoryOptions } from "./data";
+import { Spinner } from "@nextui-org/react";
 
 const FeedbackTable = () => {
   const [messFilter, setMessFilter] = useState("all");
@@ -29,6 +30,8 @@ const FeedbackTable = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const hasSearchFilter = Boolean(searchFilter);
   const [messOptions, setMessOptions] = useState([]);
+  const [feedbacks, setFeedback] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,6 +50,18 @@ const FeedbackTable = () => {
           }
         );
         setMessOptions(messoptions.data);
+        
+        const {data} = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/feedback`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        )
+        setFeedback(data.data);
+        setLoading(false)
+
       } catch (error) {
         const status = error.response.status;
         console.log(status);
@@ -56,10 +71,35 @@ const FeedbackTable = () => {
           navigate("/login");
         }
       }
+
+      // try {
+      //   const feedbacks = await axios.get(
+      //     `${import.meta.env.VITE_BACKEND_URI}/admin/feedback`,
+      //     {
+      //       headers: {
+      //         Authorization: `Admin ${token}`,
+      //       },
+      //     }
+      //   )
+      //   .then((data) => {
+      //     setFeedback(data.data.data);
+      //     setLoading(false);
+      //   });
+      //   // return{loading};
+      // } catch (error) {
+      //   const status = error.response.status;
+      //   console.log(status);
+      //   if (status === 401) {
+      //     console.log("Not Authenticated");
+      //     localStorage.removeItem("token");
+      //     navigate("/login");
+      //   }
+      // }
     }
     fetchData();
   }, [navigate]);
 
+  console.log(feedbacks);
   const onMessChange = useCallback((value) => {
     if (value) {
       setMessFilter(value);
@@ -88,34 +128,46 @@ const FeedbackTable = () => {
     setSearchFilter("");
   }, []);
 
-  const filteredFeedbacks = useMemo(() => {
-    let filteredFeedbacks = [...feedbacks];
+  
+  const filteredFeedbacks=[...feedbacks];
+  
+  // const filteredFeedbacks = useMemo(() => {
+  //   let filteredFeedbacks = [...feedbacks];
+  //   console.log(filteredFeedbacks);
 
-    if (hasSearchFilter) {
-      filteredFeedbacks = filteredFeedbacks.filter(
-        (feedback) =>
-          feedback.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
-          feedback.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
-          feedback.description
-            .toLowerCase()
-            .includes(searchFilter.toLowerCase())
-      );
-    }
+  //   if (hasSearchFilter) {
+  //     filteredFeedbacks = filteredFeedbacks.filter(
+  //       (feedback) =>
+  //         feedback.student.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+  //         feedback.student.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
+  //         feedback.description
+  //           .toLowerCase()
+  //           .includes(searchFilter.toLowerCase())
+  //     );
+  //   }
 
-    if (messFilter !== "all") {
-      filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
-        feedback.mess.toLowerCase().includes(messFilter.toLowerCase())
-      );
-    }
+  //   if (messFilter !== "all") {
+  //     filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
+  //       feedback.mess.name.toLowerCase().includes(messFilter.toLowerCase())
+  //     );
+  //   }
 
-    if (categoryFilter !== "all") {
-      filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
-        feedback.category.toLowerCase().includes(categoryFilter.toLowerCase())
-      );
-    }
+  //   if (categoryFilter !== "all") {
+  //     filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
+  //       feedback.category.toLowerCase().includes(categoryFilter.toLowerCase())
+  //     );
+  //   }
 
-    return filteredFeedbacks;
-  }, [messFilter, categoryFilter, hasSearchFilter, searchFilter]);
+  //   return filteredFeedbacks;
+  // }, [messFilter, categoryFilter, hasSearchFilter, searchFilter]);
+
+  if (loading) {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col">
@@ -192,6 +244,7 @@ const FeedbackTable = () => {
                 <TableHead>Feedback</TableHead>
                 <TableHead>Mess</TableHead>
                 <TableHead>Category</TableHead>
+                <TableHead>Rating</TableHead>
                 <TableHead className="w-[150px]">Timestamp</TableHead>
               </TableRow>
             </TableHeader>
@@ -199,13 +252,14 @@ const FeedbackTable = () => {
               {filteredFeedbacks.map((feedback) => (
                 <TableRow key={feedback.id}>
                   <TableCell className="font-semibold">
-                    {feedback.name}
+                    {feedback.student.name}
                   </TableCell>
-                  <TableCell>{feedback.email}</TableCell>
+                  <TableCell>{feedback.student.email}</TableCell>
                   <TableCell>{feedback.description}</TableCell>
-                  <TableCell>{feedback.mess}</TableCell>
-                  <TableCell>{feedback.category}</TableCell>
-                  <TableCell>{feedback.timestamp}</TableCell>
+                  <TableCell>{feedback.mess.name}</TableCell>
+                  <TableCell>{feedback.title}</TableCell>
+                  <TableCell>{feedback.attachmenet}</TableCell>
+                  <TableCell>{feedback.createdAt}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
