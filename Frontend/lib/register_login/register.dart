@@ -105,6 +105,7 @@ class _RegistrationState extends State<Registration> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) {
