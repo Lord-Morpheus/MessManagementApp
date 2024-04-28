@@ -40,7 +40,7 @@ export async function generatePdfFromBytes(fileData) {
 
 export async function getMenuPDF(req, res) {
     try {
-        const filePath = './public/temp/07e2da93749c1711e7b1b6a4981247ec_MIT18_440S14_mid2_s2011_sl.pdf';
+        const filePath = './public/temp/menu.pdf';
 
         // Check if the file exists
         if (!fs.existsSync(filePath)) {
