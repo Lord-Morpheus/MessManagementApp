@@ -123,21 +123,33 @@ export const getUser = asyncHandler(async (req, res) => {
                 },
             },
             messId: true,
-            feedbacks: true
+            // feedbacks: true
         },
     });
 
-    const mess = await client.mess.findFirst({
-        where: {
-            id: user.messId,
-        },
-        select: {
-            id: true,
-            name: true,
-        },
-    });
+    if (!user.hostel) {
+        user.hostel = "Not Assigned"
+    } else {
+        user.hostel = user.hostel.name
+    }
 
-    return res.status(200).json(user, mess);
+    // const mess = await client.mess.findFirst({
+    //     where: {
+    //         id: user.messId,
+    //     },
+    //     select: {
+    //         id: true,
+    //         name: true,
+    //     },
+    // });
+
+    if (user.messId) {
+        user.messId = messMap[user.messId];
+    }
+
+    console.log('controller',user)
+
+    return res.status(200).json({user});
 });
 
 export const updatePassword = asyncHandler(async (req, res) => {
