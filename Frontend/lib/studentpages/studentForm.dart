@@ -125,14 +125,13 @@ class _StudentFormState extends State<StudentForm> {
 
       if (response.statusCode == 200) {
         // Request successful
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return Studenthomepage();
-          }),
-        );
         print('Preferences submitted successfully');
         TinyAlert.success(
+          onConfirm: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
           context,
           title: "Success!",
           message: "Preferences Submitted successfully!",
@@ -140,6 +139,11 @@ class _StudentFormState extends State<StudentForm> {
       } else if (response.statusCode == 401) {
         logout();
         TinyAlert.error(
+          onConfirm: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
           context,
           title: "Error!",
           message: "User unauthorized, please login again",
@@ -215,46 +219,36 @@ class _StudentFormState extends State<StudentForm> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-              color: Colors.white,
-              icon: const Icon(Icons.density_medium_rounded),
-              onPressed: () {
-                // Handle icon button action here
-              },
-            ),
-            const SizedBox(width: 1),
-            const SizedBox(
-              height: 40,
-              child: VerticalDivider(
-                color: Colors.white,
-                thickness: 2,
-              ),
-            ),
-            const SizedBox(width: 2),
-            const Text(
-              'Welcome \n user',
-              style: TextStyle(color: Colors.white),
+            Image.asset(
+              'assets/images/main_logo.png',
+              width: 40, // Adjust width as needed
+              height: 40, // Adjust height as needed
+              // You can specify other properties like fit, alignment, etc. as needed
             ),
           ],
         ),
         actions: [
-          IconButton(
-            color: Colors.white,
-            icon: const Icon(Icons.logout_outlined),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               logout();
               // Handle logout action here
             },
-          ),
-          const Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Text(
-              'LOGOUT',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.logout_outlined,
+                  color: Colors.white,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  'LOGOUT',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -277,23 +271,21 @@ class _StudentFormState extends State<StudentForm> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
               ),
-              Center(
-                child:ElevatedButton(
-                  onPressed: _resetDropdowns,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white, // Adjust text color as needed
-                    ),
-                  ),
-                )
-              ),
+              // Center(
+              //     child: ElevatedButton(
+              //   onPressed: _resetDropdowns,
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
+              //   ),
+              //   child: Text(
+              //     'Reset',
+              //     style: TextStyle(
+              //       fontSize: 16,
+              //       fontWeight: FontWeight.w600,
+              //       color: Colors.white, // Adjust text color as needed
+              //     ),
+              //   ),
+              // )),
               Center(
                 child: Form(
                   child: Column(
@@ -371,13 +363,36 @@ class _StudentFormState extends State<StudentForm> {
                         },
                       ),
                       SizedBox(height: 20),
+                      Center(
+                          child: ElevatedButton(
+                        onPressed: _resetDropdowns,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(150, 40),
+                          backgroundColor:
+                              const Color.fromARGB(255, 44, 7, 251),
+                        ),
+                        child: Text(
+                          'Reset',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white, // Adjust text color as needed
+                          ),
+                        ),
+                      )),
+                      SizedBox(height: 20),
                       ElevatedButton(
                         child: Text(
                           "Submit",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          minimumSize: Size(150, 40),
+                          backgroundColor:
+                              const Color.fromARGB(255, 44, 7, 251),
                           padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           textStyle: TextStyle(
