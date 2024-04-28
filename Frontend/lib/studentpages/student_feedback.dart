@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/login.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'Mess_menu.dart';
 import 'thankyou.dart';
@@ -31,6 +32,16 @@ class _FeedbackFormState extends State<FeedbackForm> {
     print(_token);
   }
 
+  void logout() async {
+    // Delete token from secure storage
+    await storage.delete(key: 'token');
+
+    // Navigate back to the login page
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+      return Homepg();
+    }));
+  }
+
   String? _feedbackType = null;
 
   String _description = '';
@@ -44,12 +55,12 @@ class _FeedbackFormState extends State<FeedbackForm> {
   }
 
   Future<void> sendFeedback() async {
-    // final url = Uri.parse('http://10.8.90.133:3001/api/v1/users/feedback');
-    final url = Uri.parse('http://192.168.135.166:3000/api/test');
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/feedback');
+    // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final body = {
-      'feedbackType': _feedbackType,
-      '_description': _description,
-      'rating': _rating,
+      'title': _feedbackType,
+      'description': _description,
+      'attachment': '$_rating',
     };
     try {
       final response = await http.post(
@@ -68,6 +79,13 @@ class _FeedbackFormState extends State<FeedbackForm> {
           message: "Feedback Submitted successfully!",
         );
         print('Feedback submitted successfully');
+      } else if (response.statusCode == 401) {
+        logout();
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "User unauthorized, please login again",
+        );
       } else {
         TinyAlert.error(
           context,

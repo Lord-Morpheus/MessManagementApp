@@ -127,21 +127,33 @@ export const getUser = asyncHandler(async (req, res) => {
                 },
             },
             messId: true,
-            feedbacks: true
+            // feedbacks: true
         },
     });
 
-    const mess = await client.mess.findFirst({
-        where: {
-            id: user.messId,
-        },
-        select: {
-            id: true,
-            name: true,
-        },
-    });
+    if (!user.hostel) {
+        user.hostel = "Not Assigned"
+    } else {
+        user.hostel = user.hostel.name
+    }
 
-    return res.status(200).json(user, mess);
+    // const mess = await client.mess.findFirst({
+    //     where: {
+    //         id: user.messId,
+    //     },
+    //     select: {
+    //         id: true,
+    //         name: true,
+    //     },
+    // });
+
+    if (user.messId) {
+        user.messId = messMap[user.messId];
+    }
+
+    console.log('controller',user)
+
+    return res.status(200).json({user});
 });
 
 export const updatePassword = asyncHandler(async (req, res) => {
@@ -224,17 +236,18 @@ export const updateDefaultMess = asyncHandler(async (req, res) => {
 
 export const createFeedback = asyncHandler(async (req, res) => {
     const { title, description, attachment } = req.body;
-    const { success } = z.object({
-        type: z.string().min(1),
-        description: z.string(),
-        rating: z.number().optional(),
-    }).safeParse(req.body);
+    console.log('zkldsjfalk',req.body);
+    // const { success } = z.object({
+    //     type: z.string().min(1),
+    //     description: z.string(),
+    //     rating: z.number().optional(),
+    // }).safeParse(req.body);
 
-    if (!success) {
-        return res.status(400).json({ message: "Invalid Input" });
-    }
+    // if (!success) {
+    //     return res.status(400).json({ message: "Invalid Input" });
+    // }
 
-    try {
+    // try {
         const user = await client.student.findUnique({
             where: {
                 id: req.user.id,
@@ -243,18 +256,18 @@ export const createFeedback = asyncHandler(async (req, res) => {
 
         const feedbackData = await client.feedback.create({
             data: {
-                type,
+                title,
                 description,
-                rating,
+                attachmenet: attachment,
                 studentId: user.id,
                 messId: user.messId
             },
         });
 
         return res.status(200).json(feedbackData);
-    } catch (err) {
-        return res.status(403).json(err);
-    }
+    // } catch (err) {
+    //     return res.status(403).json(err);
+    // }
 });
 
 export const getFeedbacks = asyncHandler(async (req, res) => {

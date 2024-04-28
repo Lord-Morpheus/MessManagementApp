@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mess/register_login/login.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:tiny_alert/tiny_alert.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -19,6 +20,16 @@ class _ScanQrPageState extends State<ScanQrPage> {
   void initState() {
     super.initState();
     getToken();
+  }
+
+  void logout() async {
+    // Delete token from secure storage
+    await storage.delete(key: 'token');
+
+    // Navigate back to the login page
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+      return Homepg();
+    }));
   }
 
   Future<void> getToken() async {
@@ -57,6 +68,10 @@ class _ScanQrPageState extends State<ScanQrPage> {
           body: body);
       if (!mounted) return;
       if (response.statusCode == 200) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return Homepg();
+        }));
         playSound(true);
         TinyAlert.success(
           context,
@@ -64,6 +79,13 @@ class _ScanQrPageState extends State<ScanQrPage> {
           message: "Your mess has been verified successfully!",
         );
         print('data sent successfully');
+      } else if (response.statusCode == 401) {
+        logout();
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "User unauthorized, please login again",
+        );
       } else {
         playSound(false);
         TinyAlert.error(

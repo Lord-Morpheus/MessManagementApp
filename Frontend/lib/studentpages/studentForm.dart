@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -33,6 +35,16 @@ class _StudentFormState extends State<StudentForm> {
       _token = token;
     });
     print(_token);
+  }
+
+  void logout() async {
+    // Delete token from secure storage
+    await storage.delete(key: 'token');
+
+    // Navigate back to the login page
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+      return Homepg();
+    }));
   }
 
   final List<String> _preferences = [
@@ -124,6 +136,13 @@ class _StudentFormState extends State<StudentForm> {
           context,
           title: "Success!",
           message: "Preferences Submitted successfully!",
+        );
+      } else if (response.statusCode == 401) {
+        logout();
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "User unauthorized, please login again",
         );
       } else {
         // Request failed
@@ -223,10 +242,7 @@ class _StudentFormState extends State<StudentForm> {
             color: Colors.white,
             icon: const Icon(Icons.logout_outlined),
             onPressed: () {
-              Navigator.of(context)
-                  .pushReplacement(MaterialPageRoute(builder: (context) {
-                return const Homepg();
-              }));
+              logout();
               // Handle logout action here
             },
           ),
