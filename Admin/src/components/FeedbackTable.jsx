@@ -127,6 +127,11 @@ const FeedbackTable = () => {
     );
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
+
   return (
     <div className="flex flex-col">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
@@ -217,7 +222,7 @@ const FeedbackTable = () => {
                   <TableCell>{feedback.mess.name}</TableCell>
                   <TableCell>{feedback.title}</TableCell>
                   <TableCell>{feedback.attachmenet}</TableCell>
-                  <TableCell>{feedback.createdAt}</TableCell>
+                  <TableCell>{formatDate(feedback.createdAt)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
