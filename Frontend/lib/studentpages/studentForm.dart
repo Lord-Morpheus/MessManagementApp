@@ -278,22 +278,20 @@ class _StudentFormState extends State<StudentForm> {
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
               ),
               Center(
-                child:ElevatedButton(
-                  onPressed: _resetDropdowns,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-                    minimumSize: const Size(double.infinity, 50),
+                  child: ElevatedButton(
+                onPressed: _resetDropdowns,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 44, 7, 251),
+                ),
+                child: Text(
+                  'Reset',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white, // Adjust text color as needed
                   ),
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white, // Adjust text color as needed
-                    ),
-                  ),
-                )
-              ),
+                ),
+              )),
               Center(
                 child: Form(
                   child: Column(
@@ -377,7 +375,8 @@ class _StudentFormState extends State<StudentForm> {
                           style: TextStyle(color: Colors.black),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor:
+                              const Color.fromARGB(255, 44, 7, 251),
                           padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           textStyle: TextStyle(
