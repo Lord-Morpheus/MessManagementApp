@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/login.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'Mess_menu.dart';
 import 'thankyou.dart';
@@ -29,6 +30,16 @@ class _FeedbackFormState extends State<FeedbackForm> {
       _token = token;
     });
     print(_token);
+  }
+
+  void logout() async {
+    // Delete token from secure storage
+    await storage.delete(key: 'token');
+
+    // Navigate back to the login page
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+      return Homepg();
+    }));
   }
 
   String? _feedbackType = null;
@@ -68,6 +79,13 @@ class _FeedbackFormState extends State<FeedbackForm> {
           message: "Feedback Submitted successfully!",
         );
         print('Feedback submitted successfully');
+      } else if (response.statusCode == 401) {
+        logout();
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "User unauthorized, please login again",
+        );
       } else {
         TinyAlert.error(
           context,

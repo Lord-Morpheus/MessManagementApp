@@ -137,6 +137,13 @@ class _StudentFormState extends State<StudentForm> {
           title: "Success!",
           message: "Preferences Submitted successfully!",
         );
+      } else if (response.statusCode == 401) {
+        logout();
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "User unauthorized, please login again",
+        );
       } else {
         // Request failed
         print('Failed to submit preferences. Error: ${response.statusCode}');
