@@ -793,7 +793,7 @@ export const getStudentsCountByMess = asyncHandler(async (req, res, next) => {
               fontWeight: 400,
             },
           },
-          categories: counts.map((mess) => mess.name),
+          categories: counts.map(mess => mess.name),
         },
         yaxis: {
           labels: {
@@ -899,7 +899,7 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
               fontWeight: 400,
             },
           },
-          categories: counts.map((mess) => mess.name),
+          categories: counts.map(mess => mess.name),
         },
         yaxis: {
           labels: {
@@ -940,3 +940,106 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+export const getFeedbackCountByMess = async (req, res) => {
+  try {
+    const messes = await client.mess.findMany({
+      select: {
+        id: true,
+        name: true,
+        Feedback: {
+          select: {
+            id: true,
+          }
+        }
+      },
+    });
+
+    const feedbackCounts = messes.map((mess) => ({
+      name: mess.name.toUpperCase(),
+      count: mess.Feedback.length,
+    }));
+
+
+    const chartConfig3 = {
+      type: "bar",
+      height: 240,
+      width: 420,
+      series: [
+        {
+          name: "Feedback Count",
+          data: feedbackCounts.map((mess) => mess.count),
+        },
+      ],
+      options: {
+        chart: {
+          toolbar: {
+            show: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        colors: ["#012169"],
+        plotOptions: {
+          bar: {
+            columnWidth: "60%",
+            borderRadius: 2,
+          },
+        },
+        xaxis: {
+          axisTicks: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          labels: {
+            style: {
+              colors: "#616161",
+              fontSize: "12px",
+              fontFamily: "inherit",
+              fontWeight: 400,
+            },
+          },
+          categories: feedbackCounts.map(mess => mess.name),
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: "#616161",
+              fontSize: "12px",
+              fontFamily: "inherit",
+              fontWeight: 400,
+            },
+          },
+        },
+        grid: {
+          show: false,
+          borderColor: "#dddddd",
+          strokeDashArray: 5,
+          xaxis: {
+            lines: {
+              show: true,
+            },
+          },
+          padding: {
+            top: 5,
+            right: 20,
+          },
+        },
+        fill: {
+          opacity: 0.8,
+        },
+        tooltip: {
+          theme: "dark",
+        },
+      },
+    };
+
+    res.status(200).json({ data: chartConfig3 });
+  } catch (error) {
+    console.error('Error fetching feedback counts:', error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
