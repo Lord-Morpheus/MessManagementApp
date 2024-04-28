@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:mess/studentpages/pdf_viewer_screen.dart';
 import 'Newmenu.dart';
 import 'global_vari.dart';
 import 'options.dart';
@@ -30,7 +31,7 @@ class _NewhomeState extends State<Newhome> {
             onTap: (){
               if(opt['title']=='MESS MENU'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                return  PDFViewerPage();
+                return  PdfViewerScreen();
                 }));
               }
               else if(opt['title']=='MESS PREFERENCE FORM'){

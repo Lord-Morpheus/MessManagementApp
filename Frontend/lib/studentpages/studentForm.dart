@@ -93,8 +93,8 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    // final url = Uri.parse('http://172.16.12.88:3000/api/v1/users/');
-    final url = Uri.parse('http://192.168.121.166:3000/api/test');
+    final url = Uri.parse('http://10.8.90.133:3001/api/v1/users/submit');
+    // final url = Uri.parse('http://10.8.90.133:3000/api/test');
     final body = getSelectedPreferenceIds();
     // final body = {
     // 'preference1': _selectedPreference1,
@@ -108,11 +108,17 @@ class _StudentFormState extends State<StudentForm> {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json', 'Authorization': _token},
-        body: jsonEncode(body),
+        body: jsonEncode({'preferences': (body)}),
       );
 
       if (response.statusCode == 200) {
         // Request successful
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return Studenthomepage();
+          }),
+        );
         print('Preferences submitted successfully');
         TinyAlert.success(
           context,
@@ -361,12 +367,6 @@ class _StudentFormState extends State<StudentForm> {
                               _selectedPreference5 != null) {
                             submitPreferences();
                             print('Submitted');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return thankyou();
-                              }),
-                            );
                           } else {
                             // Show a message widget when preferences are not filled
                             showDialog(
