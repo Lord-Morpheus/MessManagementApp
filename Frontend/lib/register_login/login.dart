@@ -5,6 +5,7 @@ import 'package:mess/studentpages/studenthomepg.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tiny_alert/tiny_alert.dart';
 
 final storage = new FlutterSecureStorage();
 
@@ -46,6 +47,11 @@ class _HomepgState extends State<Homepg> {
           return const Studenthomepage();
         }));
       } else {
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: "Incorrect Credentials, try again!",
+        );
         print('Login failed: ${response.body}');
       }
     } catch (e) {
