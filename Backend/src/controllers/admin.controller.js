@@ -705,23 +705,15 @@ export const getFormData = asyncHandler(async (req, res) => {
             id: true,
             name: true,
             username: true,
+            messId: true,
           },
         },
       },
     });
 
-    for (const form of forms) {
-      const currentMess = await client.student.findFirst({
-        where: {
-          id: form.studentId,
-        },
-        select: {
-          name: true,
-          messId: true,
-        },
-      });
-      form.allotedMess = currentMess.messId;
-    }
+    forms.map((form) => {
+      form.allotedMess = form.student.messId;
+    });
 
     console.log(forms);
     return res.status(200).json(forms);
