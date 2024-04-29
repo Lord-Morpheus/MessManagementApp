@@ -31,6 +31,38 @@ export function TableComponent({
   const [hostelOptions, setHostelOptions] = useState([]);
   const navigate = useNavigate();
 
+  const onMessChange = useCallback((value) => {
+    if (value) {
+      setMessFilter(value);
+    } else {
+      setMessFilter("");
+    }
+  }, []);
+
+  const onBatchChange = useCallback((value) => {
+    if (value) {
+      setBatchFilter(value);
+    } else {
+      setBatchFilter("");
+    }
+  }, []);
+
+  const onSearchChange = useCallback((value) => {
+    if (value) {
+      setFilterValue(value);
+    } else {
+      setFilterValue("");
+    }
+  }, []);
+
+  const onHostelChange = useCallback((value) => {
+    if (value) {
+      setHostelFilter(value);
+    } else {
+      setHostelFilter("");
+    }
+  }, []);
+
   useEffect(() => {
     async function fetchData() {
       const token = getToken();
@@ -70,37 +102,7 @@ export function TableComponent({
     fetchData();
   }, [navigate]);
 
-  const onMessChange = useCallback((value) => {
-    if (value) {
-      setMessFilter(value);
-    } else {
-      setMessFilter("");
-    }
-  }, []);
 
-  const onBatchChange = useCallback((value) => {
-    if (value) {
-      setBatchFilter(value);
-    } else {
-      setBatchFilter("");
-    }
-  }, []);
-
-  const onSearchChange = useCallback((value) => {
-    if (value) {
-      setFilterValue(value);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
-
-  const onHostelChange = useCallback((value) => {
-    if (value) {
-      setHostelFilter(value);
-    } else {
-      setHostelFilter("");
-    }
-  }, []);
 
   // const onClear = useCallback(() => {
   //   setFilterValue("");
