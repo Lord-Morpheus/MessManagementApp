@@ -68,9 +68,10 @@ class _StudenthomepageState extends State<Studenthomepage> {
           ],
         ),
         actions: [
-            Material(
+          Material(
             color: Colors.black,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), // Rectangle shape
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)), // Rectangle shape
             child: InkWell(
               splashColor: const Color.fromARGB(255, 58, 53, 53),
               onTap: () {
@@ -99,7 +100,9 @@ class _StudenthomepageState extends State<Studenthomepage> {
               ),
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
         ],
       ),
       body: PageView(

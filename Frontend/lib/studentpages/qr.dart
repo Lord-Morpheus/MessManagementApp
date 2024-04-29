@@ -57,7 +57,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   Future<void> sendQRData(String data) async {
     // final url = Uri.parse('http://10.8.90.133:3000/api/verify');
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/verifyqr');
+    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/verifyqr');
     final body = jsonEncode({'qrMessId': data});
     print(data);
     try {
@@ -75,7 +75,8 @@ class _ScanQrPageState extends State<ScanQrPage> {
         playSound(true);
         TinyAlert.success(
           onConfirm: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
               return const Studenthomepage();
             }))
           },
@@ -88,7 +89,8 @@ class _ScanQrPageState extends State<ScanQrPage> {
         logout();
         TinyAlert.error(
           onConfirm: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
               return const Studenthomepage();
             }))
           },

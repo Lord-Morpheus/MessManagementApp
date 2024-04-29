@@ -90,7 +90,9 @@ class _RegistrationState extends State<Registration> {
   }
 
   Future<void> sendRollNumberEmail() async {
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
+    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/signup');
+
+    // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final hostelId = getHostelIdFromName(hostel.toLowerCase());
@@ -157,8 +159,8 @@ class _RegistrationState extends State<Registration> {
                   controller: textEditingController1,
                   style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
                     labelText: 'Current Hostel',
                     hintText: 'Ex:B18',
                     labelStyle: Theme.of(context).textTheme.titleMedium,
@@ -172,8 +174,8 @@ class _RegistrationState extends State<Registration> {
                   controller: textEditingController2,
                   style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
                     labelText: 'OTP',
                     labelStyle: Theme.of(context).textTheme.titleMedium,
                     border: border,
@@ -186,8 +188,8 @@ class _RegistrationState extends State<Registration> {
                   controller: textEditingController3,
                   style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
                     labelText: 'Enter Password',
                     prefixIcon: const Icon(
                       Icons.lock_outline,
@@ -205,8 +207,8 @@ class _RegistrationState extends State<Registration> {
                   controller: textEditingController4,
                   style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
                     labelText: 'Confirm Password',
                     prefixIcon: const Icon(
                       Icons.lock_outline,
@@ -252,8 +254,8 @@ class _RegistrationState extends State<Registration> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacement(MaterialPageRoute(builder: (context) {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) {
                           return const Homepg();
                         }));
                       },

@@ -105,7 +105,9 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
+    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/submit');
+
+    // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');
     final body = getSelectedPreferenceIds();
     // final body = {
@@ -128,7 +130,8 @@ class _StudentFormState extends State<StudentForm> {
         print('Preferences submitted successfully');
         TinyAlert.success(
           onConfirm: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
               return const Studenthomepage();
             }))
           },
@@ -140,7 +143,8 @@ class _StudentFormState extends State<StudentForm> {
         logout();
         TinyAlert.error(
           onConfirm: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
               return const Studenthomepage();
             }))
           },
@@ -228,9 +232,10 @@ class _StudentFormState extends State<StudentForm> {
           ],
         ),
         actions: [
-            Material(
+          Material(
             color: Colors.black,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), // Rectangle shape
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)), // Rectangle shape
             child: InkWell(
               splashColor: const Color.fromARGB(255, 58, 53, 53),
               onTap: () {
@@ -259,7 +264,9 @@ class _StudentFormState extends State<StudentForm> {
               ),
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
         ],
       ),
       body: Container(

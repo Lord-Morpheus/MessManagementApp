@@ -91,7 +91,7 @@ class _DashState extends State<Dash> {
     print('token is $token');
     final headers = {'Authorization': '$token'};
     final response = await http.get(
-        Uri.parse('http://192.168.135.166:3001/api/v1/users/get'),
+        Uri.parse('http://192.168.233.166:3001/api/v1/users/get'),
         headers: headers);
     print(response.body);
     if (response.statusCode == 200) {
