@@ -55,7 +55,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
   }
 
   Future<void> sendFeedback() async {
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/feedback');
+    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/feedback');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final body = {
       'title': _feedbackType,
@@ -72,7 +72,8 @@ class _FeedbackFormState extends State<FeedbackForm> {
       if (response.statusCode == 200) {
         TinyAlert.success(
           onConfirm: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
               return const Studenthomepage();
             }))
           },
@@ -85,7 +86,8 @@ class _FeedbackFormState extends State<FeedbackForm> {
         logout();
         TinyAlert.error(
           onConfirm: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
               return const Studenthomepage();
             }))
           },
@@ -160,7 +162,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 width: 300,
                 child: Center(
                   child: TextField(
-                    style:TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -180,10 +182,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
               Center(
                 child: const Text(
                   'Rating:',
-                  style:TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               Row(
@@ -199,10 +201,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
               SizedBox(height: 20.0),
               Text(
                 'You rated: $_rating stars',
-                style:TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 20),
               Center(

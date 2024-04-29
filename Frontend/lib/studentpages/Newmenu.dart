@@ -36,5 +36,3 @@ class PDFViewerPage extends StatelessWidget {
     );
   }
 }
-
-
