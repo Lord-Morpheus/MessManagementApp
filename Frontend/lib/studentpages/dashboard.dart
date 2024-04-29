@@ -132,7 +132,7 @@ class _DashState extends State<Dash> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
             const Center(
               child: Text(
                 'DASHBOARD',
@@ -142,12 +142,12 @@ class _DashState extends State<Dash> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
             const Divider(
               color: Colors.black,
               thickness: 2,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(
               "Date: ${DateFormat('dd MMMM yyyy').format(time)}",
               style: const TextStyle(
@@ -155,7 +155,7 @@ class _DashState extends State<Dash> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(15),
               width: double.infinity,

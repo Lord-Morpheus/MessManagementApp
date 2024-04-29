@@ -53,7 +53,7 @@ class _StudenthomepageState extends State<Studenthomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -61,36 +61,45 @@ class _StudenthomepageState extends State<Studenthomepage> {
           children: [
             Image.asset(
               'assets/images/main_logo.png',
-              width: 40, // Adjust width as needed
-              height: 40, // Adjust height as needed
+              width: 95, // Adjust width as needed
+              height: 70, // Adjust height as needed
               // You can specify other properties like fit, alignment, etc. as needed
             ),
           ],
         ),
         actions: [
-          GestureDetector(
-            onTap: () {
-              logout();
-              // Handle logout action here
-            },
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.logout_outlined,
-                  color: Colors.white,
+            Material(
+            color: Colors.black,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), // Rectangle shape
+            child: InkWell(
+              splashColor: const Color.fromARGB(255, 58, 53, 53),
+              onTap: () {
+                logout();
+                // Handle logout action here
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.logout_outlined,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'LOGOUT',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 8),
-                Text(
-                  'LOGOUT',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
+          const SizedBox(width: 10,),
         ],
       ),
       body: PageView(
