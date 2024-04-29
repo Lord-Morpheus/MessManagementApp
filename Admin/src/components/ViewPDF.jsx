@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { PDFViewer } from "./PdfViewer";
+import swal from 'sweetalert';
 
 // eslint-disable-next-line react/prop-types
 export default function ViewPDF({ pdfURL }) {
@@ -31,8 +32,10 @@ export default function ViewPDF({ pdfURL }) {
       setUploading(false);
 
       if (response.ok) {
-        alert("File uploaded successfully!");
-        window.location.reload();
+        swal("Done","File uploaded successfully!","success").then(()=>{
+
+          window.location.reload();
+        });
         console.log("File uploaded successfully!");
         // Optionally, you can handle success behavior here
       } else {

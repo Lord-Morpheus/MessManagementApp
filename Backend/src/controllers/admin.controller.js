@@ -566,7 +566,7 @@ export const messAllocation = asyncHandler(async (req, res) => {
             // console.log(updatedUser);
             await sendEmail({
               mail: updatedUser.email,
-              subject: "Alert!! (this is a 🍽️ Test Message) ",
+              subject: "Alert!! (this is a 🍽️ Test Message)",
               text: `Hi there! you have been succesfully alloted : ${messMap[updatedUser.messId]}
           
       
@@ -705,23 +705,15 @@ export const getFormData = asyncHandler(async (req, res) => {
             id: true,
             name: true,
             username: true,
+            messId: true,
           },
         },
       },
     });
 
-    for (const form of forms) {
-      const currentMess = await client.student.findFirst({
-        where: {
-          id: form.studentId,
-        },
-        select: {
-          name: true,
-          messId: true,
-        },
-      });
-      form.allotedMess = currentMess.messId;
-    }
+    forms.map((form) => {
+      form.allotedMess = form.student.messId;
+    });
 
     console.log(forms);
     return res.status(200).json(forms);
@@ -864,7 +856,7 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
       series: [
         {
           name: "Revenue(in INR) ",
-          data: counts.map((mess) => mess.strength * 125),
+          data: counts.map((mess) => mess.strength * 125*30),
         },
       ],
       options: {
