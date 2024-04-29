@@ -40,63 +40,66 @@ class _ForgetState extends State<Forget> {
             ),
         ),
         padding: const EdgeInsets.only(left:20,right: 20),
-        child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:[
-                const SizedBox(height:150),
-                const Center(
-                  child: Text(
-                    'Verification',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w900,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:[
+                    const Center(
+                      child: Text(
+                        'Verification',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  'Enter your Institute Roll No.',
-                  style:Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: textEditingController1,
-                  style:Theme.of(context).textTheme.titleMedium,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Roll no.',
-                    hintText: 'Ex: B2XXXX',
-                    labelStyle:Theme.of(context).textTheme.titleMedium,
-                    border:border,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                ElevatedButton(
-                  style:ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    const SizedBox(height: 30),
+                    Text(
+                      'Enter your Institute Roll No.',
+                      style:Theme.of(context).textTheme.bodySmall,
                     ),
-                    elevation: 20,
-                    backgroundColor:const Color.fromARGB(255, 44, 7, 251),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  onPressed: () {
-                    assign5();
-                  },
-                  child: const Text('Reset Password',
-                    style:TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: textEditingController1,
+                      style:Theme.of(context).textTheme.titleMedium,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                        labelText: 'Roll no.',
+                        hintText: 'Ex: B2XXXX',
+                        labelStyle:Theme.of(context).textTheme.titleMedium,
+                        border:border,
+                        enabledBorder: border,
+                        focusedBorder: border,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 40),
+                    ElevatedButton(
+                      style:ElevatedButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        elevation: 20,
+                        backgroundColor:const Color.fromARGB(255, 44, 7, 251),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      onPressed: () {
+                        assign5();
+                      },
+                      child: const Text('Reset Password',
+                        style:TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ),
-                const SizedBox(height: 16),
-              ],
-            ),
+          ),
+        ),
       ),
     );
   }
