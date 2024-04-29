@@ -1,4 +1,4 @@
-import { BiExit } from "react-icons/bi";
+import { HiOutlineLogout } from "react-icons/hi";
 import mainLogo from "../assets/main_logo.png";
 import { DropDown } from "../components/DropDown";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ export default function Navbar() {
               navigate("/login");
             }}
           >
-            <BiExit
+            <HiOutlineLogout
               color="white"
               className="h-8 w-8 transition-transform duration-300 ease-in-out transform hover:scale-110"
             />

@@ -16,6 +16,7 @@ import {
   TableCell,
   Spinner,
 } from "@nextui-org/react";
+import swal from "sweetalert2";
 
 export default function Selection() {
   const [value, setValue] = useState({
@@ -150,8 +151,15 @@ export default function Selection() {
         },
       });
       setProcessing(false);
-      alert("Allocation Done successfully");
-      window.location.reload();
+      swal
+        .fire({
+          title: "Done",
+          text: "Allocation Done successfully",
+          icon: "success",
+        })
+        .then(() => {
+          window.location.reload();
+        });
     } catch (error) {
       console.error("Error starting allocation:", error);
     }

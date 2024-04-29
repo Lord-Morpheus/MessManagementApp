@@ -70,10 +70,12 @@ class _FeedbackFormState extends State<FeedbackForm> {
       );
 
       if (response.statusCode == 200) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return const Studenthomepage();
-        }));
         TinyAlert.success(
+          onConfirm: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
           context,
           title: "Success!",
           message: "Feedback Submitted successfully!",
@@ -82,6 +84,11 @@ class _FeedbackFormState extends State<FeedbackForm> {
       } else if (response.statusCode == 401) {
         logout();
         TinyAlert.error(
+          onConfirm: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
           context,
           title: "Error!",
           message: "User unauthorized, please login again",

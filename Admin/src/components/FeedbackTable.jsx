@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Table,
@@ -50,56 +50,29 @@ const FeedbackTable = () => {
           }
         );
         setMessOptions(messoptions.data);
-        
-        const {data} = await axios.get(
+
+        const { data } = await axios.get(
           `${import.meta.env.VITE_BACKEND_URI}/admin/feedback`,
           {
             headers: {
               Authorization: `Admin ${token}`,
             },
           }
-        )
+        );
         setFeedback(data.data);
-        setLoading(false)
-
+        setLoading(false);
       } catch (error) {
         const status = error.response.status;
-        console.log(status);
         if (status === 401) {
           console.log("Not Authenticated");
           localStorage.removeItem("token");
           navigate("/login");
         }
       }
-
-      // try {
-      //   const feedbacks = await axios.get(
-      //     `${import.meta.env.VITE_BACKEND_URI}/admin/feedback`,
-      //     {
-      //       headers: {
-      //         Authorization: `Admin ${token}`,
-      //       },
-      //     }
-      //   )
-      //   .then((data) => {
-      //     setFeedback(data.data.data);
-      //     setLoading(false);
-      //   });
-      //   // return{loading};
-      // } catch (error) {
-      //   const status = error.response.status;
-      //   console.log(status);
-      //   if (status === 401) {
-      //     console.log("Not Authenticated");
-      //     localStorage.removeItem("token");
-      //     navigate("/login");
-      //   }
-      // }
     }
     fetchData();
   }, [navigate]);
 
-  console.log(feedbacks);
   const onMessChange = useCallback((value) => {
     if (value) {
       setMessFilter(value);
@@ -128,38 +101,23 @@ const FeedbackTable = () => {
     setSearchFilter("");
   }, []);
 
-  
-  const filteredFeedbacks=[...feedbacks];
-  
-  // const filteredFeedbacks = useMemo(() => {
-  //   let filteredFeedbacks = [...feedbacks];
-  //   console.log(filteredFeedbacks);
+  // const filteredFeedbacks = [...feedbacks];
 
-  //   if (hasSearchFilter) {
-  //     filteredFeedbacks = filteredFeedbacks.filter(
-  //       (feedback) =>
-  //         feedback.student.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
-  //         feedback.student.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
-  //         feedback.description
-  //           .toLowerCase()
-  //           .includes(searchFilter.toLowerCase())
-  //     );
-  //   }
-
-  //   if (messFilter !== "all") {
-  //     filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
-  //       feedback.mess.name.toLowerCase().includes(messFilter.toLowerCase())
-  //     );
-  //   }
-
-  //   if (categoryFilter !== "all") {
-  //     filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
-  //       feedback.category.toLowerCase().includes(categoryFilter.toLowerCase())
-  //     );
-  //   }
-
-  //   return filteredFeedbacks;
-  // }, [messFilter, categoryFilter, hasSearchFilter, searchFilter]);
+  const filteredFeedbacks = feedbacks.filter((feedback) => {
+    return (
+      (!hasSearchFilter ||
+        feedback.student.name
+          .toLowerCase()
+          .includes(searchFilter.toLowerCase()) ||
+        feedback.student.email
+          .toLowerCase()
+          .includes(searchFilter.toLowerCase())) &&
+      (messFilter === "all" ||
+        feedback.mess.name.toLowerCase().includes(messFilter.toLowerCase())) &&
+      (categoryFilter === "all" ||
+        feedback.title.toLowerCase().includes(categoryFilter.toLowerCase()))
+    );
+  });
 
   if (loading) {
     return (
@@ -169,8 +127,13 @@ const FeedbackTable = () => {
     );
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
         <div className="flex-1">
           <h1 className="font-semibold text-lg">Feedbacks</h1>
@@ -259,7 +222,7 @@ const FeedbackTable = () => {
                   <TableCell>{feedback.mess.name}</TableCell>
                   <TableCell>{feedback.title}</TableCell>
                   <TableCell>{feedback.attachmenet}</TableCell>
-                  <TableCell>{feedback.createdAt}</TableCell>
+                  <TableCell>{formatDate(feedback.createdAt)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

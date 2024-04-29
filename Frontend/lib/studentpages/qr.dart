@@ -69,11 +69,16 @@ class _ScanQrPageState extends State<ScanQrPage> {
           body: body);
       if (!mounted) return;
       if (response.statusCode == 200) {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return Studenthomepage();
-        }));
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        //   return Studenthomepage();
+        // }));
         playSound(true);
         TinyAlert.success(
+          onConfirm: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
           context,
           title: "Success!",
           message: "Your mess has been verified successfully!",
@@ -82,6 +87,11 @@ class _ScanQrPageState extends State<ScanQrPage> {
       } else if (response.statusCode == 401) {
         logout();
         TinyAlert.error(
+          onConfirm: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
           context,
           title: "Error!",
           message: "User unauthorized, please login again",

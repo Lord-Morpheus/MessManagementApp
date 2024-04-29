@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -7,7 +7,6 @@ import {
   TableRow,
   TableCell,
   User,
-  Chip,
   Spinner,
 } from "@nextui-org/react";
 import { columns } from "./data";
@@ -15,13 +14,14 @@ import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert2";
 // import { useUsers } from "../hooks/useUsers";
 // import { Loader } from "lucide-react";
-const statusColorMap = {
-  dining: "success",
-  pass_Out: "danger",
-  mess_Off: "warning",
-};
+// const statusColorMap = {
+//   dining: "success",
+//   pass_Out: "danger",
+//   mess_Off: "warning",
+// };
 
 export default function App() {
   // const [users, setUsers] = useState([]);
@@ -32,11 +32,20 @@ export default function App() {
   const [hostelFilter, setHostelFilter] = useState("all");
   const [batchFilter, setBatchFilter] = useState("all");
 
-  // const hasSearchFilter = Boolean(filterValue);
+  const hasSearchFilter = Boolean(filterValue);
 
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
-
+  const [users, setUsers] = useState([
+    {
+      email: "b22026@students.iitmandi.ac.in",
+      hostel: "B18",
+      id: "16ff5894-8820-4c9d-90f9-0dc3818ba631",
+      mess: "TULSI MESS",
+      messId: "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
+      name: "Olivia Young",
+      username: "B22026",
+    },
+  ]);
   useEffect(() => {
     async function fetchData() {
       const token = getToken();
@@ -44,18 +53,17 @@ export default function App() {
         navigate("/login");
       }
       try {
-        await axios
-          .get(`${import.meta.env.VITE_BACKEND_URI}/admin/students`, {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
+          {
             headers: {
               Authorization: `Admin ${getToken()}`,
             },
-          })
-          .then((res) => {
-            // console.log(res.data.data);
-            // res.data.data.map((user) => user.hostel = user.hostel.name);
-            setUsers(res.data.data);
-            setLoading(false);
-          });
+          }
+        );
+
+        setUsers(data.data);
+        setLoading(false);
 
         return { users, loading };
       } catch (error) {
@@ -69,7 +77,25 @@ export default function App() {
       }
     }
     fetchData();
-  }, [loading, navigate]);
+  }, []);
+
+  const confirmDelete = (userId) => {
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          handleDelete(userId);
+        }
+      });
+  };
 
   const handleDelete = async (studentId) => {
     try {
@@ -77,16 +103,22 @@ export default function App() {
         `${import.meta.env.VITE_BACKEND_URI}/admin/delete`,
 
         {
-          data:{studentId},
+          data: { studentId },
           headers: {
             Authorization: `Admin ${getToken()}`,
           },
         }
       );
       if (response.status === 201) {
-
-        alert(`user deleted successfully: ${response.data.user.name}`)
-        window.location.reload();
+        swal
+          .fire({
+            title: "Done",
+            text: `user deleted successfully: ${response.data.user.name}`,
+            icon: "success",
+          })
+          .then(() => {
+            window.location.reload();
+          });
         console.log("User deleted successfully:", response.data.user.name);
       } else {
         console.error("Unexpected response:", response);
@@ -95,51 +127,21 @@ export default function App() {
       console.error("Error deleting user:", error);
     }
   };
-  // useEffect(() => {
-  //   console.log("Users updated:", users);
-  // }, [users]);
-  const filteredItems = [...users];
 
-  // const filteredItems = useMemo(() => {
-  //   let filteredUsers = users;
-  //   return filteredUsers;
-  // }, [users])
-
-  // const filteredItems = useMemo(() => {
-  //   let filteredUsers = users;
-  //   console.log(filteredUsers);
-
-  //   if (hasSearchFilter) {
-  //     filteredUsers = filteredUsers.filter(
-  //       (user) =>
-  //         user.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-  //         user.username.toLowerCase().includes(filterValue.toLowerCase())
-  //     );
-  //   }
-
-  //   if (messFilter !== "all") {
-  //     filteredUsers = filteredUsers.filter((user) =>
-  //       user.mess.toLowerCase().includes(messFilter.toLowerCase())
-  //     );
-  //   }
-  //   if (hostelFilter !== "all") {
-  //     // console.log("hostelFilter");
-  //     filteredUsers = filteredUsers.filter((user) =>
-  //       user.hostel.toLowerCase().includes(hostelFilter.toLowerCase())
-  //     );
-  //   }
-
-  //   if (batchFilter !== "all") {
-  //     filteredUsers = filteredUsers.filter(
-  //       (user) =>
-  //         user.username.substring(1, 3) ==
-  //         batchFilter.substring(batchFilter.length - 2)
-  //     );
-  //   }
-
-  //   return filteredUsers;
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [users, filterValue, messFilter, hostelFilter, batchFilter]);
+  const filteredItems = users.filter((user) => {
+    return (
+      (!hasSearchFilter ||
+        user.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+        user.username.toLowerCase().includes(filterValue.toLowerCase())) &&
+      (messFilter === "all" ||
+        user.mess.toLowerCase().includes(messFilter.toLowerCase())) &&
+      (hostelFilter === "all" ||
+        user.hostel.toLowerCase().includes(hostelFilter.toLowerCase())) &&
+      (batchFilter === "all" ||
+        user.username.substring(1, 3) ===
+          batchFilter.substring(batchFilter.length - 2))
+    );
+  });
 
   const topContent = useMemo(() => {
     return TableComponent({
@@ -165,32 +167,35 @@ export default function App() {
     filteredItems,
   ]);
 
-  const renderCell = useCallback((user, columnKey) => {
-    // console.log(user);
+  const renderCell = (user, columnKey) => {
+    console.log(user);
+    if (!user || Object.keys(user).length === 0) {
+      return null;
+    }
     const cellValue = user[columnKey];
 
     switch (columnKey) {
       case "name":
         return (
           <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
+            // avatarProps={{ radius: "lg", src: user.avatar }}
             description={user.email}
             name={cellValue}
           >
             {user.email}
           </User>
         );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
+      // case "status":
+      //   return (
+      //     <Chip
+      //       className="capitalize"
+      //       color={statusColorMap[user.status]}
+      //       size="sm"
+      //       variant="flat"
+      //     >
+      //       {cellValue}
+      //     </Chip>
+      //   );
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
@@ -217,7 +222,7 @@ export default function App() {
                 </svg>
               </span>
             </div>
-            <div onClick={() => handleDelete(user.id)}>
+            <div onClick={() => confirmDelete(user.id)}>
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +245,7 @@ export default function App() {
       default:
         return cellValue;
     }
-  }, []);
+  };
 
   if (loading) {
     return (
@@ -256,6 +261,8 @@ export default function App() {
       // selectionMode="multiple"
       aria-label="Example table with custom cells"
       topContent={topContent}
+      isStriped
+      
     >
       <TableHeader columns={columns}>
         {(column) => (

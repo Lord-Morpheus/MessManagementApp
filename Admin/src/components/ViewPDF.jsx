@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { PDFViewer } from "./PdfViewer";
+import swal from "sweetalert2";
 
 // eslint-disable-next-line react/prop-types
 export default function ViewPDF({ pdfURL }) {
@@ -31,17 +32,21 @@ export default function ViewPDF({ pdfURL }) {
       setUploading(false);
 
       if (response.ok) {
-        alert("File uploaded successfully!");
-        window.location.reload();
+        swal
+          .fire({
+            title: "Done",
+            text: "File uploaded successfully!",
+            icon: "success",
+          })
+          .then(() => {
+            window.location.reload();
+          });
         console.log("File uploaded successfully!");
-        // Optionally, you can handle success behavior here
       } else {
         console.error("Failed to upload file:", response.statusText);
-        // Optionally, you can handle error behavior here
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      // Optionally, you can handle error behavior here
     }
   };
 

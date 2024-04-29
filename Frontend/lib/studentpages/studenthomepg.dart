@@ -53,57 +53,53 @@ class _StudenthomepageState extends State<Studenthomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-              color: Colors.white,
-              icon: const Icon(Icons.density_medium_rounded),
-              onPressed: () {
-                // Handle icon button action here
-              },
-            ),
-            const SizedBox(width: 1),
-            const SizedBox(
-              height: 40,
-              child: VerticalDivider(
-                color: Colors.white,
-                thickness: 2,
-              ),
-            ),
-            const SizedBox(width: 2),
-            const Text(
-              'Welcome \n user',
-              style: TextStyle(color: Colors.white),
+            Image.asset(
+              'assets/images/main_logo.png',
+              width: 95, // Adjust width as needed
+              height: 70, // Adjust height as needed
+              // You can specify other properties like fit, alignment, etc. as needed
             ),
           ],
         ),
         actions: [
-          IconButton(
-            color: Colors.white,
-            icon: const Icon(Icons.logout_outlined),
-            onPressed: () {
-              logout();
-              // Navigator.of(context)
-              //     .pushReplacement(MaterialPageRoute(builder: (context) {
-              //   return const Homepg();
-              // }));
-              // Handle logout action here
-            },
-          ),
-          const Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Text(
-              'LOGOUT',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            Material(
+            color: Colors.black,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), // Rectangle shape
+            child: InkWell(
+              splashColor: const Color.fromARGB(255, 58, 53, 53),
+              onTap: () {
+                logout();
+                // Handle logout action here
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.logout_outlined,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'LOGOUT',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
+          const SizedBox(width: 10,),
         ],
       ),
       body: PageView(

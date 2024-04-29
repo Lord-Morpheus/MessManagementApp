@@ -62,7 +62,7 @@ export const StudentsPage = () => {
       <Sidebar />
       <div className="flex flex-col h-full w-full">
         <Navbar />
-        <div className="px-6 pb-6 pt-6">
+        <div className="px-6 py-6">
           <StudentCard2 />
         </div>
       </div>
