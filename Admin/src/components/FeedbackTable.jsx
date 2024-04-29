@@ -133,7 +133,7 @@ const FeedbackTable = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
         <div className="flex-1">
           <h1 className="font-semibold text-lg">Feedbacks</h1>

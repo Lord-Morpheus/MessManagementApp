@@ -49,7 +49,7 @@ export default function Home() {
         <div className="row-span-1">
           <Navbar />
         </div>
-        <Card className="flex flex-shrink h-full flex-col p-2 m-12 md:p-2">
+        <Card className="flex flex-shrink h-full flex-col p-2 m-8 md:p-2">
           <FeedbackTable />
         </Card>
       </div>

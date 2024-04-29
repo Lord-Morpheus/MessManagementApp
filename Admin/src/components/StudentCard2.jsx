@@ -261,6 +261,8 @@ export default function App() {
       // selectionMode="multiple"
       aria-label="Example table with custom cells"
       topContent={topContent}
+      isStriped
+      
     >
       <TableHeader columns={columns}>
         {(column) => (
