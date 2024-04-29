@@ -86,103 +86,106 @@ class _ResetState extends State<Reset> {
             ),
         ),
         padding: const EdgeInsets.only(left:20,right: 20),
-        child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:[
-                const SizedBox(height:100),
-                const Center(
-                  child: Text(
-                    'Reset Password',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w900,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:[
+                    const Center(
+                      child: Text(
+                        'Reset Password',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: textEditingController2,
-                  style:Theme.of(context).textTheme.titleMedium,
-                  decoration: InputDecoration(
-                    contentPadding:const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'OTP',
-                    labelStyle:Theme.of(context).textTheme.titleMedium,
-                    border:border,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                TextField(
-                  controller: textEditingController3,
-                  style:Theme.of(context).textTheme.titleMedium,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Enter New Password',
-                    prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
-                    labelStyle:Theme.of(context).textTheme.titleMedium,
-                    border:border,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                  ),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 15),
-                TextField(
-                  controller: textEditingController4,
-                  style:Theme.of(context).textTheme.titleMedium,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                    labelText: 'Confirm Password',
-                    prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
-                    labelStyle:Theme.of(context).textTheme.titleMedium,
-                    border:border,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                  ),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  style:ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: textEditingController2,
+                      style:Theme.of(context).textTheme.titleMedium,
+                      decoration: InputDecoration(
+                        contentPadding:const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                        labelText: 'OTP',
+                        labelStyle:Theme.of(context).textTheme.titleMedium,
+                        border:border,
+                        enabledBorder: border,
+                        focusedBorder: border,
+                      ),
                     ),
-                    elevation: 20,
-                    backgroundColor:const Color.fromARGB(255, 44, 7, 251),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  onPressed: () {
-                    assign2();
-                  },
-                  child: const Text('Submit',
-                    style:TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
+                    const SizedBox(height: 15),
+                    TextField(
+                      controller: textEditingController3,
+                      style:Theme.of(context).textTheme.titleMedium,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                        labelText: 'Enter New Password',
+                        prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
+                        labelStyle:Theme.of(context).textTheme.titleMedium,
+                        border:border,
+                        enabledBorder: border,
+                        focusedBorder: border,
+                      ),
+                      obscureText: true,
                     ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('Already have an account?',
-                      style:Theme.of(context).textTheme.bodySmall,
+                    const SizedBox(height: 15),
+                    TextField(
+                      controller: textEditingController4,
+                      style:Theme.of(context).textTheme.titleMedium,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
+                        labelText: 'Confirm Password',
+                        prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
+                        labelStyle:Theme.of(context).textTheme.titleMedium,
+                        border:border,
+                        enabledBorder: border,
+                        focusedBorder: border,
+                      ),
+                      obscureText: true,
                     ),
-                    TextButton(
+                    const SizedBox(height: 15),
+                    ElevatedButton(
+                      style:ElevatedButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        elevation: 20,
+                        backgroundColor:const Color.fromARGB(255, 44, 7, 251),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                        return const Homepg();
-                      }));
+                        assign2();
                       },
-                      child: Text('Login', style:Theme.of(context).textTheme.titleSmall,),
+                      child: const Text('Submit',
+                        style:TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Already have an account?',
+                          style:Theme.of(context).textTheme.bodySmall,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                            return const Homepg();
+                          }));
+                          },
+                          child: Text('Login', style:Theme.of(context).textTheme.titleSmall,),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+          ),
+        ),
       ),
     );
   }

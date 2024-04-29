@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import router from './app.js';
 const PORT = process.env.PORT || 3000;
+const host = process.env.HOST || '0.0.0.0';
 
 const app = express();
 
@@ -18,8 +19,8 @@ app.get('/health', (req, res) => {
 });
 app.use('/api/v1', router);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+app.listen(PORT, host, () => {
+    console.log(`Server is running on port http://${host}:${PORT}`);
 });
 
 // module.exports = app;
