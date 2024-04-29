@@ -14,14 +14,14 @@ import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import swal from "sweetalert";
+import swal from "sweetalert2";
 // import { useUsers } from "../hooks/useUsers";
 // import { Loader } from "lucide-react";
-const statusColorMap = {
-  dining: "success",
-  pass_Out: "danger",
-  mess_Off: "warning",
-};
+// const statusColorMap = {
+//   dining: "success",
+//   pass_Out: "danger",
+//   mess_Off: "warning",
+// };
 
 export default function App() {
   // const [users, setUsers] = useState([]);
@@ -79,6 +79,24 @@ export default function App() {
     fetchData();
   }, []);
 
+  const confirmDelete = (userId) => {
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          handleDelete(userId);
+        }
+      });
+  };
+
   const handleDelete = async (studentId) => {
     try {
       const response = await axios.delete(
@@ -92,9 +110,15 @@ export default function App() {
         }
       );
       if (response.status === 201) {
-        swal("Done",`user deleted successfully: ${response.data.user.name}`,"success").then(()=>{
-          window.location.reload();
-        });
+        swal
+          .fire({
+            title: "Done",
+            text: `user deleted successfully: ${response.data.user.name}`,
+            icon: "success",
+          })
+          .then(() => {
+            window.location.reload();
+          });
         console.log("User deleted successfully:", response.data.user.name);
       } else {
         console.error("Unexpected response:", response);
@@ -198,7 +222,7 @@ export default function App() {
                 </svg>
               </span>
             </div>
-            <div onClick={() => handleDelete(user.id)}>
+            <div onClick={() => confirmDelete(user.id)}>
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

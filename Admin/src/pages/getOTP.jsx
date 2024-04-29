@@ -3,6 +3,7 @@ import Security from "../images/otp.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getToken } from "../utils/getToken";
+import Swal from "sweetalert2";
 
 export default function GetOTP() {
   const [email, setEmail] = useState("");
@@ -40,8 +41,11 @@ export default function GetOTP() {
         console.error("Failed to save data");
       }
     } catch (error) {
-      alert(error.response.data.message).then(()=>{
-
+      Swal.fire({
+        title: "Error",
+        text: `${error.response.data.message}`,
+        icon: "error",
+      }).then(() => {
         window.location.reload();
       });
       console.error("Error:", error);
