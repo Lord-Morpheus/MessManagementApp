@@ -9,12 +9,22 @@ import {
   User,
   Spinner,
 } from "@nextui-org/react";
+
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+
 import { columns } from "./data";
 import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
+// import Popup from "reactjs-popup";
 // import { useUsers } from "../hooks/useUsers";
 // import { Loader } from "lucide-react";
 // const statusColorMap = {
@@ -26,14 +36,18 @@ import swal from "sweetalert2";
 export default function App() {
   // const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
+  const [MessMenuclick, setMessMenuClick] = useState(false);
+  const [HostelMenuclick, setHostelMenuClick] = useState(false);
+  const [messOptions, setMessOptions] = useState([]);
+  const [hostelOptions, setHostelOptions] = useState([]);
   const [filterValue, setFilterValue] = useState("");
   const [messFilter, setMessFilter] = useState("all");
   const [hostelFilter, setHostelFilter] = useState("all");
   const [batchFilter, setBatchFilter] = useState("all");
-
+  const [open, setOpen] = useState(false);
   const hasSearchFilter = Boolean(filterValue);
-
+  const [mess, setMess] = useState("");
+  const [hostel, setHostel] = useState("");
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([
     {
@@ -46,6 +60,16 @@ export default function App() {
       username: "B22026",
     },
   ]);
+
+  const handleOpen = () =>{
+    setOpen(!open);
+    setMess('');
+    setHostel('');
+    setHostelMenuClick(false);
+    setMessMenuClick(false);
+    console.log('clicked');
+  } 
+
   useEffect(() => {
     async function fetchData() {
       const token = getToken();
@@ -53,6 +77,27 @@ export default function App() {
         navigate("/login");
       }
       try {
+        const messoptions = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/mess`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        console.log(messoptions.data);
+        setMessOptions(messoptions.data);
+
+        const hosteloptions = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URI}/admin/hostels`,
+          {
+            headers: {
+              Authorization: `Admin ${token}`,
+            },
+          }
+        );
+        setHostelOptions(hosteloptions.data);
+
         const { data } = await axios.get(
           `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
           {
@@ -167,8 +212,19 @@ export default function App() {
     filteredItems,
   ]);
 
+  const onMessChange =((value) => {
+    setMess(value);
+    setMessMenuClick(!MessMenuclick);
+    // console.log(mess);
+  });
+  const onHostelChange =((value) => {
+    setHostel(value);
+    setHostelMenuClick(!HostelMenuclick);
+    // console.log(mess);
+  });
+
   const renderCell = (user, columnKey) => {
-    console.log(user);
+    // console.log(user);
     if (!user || Object.keys(user).length === 0) {
       return null;
     }
@@ -179,32 +235,17 @@ export default function App() {
         return (
           <User
             // avatarProps={{ radius: "lg", src: user.avatar }}
+            className="font-semibold"
             description={user.email}
             name={cellValue}
           >
             {user.email}
           </User>
         );
-      // case "status":
-      //   return (
-      //     <Chip
-      //       className="capitalize"
-      //       color={statusColorMap[user.status]}
-      //       size="sm"
-      //       variant="flat"
-      //     >
-      //       {cellValue}
-      //     </Chip>
-      //   );
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            {/* <Tooltip content="Details">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <MdOutlineRemoveRedEye />
-              </span>
-            </Tooltip> */}
-            <div>
+            <div onClick={handleOpen}>
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -256,33 +297,153 @@ export default function App() {
   }
 
   return (
-    <Table
-      color="primary"
-      // selectionMode="multiple"
-      aria-label="Example table with custom cells"
-      topContent={topContent}
-      isStriped
-      
-    >
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No users found"} items={filteredItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+    <>
+      <Table
+        color="primary"
+        // selectionMode="multiple"
+        aria-label="Example table with custom cells"
+        topContent={topContent}
+        isStriped
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={"No users found"} items={filteredItems}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      <Dialog open={open} handler={handleOpen} className="flex flex-col">
+        <DialogHeader>Update Student Details</DialogHeader>
+        <DialogBody className="flex flex-col gap-3 ">
+          <div className="flex gap-3">
+            <span>Update Name:</span>
+            <input className="border rounded" type="text" placeholder="Enter Name" />
+          </div>
+          <div className="flex gap-3">
+            <span>Update Email:</span>
+            <input className="border rounded" type="text" placeholder="Enter Email" />
+          </div>
+
+          <div className="flex gap-3">
+            <span>Update Roll Number:</span>
+            <input className="border rounded" type="text" placeholder="Enter Roll Number" />
+          </div>
+          <div className="relative inline-block text-left">
+            <button
+              type="button"
+              className="inline-flex w-2/5 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              id="menu-button"
+              onClick={()=>{setMessMenuClick(!MessMenuclick)}}
+            >
+              {mess===''?'Update Mess':`${mess}`}
+              <svg
+                className="-mr-1 h-5 w-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {MessMenuclick && (
+              <div
+                className="absolute z-10 mt-2 w-2/5 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="menu-button"
+              >
+                <div className="py-1 " role="none" >
+                  <div className="w-full flex gap-4 flex-wrap justify-evenly">
+                    {messOptions.map(({ name, id }) => (
+                      <div
+                        key={id}
+                        onClick={() => onMessChange(name)}
+                        className="hover:bg-gray-200 cursor-pointer"
+                      >
+                        {name.toUpperCase()}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          </div>
+          <div className="relative inline-block text-left">
+            <button
+              type="button"
+              className="inline-flex w-2/5 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              id="menu-button"
+              onClick={()=>{setHostelMenuClick(!HostelMenuclick)}}
+            >
+              {hostel===''?'Update hostel':`${hostel}`}
+              <svg
+                className="-mr-1 h-5 w-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {HostelMenuclick && (
+              <div
+                className="absolute z-10 mt-2 w-2/5 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="menu-button"
+              >
+                <div className="py-1 " role="none" >
+                  <div className="w-full grid grid-cols-4 gap-2 mx-2">
+                    {hostelOptions.map(({ name, id }) => (
+                      <div
+                        key={id}
+                        onClick={() => onHostelChange(name)}
+                        className="hover:bg-gray-200 cursor-pointer"
+                      >
+                        {name.toUpperCase()}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button variant="gradient" color="green" onClick={handleOpen}>
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
+    </>
   );
 }
