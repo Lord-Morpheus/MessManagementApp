@@ -222,6 +222,7 @@ class _StudentFormState extends State<StudentForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Row(

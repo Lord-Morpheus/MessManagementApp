@@ -24,7 +24,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   Future<void> displayPDF() async {
     final bytes = await fetchPDFData();
 
-    await Navigator.of(context).push(
+    await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(

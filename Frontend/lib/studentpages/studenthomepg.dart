@@ -53,6 +53,7 @@ class _StudenthomepageState extends State<Studenthomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Row(
