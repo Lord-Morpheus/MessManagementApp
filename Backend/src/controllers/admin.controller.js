@@ -267,6 +267,7 @@ export const deleteStudent = asyncHandler(async (req, res) => {
 export const updateStudent = asyncHandler(async (req, res) => {
   const { name, username, studentId, email, hostelId, messId } = req.body;
   console.log(studentId);
+  console.log(req.body)
 
   // Create an object to hold the data to be updated
   const dataToUpdate = {};
@@ -281,7 +282,7 @@ export const updateStudent = asyncHandler(async (req, res) => {
   if (email !== null && email !== undefined) {
     dataToUpdate.email = email;
   }
-  if (hostelId !== null && hostelId !== undefined) {
+  if (hostelId !== null && hostelId !== undefined && hostelId !== "") {
     dataToUpdate.hostel = {
       connect: {
         id: hostelId
