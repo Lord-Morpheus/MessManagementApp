@@ -30,7 +30,7 @@ class _RollState extends State<Roll> {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/send/otp');
+    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/send/otp');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode(

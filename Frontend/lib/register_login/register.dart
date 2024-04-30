@@ -96,7 +96,7 @@ class _RegistrationState extends State<Registration> {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
+    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/signup');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');

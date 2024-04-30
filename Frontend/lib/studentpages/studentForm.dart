@@ -107,7 +107,7 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
+    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/submit');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');

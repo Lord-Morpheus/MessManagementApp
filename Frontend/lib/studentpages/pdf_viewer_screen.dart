@@ -11,7 +11,7 @@ class PdfViewerScreen extends StatefulWidget {
 class _PdfViewerScreenState extends State<PdfViewerScreen> {
   Future<Uint8List> fetchPDFData() async {
     final response = await http
-        .get(Uri.parse('http://192.168.135.166:3001/api/v1/users/menu'));
+        .get(Uri.parse('http://172.16.12.115:3001/api/v1/users/menu'));
     return response.bodyBytes;
   }
 
