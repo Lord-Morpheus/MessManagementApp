@@ -3,7 +3,6 @@ import 'package:mess/register_login/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:tiny_alert/tiny_alert.dart';
 
 class Roll extends StatefulWidget {
   const Roll({super.key});
@@ -44,19 +43,10 @@ class _RollState extends State<Roll> {
           return Registration(roll: roll, name: name);
         }));
       } else {
-        TinyAlert.error(
-          context,
-          title: "Error!",
-          message: "Incorrect Credentials, please try again!",
-        );
         print('Login failed: ${response.body}');
       }
     } catch (e) {
-      TinyAlert.error(
-        context,
-        title: "Error!",
-        message: "Incorrect Credentials, please try again!",
-      );
+      print('Network error: $e');
     } finally {
       setState(() {
         isLoading = false;
