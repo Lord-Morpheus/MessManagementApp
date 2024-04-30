@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mess/register_login/globalip.dart';
 import 'package:mess/register_login/login.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -57,7 +58,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   Future<void> sendQRData(String data) async {
     // final url = Uri.parse('http://10.8.90.133:3000/api/verify');
-    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/verifyqr');
+    final url = Uri.parse('http://$ip:3001/api/v1/users/verifyqr');
     final body = jsonEncode({'qrMessId': data});
     print(data);
     try {

@@ -3,6 +3,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mess/register_login/globalip.dart';
 import 'newhome.dart';
 import 'studenthomepg.dart';
 import '../register_login/login.dart';
@@ -107,7 +108,7 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/submit');
+    final url = Uri.parse('http://$ip:3001/api/v1/users/submit');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');

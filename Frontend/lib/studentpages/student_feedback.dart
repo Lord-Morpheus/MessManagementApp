@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/globalip.dart';
 import 'package:mess/register_login/login.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'Mess_menu.dart';
@@ -59,7 +60,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/feedback');
+    final url = Uri.parse('http://$ip:3001/api/v1/users/feedback');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final body = {
       'title': _feedbackType,

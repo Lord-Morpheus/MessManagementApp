@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mess/register_login/globalip.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
 
   Future<Uint8List> fetchPDFData() async {
     final response = await http
-        .get(Uri.parse('http://172.16.12.115:3001/api/v1/users/menu'));
+        .get(Uri.parse('http://$ip:3001/api/v1/users/menu'));
     return response.bodyBytes;
   }
 
