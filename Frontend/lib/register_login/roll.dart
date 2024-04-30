@@ -3,6 +3,7 @@ import 'package:mess/register_login/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tiny_alert/tiny_alert.dart';
 
 class Roll extends StatefulWidget {
   const Roll({super.key});
@@ -43,6 +44,11 @@ class _RollState extends State<Roll> {
           return Registration(roll: roll, name: name);
         }));
       } else {
+        TinyAlert.error(
+          context,
+          title: "Error!",
+          message: 'User already Exists, please try again!',
+        );
         print('Login failed: ${response.body}');
       }
     } catch (e) {
@@ -113,7 +119,7 @@ class _RollState extends State<Roll> {
                   '*Enter Your Institute Roll no.',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 TextField(
                   controller: textEditingController2,
                   style: Theme.of(context).textTheme.titleMedium,
@@ -128,7 +134,7 @@ class _RollState extends State<Roll> {
                     focusedBorder: border,
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: isLoading
                       ? null
