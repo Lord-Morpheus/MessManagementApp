@@ -1119,3 +1119,23 @@ export const sendNotification = asyncHandler(async (req, res) => {
     return res.status(403).json(err);
   }
 });
+
+export const Profile = asyncHandler(async (req, res) => {
+  try {
+    const user = await client.admin.findFirst({
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+      },
+    });
+
+    return res.status(200).json({ data: user });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
