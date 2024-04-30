@@ -149,6 +149,8 @@ export const getUser = asyncHandler(async (req, res) => {
 
     if (user.messId) {
         user.messId = messMap[user.messId];
+    } else {
+        user.messId = "Not Assigned";
     }
 
     console.log('controller', user)
