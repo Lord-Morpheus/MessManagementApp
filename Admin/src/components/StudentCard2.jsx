@@ -46,6 +46,12 @@ export default function App() {
   const [batchFilter, setBatchFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const hasSearchFilter = Boolean(filterValue);
+  const [studentId, setStudentId] = useState("");
+  // const [updatedName, setUpdatedName] = useState("");
+  // const [updatedUsername, setUpdatedUsername] = useState("");
+  // const [updatedEmail, setUpdatedEmail] = useState("");
+  const [updatedHostelId, setUpdatedHostelId] = useState("");
+  const [updatedMessId, setUpdatedMessId] = useState("");
   const [mess, setMess] = useState("");
   const [hostel, setHostel] = useState("");
   const [loading, setLoading] = useState(true);
@@ -60,15 +66,6 @@ export default function App() {
       username: "B22026",
     },
   ]);
-
-  const handleOpen = () =>{
-    setOpen(!open);
-    setMess('');
-    setHostel('');
-    setHostelMenuClick(false);
-    setMessMenuClick(false);
-    console.log('clicked');
-  } 
 
   useEffect(() => {
     async function fetchData() {
@@ -173,6 +170,61 @@ export default function App() {
     }
   };
 
+  const handleOpen = (studentId) => {
+    setOpen(!open);
+    setStudentId(studentId);
+    setMess("");
+    setHostel("");
+    setHostelMenuClick(false);
+    setMessMenuClick(false);
+    console.log("clicked");
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URI}/admin/update`,
+        {
+          headers: {
+            Authorization: `Admin ${getToken()}`,
+          },
+        },
+        {
+          id: studentId,
+          // name: updatedName,
+          // username: updatedUsername,
+          // email: updatedEmail,
+          hostelId: updatedHostelId,
+          messId: updatedMessId,
+        }
+      );
+
+      if (response.status === 201) {
+        swal.fire({
+          title:"Success",
+          text:"Student details updated successfully!",
+          icon:"success"
+      });
+        handleOpen(studentId);
+      } else {
+        swal.fire("Error", "Failed to update student details", "error");
+      }
+    } catch (error) {
+      console.error("Error updating student details:", error);
+      swal.fire("Error", "Failed to update student details", "error");
+    }
+  };
+
+  // const handleUsernameChange = (event) => {
+  //   setUpdatedUsername(event.target.value);
+  // };
+  // const handleNameChange = (event) => {
+  //   setUpdatedName(event.target.value);
+  // };
+  // const handleEmailChange = (event) => {
+  //   setUpdatedEmail(event.target.value);
+  // };
+
   const filteredItems = users.filter((user) => {
     return (
       (!hasSearchFilter ||
@@ -212,16 +264,18 @@ export default function App() {
     filteredItems,
   ]);
 
-  const onMessChange =((value) => {
+  const onMessChange = (value,id) => {
     setMess(value);
+    setUpdatedMessId(id);
     setMessMenuClick(!MessMenuclick);
     // console.log(mess);
-  });
-  const onHostelChange =((value) => {
+  };
+  const onHostelChange = (value,id) => {
     setHostel(value);
+    setUpdatedHostelId(id);
     setHostelMenuClick(!HostelMenuclick);
     // console.log(mess);
-  });
+  };
 
   const renderCell = (user, columnKey) => {
     // console.log(user);
@@ -245,7 +299,7 @@ export default function App() {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <div onClick={handleOpen}>
+            <div onClick={() => handleOpen(user.id)}>
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -325,30 +379,55 @@ export default function App() {
           )}
         </TableBody>
       </Table>
-      <Dialog open={open} handler={handleOpen} className="flex flex-col">
+      <Dialog
+        open={open}
+        handler={handleOpen}
+        studentId={studentId}
+        className="flex flex-col"
+      >
         <DialogHeader>Update Student Details</DialogHeader>
         <DialogBody className="flex flex-col gap-3 ">
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3">
             <span>Update Name:</span>
-            <input className="border rounded" type="text" placeholder="Enter Name" />
+            <input
+              className="border rounded"
+              type="text"
+              placeholder="Enter Name"
+              value={updatedName}
+              onChange={handleNameChange}
+            />
           </div>
           <div className="flex gap-3">
             <span>Update Email:</span>
-            <input className="border rounded" type="text" placeholder="Enter Email" />
+            <input
+              className="border rounded"
+              type="text"
+              placeholder="Enter Email"
+              value={updatedEmail}
+              onChange={handleEmailChange}
+            />
           </div>
 
           <div className="flex gap-3">
             <span>Update Roll Number:</span>
-            <input className="border rounded" type="text" placeholder="Enter Roll Number" />
-          </div>
+            <input
+              className="border rounded"
+              type="text"
+              placeholder="Enter Roll Number"
+              value={updatedUsername}
+              onChange={handleUsernameChange}
+            />
+          </div> */}
           <div className="relative inline-block text-left">
             <button
               type="button"
               className="inline-flex w-2/5 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               id="menu-button"
-              onClick={()=>{setMessMenuClick(!MessMenuclick)}}
+              onClick={() => {
+                setMessMenuClick(!MessMenuclick);
+              }}
             >
-              {mess===''?'Update Mess':`${mess}`}
+              {mess === "" ? "Update Mess" : `${mess}`}
               <svg
                 className="-mr-1 h-5 w-5 text-gray-400"
                 viewBox="0 0 20 20"
@@ -369,12 +448,12 @@ export default function App() {
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
               >
-                <div className="py-1 " role="none" >
+                <div className="py-1 " role="none">
                   <div className="w-full flex gap-4 flex-wrap justify-evenly">
                     {messOptions.map(({ name, id }) => (
                       <div
                         key={id}
-                        onClick={() => onMessChange(name)}
+                        onClick={() => onMessChange(name,id)}
                         className="hover:bg-gray-200 cursor-pointer"
                       >
                         {name.toUpperCase()}
@@ -390,9 +469,11 @@ export default function App() {
               type="button"
               className="inline-flex w-2/5 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               id="menu-button"
-              onClick={()=>{setHostelMenuClick(!HostelMenuclick)}}
+              onClick={() => {
+                setHostelMenuClick(!HostelMenuclick);
+              }}
             >
-              {hostel===''?'Update hostel':`${hostel}`}
+              {hostel === "" ? "Update hostel" : `${hostel}`}
               <svg
                 className="-mr-1 h-5 w-5 text-gray-400"
                 viewBox="0 0 20 20"
@@ -413,12 +494,12 @@ export default function App() {
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
               >
-                <div className="py-1 " role="none" >
+                <div className="py-1 " role="none">
                   <div className="w-full grid grid-cols-4 gap-2 mx-2">
                     {hostelOptions.map(({ name, id }) => (
                       <div
                         key={id}
-                        onClick={() => onHostelChange(name)}
+                        onClick={() => onHostelChange(name,id)}
                         className="hover:bg-gray-200 cursor-pointer"
                       >
                         {name.toUpperCase()}
@@ -439,7 +520,7 @@ export default function App() {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
+          <Button variant="gradient" color="green" onClick={handleUpdate}>
             <span>Confirm</span>
           </Button>
         </DialogFooter>

@@ -267,7 +267,7 @@ export const deleteStudent = asyncHandler(async (req, res) => {
 export const updateStudent = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { name, username, email, hostelId, messId } = req.body;
-
+  console.log(id);
   try {
     const user = await client.student.update({
       where: {
@@ -293,6 +293,7 @@ export const updateStudent = asyncHandler(async (req, res) => {
       },
     });
 
+    console.log(user)
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
