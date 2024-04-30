@@ -10,6 +10,8 @@ import {
   formData2,
   formData4,
   formData5,
+  hostelData,
+  messData,
   studentsData,
 } from "../../prisma/data.js";
 import sendEmail from "../utils/email/index.js";
@@ -267,6 +269,7 @@ export const deleteStudent = asyncHandler(async (req, res) => {
 export const updateStudent = asyncHandler(async (req, res) => {
   const { name, username, studentId, email, hostelId, messId } = req.body;
   console.log(studentId);
+  console.log(req.body)
 
   // Create an object to hold the data to be updated
   const dataToUpdate = {};
@@ -281,7 +284,7 @@ export const updateStudent = asyncHandler(async (req, res) => {
   if (email !== null && email !== undefined) {
     dataToUpdate.email = email;
   }
-  if (hostelId !== null && hostelId !== undefined) {
+  if (hostelId !== null && hostelId !== undefined && hostelId !== "") {
     dataToUpdate.hostel = {
       connect: {
         id: hostelId
@@ -342,6 +345,31 @@ export const addMess = asyncHandler(async (req, res) => {
     return res
       .status(200)
       .json({ data: messData, msg: "Mess added successfully" });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const seedMess = asyncHandler(async (req, res) => {
+  try {
+    const messes = await client.mess.createMany({
+      data: messData,
+    });
+
+    return res.status(200).json(messes);
+  }
+  catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const seedHostel = asyncHandler(async (req, res) => {
+  try {
+    const hostels = await client.hostel.createMany({
+      data: hostelData,
+    });
+
+    return res.status(200).json(hostels);
   } catch (err) {
     return res.status(403).json(err);
   }
@@ -1054,3 +1082,60 @@ export const getFeedbackCountByMess = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const sendNotification = asyncHandler(async (req, res) => {
+  const { startDate, endDate } = req.body;
+
+  try {
+    console.log(startDate, endDate);
+    await client.notification.create({
+      data: {
+        isOpened: true,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+      },
+    });
+
+    const students = await client.student.findMany({});
+
+    // for (const student of students) {
+    //   const email = student.email;
+    //   const subject = "🍽️ Mess Forms Are Out";
+    //   const message = `Hi ${student.name}!\n\nThe mess form is now open. Please fill the form before the deadline. Deadline to fill the form is ${endDate}.\n\nIIT Mandi Mess Service Team`;
+
+    //   await sendEmail({ mail: email, subject, text: message });
+
+    //   console.log(`Notification email sent to ${email}`);
+    // }
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 5000);
+    });
+
+    return res.status(200).json({ message: "Notifications sent successfully" });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const Profile = asyncHandler(async (req, res) => {
+  try {
+    const user = await client.admin.findFirst({
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+      },
+    });
+
+    return res.status(200).json({ data: user });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});

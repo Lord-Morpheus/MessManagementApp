@@ -105,6 +105,7 @@ export default function App() {
         );
 
         setUsers(data.data);
+        // console.log(users)
         setLoading(false);
 
         return { users, loading };
@@ -170,12 +171,12 @@ export default function App() {
     }
   };
 
-  const handleOpen = (studentId) => {
+  const handleOpen = (studentId,mess,hostel) => {
     setOpen(!open);
     setStudentId(studentId);
     console.log("Student Id", studentId);
-    setMess("");
-    setHostel("");
+    setMess(mess);
+    setHostel(hostel);
     setHostelMenuClick(false);
     setMessMenuClick(false);
     console.log("clicked");
@@ -187,9 +188,6 @@ export default function App() {
         `${import.meta.env.VITE_BACKEND_URI}/admin/update`,
         {
           studentId: studentId,
-          // name: updatedName,
-          // username: updatedUsername,
-          // email: updatedEmail,
           hostelId: updatedHostelId,
           messId: updatedMessId,
         },
@@ -206,13 +204,16 @@ export default function App() {
           text: "Student details updated successfully!",
           icon: "success",
         });
-        handleOpen(studentId);
+        handleOpen(studentId,mess,hostel);
       } else {
         swal.fire("Error", "Failed to update student details", "error");
+        console.log('same value')
+        handleOpen(studentId,mess,hostel);
       }
     } catch (error) {
       console.error("Error updating student details:", error);
       swal.fire("Error", "Failed to update student details", "error");
+      handleOpen(studentId,mess,hostel);
     }
   };
 
@@ -300,7 +301,7 @@ export default function App() {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <div onClick={() => handleOpen(user.id)}>
+            <div onClick={() => handleOpen(user.id,user.mess,user.hostel)}>
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -387,45 +388,15 @@ export default function App() {
         className="flex flex-col"
       >
         <DialogHeader>Update Student Details</DialogHeader>
-        <DialogBody className="flex flex-col gap-3 ">
-          {/* <div className="flex gap-3">
-            <span>Update Name:</span>
-            <input
-              className="border rounded"
-              type="text"
-              placeholder="Enter Name"
-              value={updatedName}
-              onChange={handleNameChange}
-            />
-          </div>
-          <div className="flex gap-3">
-            <span>Update Email:</span>
-            <input
-              className="border rounded"
-              type="text"
-              placeholder="Enter Email"
-              value={updatedEmail}
-              onChange={handleEmailChange}
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <span>Update Roll Number:</span>
-            <input
-              className="border rounded"
-              type="text"
-              placeholder="Enter Roll Number"
-              value={updatedUsername}
-              onChange={handleUsernameChange}
-            />
-          </div> */}
+        <DialogBody className="flex gap-3 ">
           <div className="relative inline-block text-left">
             <button
               type="button"
-              className="inline-flex w-2/5 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="inline-flex justify-center rounded-md bg-[#012169] text-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#012169dd] capitalize"
               id="menu-button"
               onClick={() => {
                 setMessMenuClick(!MessMenuclick);
+                setHostelMenuClick(false);
               }}
             >
               {mess === "" ? "Update Mess" : `${mess}`}
@@ -444,18 +415,18 @@ export default function App() {
             </button>
             {MessMenuclick && (
               <div
-                className="absolute z-10 mt-2 w-2/5 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                className="absolute z-10 mt-2 w-[230%] origin-top-left rounded-md bg-[#012169] text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
               >
                 <div className="py-1 " role="none">
-                  <div className="w-full flex gap-4 flex-wrap justify-evenly">
+                  <div className="w-full grid grid-cols-2 gap-3 px-3">
                     {messOptions.map(({ name, id }) => (
                       <div
                         key={id}
                         onClick={() => onMessChange(name, id)}
-                        className="hover:bg-gray-200 cursor-pointer"
+                        className="hover:bg-[white] hover:text-black cursor-pointer border-2 border-[#012169] rounded-md text-center"
                       >
                         {name.toUpperCase()}
                       </div>
@@ -468,10 +439,12 @@ export default function App() {
           <div className="relative inline-block text-left">
             <button
               type="button"
-              className="inline-flex w-2/5 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="inline-flex justify-center w-[125%] rounded-md bg-[#012169] text-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#012169dd] capitalize"
               id="menu-button"
               onClick={() => {
                 setHostelMenuClick(!HostelMenuclick);
+                setMessMenuClick(false);
+                
               }}
             >
               {hostel === "" ? "Update hostel" : `${hostel}`}
@@ -490,18 +463,18 @@ export default function App() {
             </button>
             {HostelMenuclick && (
               <div
-                className="absolute z-10 mt-2 w-2/5 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                className="absolute z-10 mt-2 w-[250%] origin-top-left rounded-md bg-[#012169] text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
               >
                 <div className="py-1 " role="none">
-                  <div className="w-full grid grid-cols-4 gap-2 mx-2">
+                  <div className="w-full grid grid-cols-3 gap-2 px-2">
                     {hostelOptions.map(({ name, id }) => (
                       <div
                         key={id}
                         onClick={() => onHostelChange(name, id)}
-                        className="hover:bg-gray-200 cursor-pointer"
+                        className="hover:bg-[white] hover:text-black cursor-pointer border-2 rounded-md text-center border-[#012169]"
                       >
                         {name.toUpperCase()}
                       </div>

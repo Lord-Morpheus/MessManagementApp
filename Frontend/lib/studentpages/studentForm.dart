@@ -3,6 +3,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mess/register_login/globalip.dart';
 import 'newhome.dart';
 import 'studenthomepg.dart';
 import '../register_login/login.dart';
@@ -107,7 +108,7 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/submit');
+    final url = Uri.parse('http://$ip:3001/api/v1/users/submit');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');
@@ -284,196 +285,202 @@ class _StudentFormState extends State<StudentForm> {
         ),
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "SELECT YOUR MESS",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
-              ),
-              // Center(
-              //     child: ElevatedButton(
-              //   onPressed: _resetDropdowns,
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-              //   ),
-              //   child: Text(
-              //     'Reset',
-              //     style: TextStyle(
-              //       fontSize: 16,
-              //       fontWeight: FontWeight.w600,
-              //       color: Colors.white, // Adjust text color as needed
-              //     ),
-              //   ),
-              // )),
-              Center(
-                child: Form(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20),
-                      buildDropdownBox(
-                        'Preference 1:',
-                        _selectedPreference1,
-                        (val) {
-                          if (val != _selectedPreference5 &&
-                              val != _selectedPreference4 &&
-                              val != _selectedPreference2 &&
-                              val != _selectedPreference3) {
-                            setState(() {
-                              _selectedPreference1 = val;
-                            });
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      buildDropdownBox('Preference 2:', _selectedPreference2,
-                          (val) {
-                        if (val != _selectedPreference5 &&
-                            val != _selectedPreference4 &&
-                            val != _selectedPreference3 &&
-                            val != _selectedPreference1) {
-                          setState(() {
-                            _selectedPreference2 = val;
-                          });
-                        }
-                      }),
-                      SizedBox(height: 5),
-                      buildDropdownBox(
-                        'Preference 3:',
-                        _selectedPreference3,
-                        (val) {
-                          if (val != _selectedPreference5 &&
-                              val != _selectedPreference4 &&
-                              val != _selectedPreference2 &&
-                              val != _selectedPreference1) {
-                            setState(() {
-                              _selectedPreference3 = val;
-                            });
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      buildDropdownBox(
-                        'Preference 4:',
-                        _selectedPreference4,
-                        (val) {
-                          if (val != _selectedPreference5 &&
-                              val != _selectedPreference1 &&
-                              val != _selectedPreference2 &&
-                              val != _selectedPreference3) {
-                            setState(() {
-                              _selectedPreference4 = val;
-                            });
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      buildDropdownBox(
-                        'Preference 5:',
-                        _selectedPreference5,
-                        (val) {
-                          if (val != _selectedPreference1 &&
-                              val != _selectedPreference4 &&
-                              val != _selectedPreference2 &&
-                              val != _selectedPreference3) {
-                            setState(() {
-                              _selectedPreference5 = val;
-                            });
-                          }
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      Center(
-                          child: ElevatedButton(
-                        onPressed: _resetDropdowns,
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(150, 40),
-                          backgroundColor:
-                              const Color.fromARGB(255, 44, 7, 251),
-                        ),
-                        child: Text(
-                          'Reset',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white, // Adjust text color as needed
-                          ),
-                        ),
-                      )),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: isLoading
-                            ? null
-                            : () {
-                                if (_selectedPreference1 != null &&
-                                    _selectedPreference2 != null &&
-                                    _selectedPreference3 != null &&
-                                    _selectedPreference4 != null &&
-                                    _selectedPreference5 != null) {
-                                  submitPreferences();
-                                  print('Submitted');
-                                } else {
-                                  // Show a message widget when preferences are not filled
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("Error"),
-                                        content: Text(
-                                            "Please fill all the preferences."),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text("OK"),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                        child: isLoading
-                            ? LoadingAnimationWidget.staggeredDotsWave(
-                                color: Colors.white,
-                                size: 24,
-                              )
-                            : Text(
-                                "Submit",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                              ),
-                        style: ButtonStyle(
-                          minimumSize: WidgetStateProperty.all(Size(150, 40)),
-                          backgroundColor:
-                              WidgetStateProperty.resolveWith<Color>((states) {
-                            if (states.contains(MaterialState.disabled)) {
-                              return Color.fromARGB(255, 44, 7, 251)
-                                  .withOpacity(0.5); // Disabled color
-                            }
-                            return Color.fromARGB(
-                                255, 44, 7, 251); // Enabled color
-                          }),
-                          padding: WidgetStateProperty.all(EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10)),
-                          textStyle: WidgetStateProperty.all(TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black,
-                          )),
-                        ),
-                      )
-                    ],
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "SELECT YOUR MESS",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
                   ),
-                ),
-              )
-            ],
+                  // Center(
+                  //     child: ElevatedButton(
+                  //   onPressed: _resetDropdowns,
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
+                  //   ),
+                  //   child: Text(
+                  //     'Reset',
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.w600,
+                  //       color: Colors.white, // Adjust text color as needed
+                  //     ),
+                  //   ),
+                  // )),
+                  Center(
+                    child: Form(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 20),
+                          buildDropdownBox(
+                            'Preference 1:',
+                            _selectedPreference1,
+                            (val) {
+                              if (val != _selectedPreference5 &&
+                                  val != _selectedPreference4 &&
+                                  val != _selectedPreference2 &&
+                                  val != _selectedPreference3) {
+                                setState(() {
+                                  _selectedPreference1 = val;
+                                });
+                              }
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          buildDropdownBox('Preference 2:', _selectedPreference2,
+                              (val) {
+                            if (val != _selectedPreference5 &&
+                                val != _selectedPreference4 &&
+                                val != _selectedPreference3 &&
+                                val != _selectedPreference1) {
+                              setState(() {
+                                _selectedPreference2 = val;
+                              });
+                            }
+                          }),
+                          SizedBox(height: 5),
+                          buildDropdownBox(
+                            'Preference 3:',
+                            _selectedPreference3,
+                            (val) {
+                              if (val != _selectedPreference5 &&
+                                  val != _selectedPreference4 &&
+                                  val != _selectedPreference2 &&
+                                  val != _selectedPreference1) {
+                                setState(() {
+                                  _selectedPreference3 = val;
+                                });
+                              }
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          buildDropdownBox(
+                            'Preference 4:',
+                            _selectedPreference4,
+                            (val) {
+                              if (val != _selectedPreference5 &&
+                                  val != _selectedPreference1 &&
+                                  val != _selectedPreference2 &&
+                                  val != _selectedPreference3) {
+                                setState(() {
+                                  _selectedPreference4 = val;
+                                });
+                              }
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          buildDropdownBox(
+                            'Preference 5:',
+                            _selectedPreference5,
+                            (val) {
+                              if (val != _selectedPreference1 &&
+                                  val != _selectedPreference4 &&
+                                  val != _selectedPreference2 &&
+                                  val != _selectedPreference3) {
+                                setState(() {
+                                  _selectedPreference5 = val;
+                                });
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          Center(
+                              child: ElevatedButton(
+                            onPressed: _resetDropdowns,
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: Size(150, 40),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 44, 7, 251),
+                            ),
+                            child: Text(
+                              'Reset',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white, // Adjust text color as needed
+                              ),
+                            ),
+                          )),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    if (_selectedPreference1 != null &&
+                                        _selectedPreference2 != null &&
+                                        _selectedPreference3 != null &&
+                                        _selectedPreference4 != null &&
+                                        _selectedPreference5 != null) {
+                                      submitPreferences();
+                                      print('Submitted');
+                                    } else {
+                                      // Show a message widget when preferences are not filled
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Error"),
+                                            content: Text(
+                                                "Please fill all the preferences."),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text("OK"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                            child: isLoading
+                                ? LoadingAnimationWidget.staggeredDotsWave(
+                                    color: Colors.white,
+                                    size: 24,
+                                  )
+                                : Text(
+                                    "Submit",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(Size(150, 40)),
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return Color.fromARGB(255, 44, 7, 251)
+                                      .withOpacity(0.5); // Disabled color
+                                }
+                                return Color.fromARGB(
+                                    255, 44, 7, 251); // Enabled color
+                              }),
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10)),
+                              textStyle: MaterialStateProperty.all(TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black,
+                              )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

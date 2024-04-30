@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mess/register_login/globalip.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -92,7 +93,7 @@ class _DashState extends State<Dash> {
     print('token is $token');
     final headers = {'Authorization': '$token'};
     final response = await http.get(
-        Uri.parse('http://172.16.12.115:3001/api/v1/users/get'),
+        Uri.parse('http://$ip:3001/api/v1/users/get'),
         headers: headers);
     print(response.body);
     if (response.statusCode == 200) {

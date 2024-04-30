@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mess/register_login/forget.dart';
+import 'package:mess/register_login/globalip.dart';
 import 'package:mess/register_login/roll.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'dart:convert';
@@ -33,7 +34,8 @@ class _HomepgState extends State<Homepg> {
   }
 
   Future<void> sendLoginRequest() async {
-    final url = Uri.parse('http://172.16.12.115:3001/api/v1/users/login');
+    print('$ip');
+    final url = Uri.parse('http://$ip:3001/api/v1/users/login');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode({'username': roll, 'password': pass});
 
@@ -46,6 +48,7 @@ class _HomepgState extends State<Homepg> {
       String token = jsonDecode(response.body)['token'];
       token = "Bearer " + token;
       await storage.write(key: 'token', value: token);
+
       if (response.statusCode == 200) {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) {
@@ -55,7 +58,7 @@ class _HomepgState extends State<Homepg> {
         TinyAlert.error(
           context,
           title: "Error!",
-          message: "Incorrect Credentials, try again!",
+          message: "${response.body}, try again!",
         );
         print('Login failed: ${response.body}');
       }
@@ -63,7 +66,7 @@ class _HomepgState extends State<Homepg> {
       TinyAlert.error(
         context,
         title: "Error!",
-        message: "Incorrect Credentials, try again!",
+        message: "${e},  again!",
       );
       print('Network error: $e');
     } finally {

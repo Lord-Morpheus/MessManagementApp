@@ -360,3 +360,25 @@ export const verifyQR = asyncHandler(async (req, res) => {
         return res.status(403).json(err);
     }
 });
+
+export const getFormStatus = asyncHandler(async (req, res) => {
+    try {
+        const currentTime = new Date();
+        // console.log(currentTime.getTime());
+
+        const form = await client.notification.findFirst({
+            where: {
+                endDate: { gte: currentTime },
+                startDate: { lte: currentTime },
+            },
+        });
+
+        if (!form) {
+            return res.status(404).json({ message: "No form available" });
+        }
+
+        return res.status(200).json(form);
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});
