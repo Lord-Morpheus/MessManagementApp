@@ -265,35 +265,54 @@ export const deleteStudent = asyncHandler(async (req, res) => {
 
 // Update a student in database
 export const updateStudent = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { name, username, email, hostelId, messId } = req.body;
-  console.log(id);
+  const { name, username, studentId, email, hostelId, messId } = req.body;
+  console.log(studentId);
+
+  // Create an object to hold the data to be updated
+  const dataToUpdate = {};
+
+  // Check if each field is not null, and if not, add it to the dataToUpdate object
+  if (name !== null && name !== undefined) {
+    dataToUpdate.name = name;
+  }
+  if (username !== null && username !== undefined) {
+    dataToUpdate.username = username;
+  }
+  if (email !== null && email !== undefined) {
+    dataToUpdate.email = email;
+  }
+  if (hostelId !== null && hostelId !== undefined) {
+    dataToUpdate.hostel = {
+      connect: {
+        id: hostelId
+      }
+    };
+  }
+  if (messId !== null && messId !== undefined) {
+    dataToUpdate.messId = messId;
+  }
+
+  // Check if there are any fields to update
+  if (Object.keys(dataToUpdate).length === 0) {
+    return res.status(400).json({ msg: "No valid fields to update" });
+  }
+
+  // Update the student details with the non-null fields
   try {
     const user = await client.student.update({
       where: {
-        id,
+        id: studentId,
       },
-      data: {
-        name,
-        username,
-        email,
-        hostel: {
-          connect: {
-            id: hostelId
-          }
-        },
-        messId,
-      },
+      data: dataToUpdate,
       select: {
         name: true,
         username: true,
         email: true,
         hostel: true,
-        mess: true,
       },
     });
 
-    console.log(user)
+    console.log(user);
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
@@ -857,7 +876,7 @@ export const getRevenueOfMess = asyncHandler(async (req, res, next) => {
       series: [
         {
           name: "Revenue(in INR) ",
-          data: counts.map((mess) => mess.strength * 125*30),
+          data: counts.map((mess) => mess.strength * 125 * 30),
         },
       ],
       options: {

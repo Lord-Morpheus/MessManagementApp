@@ -173,6 +173,7 @@ export default function App() {
   const handleOpen = (studentId) => {
     setOpen(!open);
     setStudentId(studentId);
+    console.log("Student Id", studentId);
     setMess("");
     setHostel("");
     setHostelMenuClick(false);
@@ -185,26 +186,26 @@ export default function App() {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URI}/admin/update`,
         {
-          headers: {
-            Authorization: `Admin ${getToken()}`,
-          },
-        },
-        {
-          id: studentId,
+          studentId: studentId,
           // name: updatedName,
           // username: updatedUsername,
           // email: updatedEmail,
           hostelId: updatedHostelId,
           messId: updatedMessId,
+        },
+        {
+          headers: {
+            Authorization: `Admin ${getToken()}`,
+          },
         }
       );
 
       if (response.status === 201) {
         swal.fire({
-          title:"Success",
-          text:"Student details updated successfully!",
-          icon:"success"
-      });
+          title: "Success",
+          text: "Student details updated successfully!",
+          icon: "success",
+        });
         handleOpen(studentId);
       } else {
         swal.fire("Error", "Failed to update student details", "error");
@@ -264,13 +265,13 @@ export default function App() {
     filteredItems,
   ]);
 
-  const onMessChange = (value,id) => {
+  const onMessChange = (value, id) => {
     setMess(value);
     setUpdatedMessId(id);
     setMessMenuClick(!MessMenuclick);
     // console.log(mess);
   };
-  const onHostelChange = (value,id) => {
+  const onHostelChange = (value, id) => {
     setHostel(value);
     setUpdatedHostelId(id);
     setHostelMenuClick(!HostelMenuclick);
@@ -453,7 +454,7 @@ export default function App() {
                     {messOptions.map(({ name, id }) => (
                       <div
                         key={id}
-                        onClick={() => onMessChange(name,id)}
+                        onClick={() => onMessChange(name, id)}
                         className="hover:bg-gray-200 cursor-pointer"
                       >
                         {name.toUpperCase()}
@@ -499,7 +500,7 @@ export default function App() {
                     {hostelOptions.map(({ name, id }) => (
                       <div
                         key={id}
-                        onClick={() => onHostelChange(name,id)}
+                        onClick={() => onHostelChange(name, id)}
                         className="hover:bg-gray-200 cursor-pointer"
                       >
                         {name.toUpperCase()}
@@ -520,7 +521,13 @@ export default function App() {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleUpdate}>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={() => {
+              handleUpdate();
+            }}
+          >
             <span>Confirm</span>
           </Button>
         </DialogFooter>
