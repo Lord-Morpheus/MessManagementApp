@@ -364,11 +364,12 @@ export const verifyQR = asyncHandler(async (req, res) => {
 export const getFormStatus = asyncHandler(async (req, res) => {
     try {
         const currentTime = new Date();
+        // console.log(currentTime.getTime());
 
         const form = await client.notification.findFirst({
             where: {
-                endDate: { lte: currentTime },
-                startDate: { gte: currentTime },
+                endDate: { gte: currentTime },
+                startDate: { lte: currentTime },
             },
         });
 
