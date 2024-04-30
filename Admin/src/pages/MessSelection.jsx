@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Sidebar from "./sidebar";
@@ -250,6 +250,7 @@ export default function Selection() {
             <Table
               aria-label="Example table with dynamic content"
               topContent={renderTopContent()}
+              isStriped
             >
               <TableHeader columns={columns}>
                 {(column) => (
