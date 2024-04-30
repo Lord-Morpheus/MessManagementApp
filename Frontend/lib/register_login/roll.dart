@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mess/register_login/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Roll extends StatefulWidget {
   const Roll({super.key});
@@ -13,6 +14,7 @@ class _RollState extends State<Roll> {
   late String name;
   late String roll;
   late String email;
+  bool isLoading = false;
 
   final TextEditingController textEditingController1 = TextEditingController();
   final TextEditingController textEditingController2 = TextEditingController();
@@ -24,7 +26,10 @@ class _RollState extends State<Roll> {
   }
 
   Future<void> sendRollNumberEmail() async {
-    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/send/otp');
+    setState(() {
+      isLoading = true;
+    });
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/send/otp');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode(
@@ -42,6 +47,10 @@ class _RollState extends State<Roll> {
       }
     } catch (e) {
       print('Network error: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -83,6 +92,9 @@ class _RollState extends State<Roll> {
                   '*Enter Your Name',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 TextField(
                   controller: textEditingController1,
                   style: Theme.of(context).textTheme.titleMedium,
@@ -96,7 +108,7 @@ class _RollState extends State<Roll> {
                     focusedBorder: border,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Text(
                   '*Enter Your Institute Roll no.',
                   style: Theme.of(context).textTheme.bodySmall,
@@ -118,24 +130,34 @@ class _RollState extends State<Roll> {
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          assign3();
+                          await sendRollNumberEmail();
+                        },
+                  child: isLoading
+                      ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 24,
+                        )
+                      : const Text(
+                          'Send OTP',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                   style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    elevation: 20,
-                    backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  onPressed: () {
-                    assign3();
-                    sendRollNumberEmail();
-                  },
-                  child: const Text(
-                    'Send OTP',
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                    elevation: 0,
+                    minimumSize: Size(double.infinity, 50),
+                    backgroundColor: isLoading
+                        ? const Color.fromARGB(255, 44, 7, 251)
+                        : const Color.fromARGB(255, 44, 7, 251),
                   ),
                 ),
                 const SizedBox(height: 16),

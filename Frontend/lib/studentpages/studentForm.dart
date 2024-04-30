@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,6 +23,7 @@ class StudentForm extends StatefulWidget {
 }
 
 class _StudentFormState extends State<StudentForm> {
+  bool isLoading = false;
   var _token;
   void initState() {
     super.initState();
@@ -38,10 +39,8 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   void logout() async {
-    // Delete token from secure storage
     await storage.delete(key: 'token');
 
-    // Navigate back to the login page
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
       return Homepg();
     }));
@@ -72,6 +71,9 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   List<String> getSelectedPreferenceIds() {
+    setState(() {
+      isLoading = true;
+    });
     final List<String> selectedPreferenceIds = [];
 
     final Map<String, String> messIdMap = {
@@ -105,7 +107,7 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/submit');
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');
@@ -165,6 +167,9 @@ class _StudentFormState extends State<StudentForm> {
       // Handle exceptions
       print('Error: $e');
     }
+    setState(() {
+      isLoading = true;
+    });
   }
 
   Widget buildDropdownBox(
@@ -398,54 +403,70 @@ class _StudentFormState extends State<StudentForm> {
                       )),
                       SizedBox(height: 20),
                       ElevatedButton(
-                        child: Text(
-                          "Submit",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(150, 40),
-                          backgroundColor:
-                              const Color.fromARGB(255, 44, 7, 251),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.black),
-                        ),
-                        onPressed: () {
-                          if (_selectedPreference1 != null &&
-                              _selectedPreference2 != null &&
-                              _selectedPreference3 != null &&
-                              _selectedPreference4 != null &&
-                              _selectedPreference5 != null) {
-                            submitPreferences();
-                            print('Submitted');
-                          } else {
-                            // Show a message widget when preferences are not filled
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content:
-                                      Text("Please fill all the preferences."),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text("OK"),
-                                    ),
-                                  ],
-                                );
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (_selectedPreference1 != null &&
+                                    _selectedPreference2 != null &&
+                                    _selectedPreference3 != null &&
+                                    _selectedPreference4 != null &&
+                                    _selectedPreference5 != null) {
+                                  submitPreferences();
+                                  print('Submitted');
+                                } else {
+                                  // Show a message widget when preferences are not filled
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Error"),
+                                        content: Text(
+                                            "Please fill all the preferences."),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
-                            );
-                          }
-                        },
+                        child: isLoading
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                                color: Colors.white,
+                                size: 24,
+                              )
+                            : Text(
+                                "Submit",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                        style: ButtonStyle(
+                          minimumSize: WidgetStateProperty.all(Size(150, 40)),
+                          backgroundColor:
+                              WidgetStateProperty.resolveWith<Color>((states) {
+                            if (states.contains(MaterialState.disabled)) {
+                              return Color.fromARGB(255, 44, 7, 251)
+                                  .withOpacity(0.5); // Disabled color
+                            }
+                            return Color.fromARGB(
+                                255, 44, 7, 251); // Enabled color
+                          }),
+                          padding: WidgetStateProperty.all(EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10)),
+                          textStyle: WidgetStateProperty.all(TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black,
+                          )),
+                        ),
                       )
                     ],
                   ),

@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tiny_alert/tiny_alert.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final storage = new FlutterSecureStorage();
 
@@ -18,6 +19,8 @@ class FeedbackForm extends StatefulWidget {
 }
 
 class _FeedbackFormState extends State<FeedbackForm> {
+  bool isLoading = false;
+
   var _token;
   void initState() {
     super.initState();
@@ -33,10 +36,8 @@ class _FeedbackFormState extends State<FeedbackForm> {
   }
 
   void logout() async {
-    // Delete token from secure storage
     await storage.delete(key: 'token');
 
-    // Navigate back to the login page
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
       return Homepg();
     }));
@@ -55,7 +56,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
   }
 
   Future<void> sendFeedback() async {
-    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/feedback');
+    setState(() {
+      isLoading = true;
+    });
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/feedback');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final body = {
       'title': _feedbackType,
@@ -106,6 +110,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
     } catch (e) {
       // Handle exceptions
       print('Error: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -210,17 +218,39 @@ class _FeedbackFormState extends State<FeedbackForm> {
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: isLoading
+                        ? const Color.fromARGB(128, 44, 7, 251)
+                        : const Color.fromARGB(255, 44, 7, 251),
+                    // backgroundColor: Colors.green
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 20,
+                    minimumSize: Size(150, 50),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
                   ),
-                  onPressed: () {
-                    // Here you can handle the submission of the feedback form
-                    sendFeedback();
-                  },
-                  child: const Text('Submit',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                      )),
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          sendFeedback();
+                        },
+                  child: isLoading
+                      ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 24,
+                        )
+                      : Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
                 ),
               ),
             ],

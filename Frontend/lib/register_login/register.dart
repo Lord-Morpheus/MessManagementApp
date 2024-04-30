@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mess/register_login/login.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Registration extends StatefulWidget {
   final String roll;
@@ -20,6 +21,7 @@ class _RegistrationState extends State<Registration> {
   late String roll2;
   late String name2;
   late List<Map<String, dynamic>> hostelList;
+  bool isLoading = false;
 
   final TextEditingController textEditingController1 = TextEditingController();
   final TextEditingController textEditingController2 = TextEditingController();
@@ -90,7 +92,10 @@ class _RegistrationState extends State<Registration> {
   }
 
   Future<void> sendRollNumberEmail() async {
-    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/signup');
+    setState(() {
+      isLoading = true;
+    });
+    final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
@@ -118,6 +123,10 @@ class _RegistrationState extends State<Registration> {
       }
     } catch (e) {
       print('Network error: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -223,25 +232,32 @@ class _RegistrationState extends State<Registration> {
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          assign2();
+                          await sendRollNumberEmail();
+                        },
+                  child: isLoading
+                      ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 24,
+                        )
+                      : const Text(
+                          'Register',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                   style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                     elevation: 20,
+                    minimumSize: Size(double.infinity, 50),
                     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  onPressed: () {
-                    // sendRollNumberEmail();
-                    assign2();
-                    sendRollNumberEmail();
-                  },
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
                   ),
                 ),
                 const SizedBox(height: 20),

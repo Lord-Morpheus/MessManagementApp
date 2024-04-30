@@ -57,7 +57,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   Future<void> sendQRData(String data) async {
     // final url = Uri.parse('http://10.8.90.133:3000/api/verify');
-    final url = Uri.parse('http://192.168.233.166:3001/api/v1/users/verifyqr');
+    final url = Uri.parse('http://192.168.135.1666:3001/api/v1/users/verifyqr');
     final body = jsonEncode({'qrMessId': data});
     print(data);
     try {
