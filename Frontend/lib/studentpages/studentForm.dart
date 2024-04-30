@@ -25,6 +25,7 @@ class StudentForm extends StatefulWidget {
 
 class _StudentFormState extends State<StudentForm> {
   bool isLoading = false;
+  var _formAvailable = false;
   var _token;
   void initState() {
     super.initState();
@@ -37,6 +38,31 @@ class _StudentFormState extends State<StudentForm> {
       _token = token;
     });
     print(_token);
+    checkFormAvailability();
+  }
+
+  Future<void> checkFormAvailability() async {
+    // final url = Uri.parse('http://$ip:3001/api/v1/users/status');
+    final url = Uri.parse('http://$ip:3000/api/form');
+
+    try {
+      final response = await http.get(
+        url,
+        // headers: {'Authorization': _token},
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _formAvailable = true;
+        });
+      } else {
+        setState(() {
+          _formAvailable = false;
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   void logout() async {
@@ -221,269 +247,284 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 80,
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              'assets/images/main_logo.png',
-              width: 95, // Adjust width as needed
-              height: 70, // Adjust height as needed
-              // You can specify other properties like fit, alignment, etc. as needed
+    if (_formAvailable) {
+      return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 80,
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Colors.black,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/images/main_logo.png',
+                width: 95, // Adjust width as needed
+                height: 70, // Adjust height as needed
+                // You can specify other properties like fit, alignment, etc. as needed
+              ),
+            ],
+          ),
+          actions: [
+            Material(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)), // Rectangle shape
+              child: InkWell(
+                splashColor: const Color.fromARGB(255, 58, 53, 53),
+                onTap: () {
+                  logout();
+                  // Handle logout action here
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.logout_outlined,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'LOGOUT',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
             ),
           ],
         ),
-        actions: [
-          Material(
-            color: Colors.black,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)), // Rectangle shape
-            child: InkWell(
-              splashColor: const Color.fromARGB(255, 58, 53, 53),
-              onTap: () {
-                logout();
-                // Handle logout action here
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.fill,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.logout_outlined,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 8),
                     Text(
-                      'LOGOUT',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      "SELECT YOUR MESS",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
                     ),
+                    // Center(
+                    //     child: ElevatedButton(
+                    //   onPressed: _resetDropdowns,
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
+                    //   ),
+                    //   child: Text(
+                    //     'Reset',
+                    //     style: TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w600,
+                    //       color: Colors.white, // Adjust text color as needed
+                    //     ),
+                    //   ),
+                    // )),
+                    Center(
+                      child: Form(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 20),
+                            buildDropdownBox(
+                              'Preference 1:',
+                              _selectedPreference1,
+                              (val) {
+                                if (val != _selectedPreference5 &&
+                                    val != _selectedPreference4 &&
+                                    val != _selectedPreference2 &&
+                                    val != _selectedPreference3) {
+                                  setState(() {
+                                    _selectedPreference1 = val;
+                                  });
+                                }
+                              },
+                            ),
+                            SizedBox(height: 5),
+                            buildDropdownBox(
+                                'Preference 2:', _selectedPreference2, (val) {
+                              if (val != _selectedPreference5 &&
+                                  val != _selectedPreference4 &&
+                                  val != _selectedPreference3 &&
+                                  val != _selectedPreference1) {
+                                setState(() {
+                                  _selectedPreference2 = val;
+                                });
+                              }
+                            }),
+                            SizedBox(height: 5),
+                            buildDropdownBox(
+                              'Preference 3:',
+                              _selectedPreference3,
+                              (val) {
+                                if (val != _selectedPreference5 &&
+                                    val != _selectedPreference4 &&
+                                    val != _selectedPreference2 &&
+                                    val != _selectedPreference1) {
+                                  setState(() {
+                                    _selectedPreference3 = val;
+                                  });
+                                }
+                              },
+                            ),
+                            SizedBox(height: 5),
+                            buildDropdownBox(
+                              'Preference 4:',
+                              _selectedPreference4,
+                              (val) {
+                                if (val != _selectedPreference5 &&
+                                    val != _selectedPreference1 &&
+                                    val != _selectedPreference2 &&
+                                    val != _selectedPreference3) {
+                                  setState(() {
+                                    _selectedPreference4 = val;
+                                  });
+                                }
+                              },
+                            ),
+                            SizedBox(height: 5),
+                            buildDropdownBox(
+                              'Preference 5:',
+                              _selectedPreference5,
+                              (val) {
+                                if (val != _selectedPreference1 &&
+                                    val != _selectedPreference4 &&
+                                    val != _selectedPreference2 &&
+                                    val != _selectedPreference3) {
+                                  setState(() {
+                                    _selectedPreference5 = val;
+                                  });
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            Center(
+                                child: ElevatedButton(
+                              onPressed: _resetDropdowns,
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(150, 40),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 44, 7, 251),
+                              ),
+                              child: Text(
+                                'Reset',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors
+                                      .white, // Adjust text color as needed
+                                ),
+                              ),
+                            )),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: isLoading
+                                  ? null
+                                  : () {
+                                      if (_selectedPreference1 != null &&
+                                          _selectedPreference2 != null &&
+                                          _selectedPreference3 != null &&
+                                          _selectedPreference4 != null &&
+                                          _selectedPreference5 != null) {
+                                        submitPreferences();
+                                        print('Submitted');
+                                      } else {
+                                        // Show a message widget when preferences are not filled
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Error"),
+                                              content: Text(
+                                                  "Please fill all the preferences."),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text("OK"),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+                              child: isLoading
+                                  ? LoadingAnimationWidget.staggeredDotsWave(
+                                      color: Colors.white,
+                                      size: 24,
+                                    )
+                                  : Text(
+                                      "Submit",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                              style: ButtonStyle(
+                                minimumSize:
+                                    MaterialStateProperty.all(Size(150, 40)),
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                        (states) {
+                                  if (states.contains(MaterialState.disabled)) {
+                                    return Color.fromARGB(255, 44, 7, 251)
+                                        .withOpacity(0.5); // Disabled color
+                                  }
+                                  return Color.fromARGB(
+                                      255, 44, 7, 251); // Enabled color
+                                }),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10)),
+                                textStyle: MaterialStateProperty.all(TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black,
+                                )),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.fill,
-          ),
         ),
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "SELECT YOUR MESS",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
-                  ),
-                  // Center(
-                  //     child: ElevatedButton(
-                  //   onPressed: _resetDropdowns,
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: const Color.fromARGB(255, 44, 7, 251),
-                  //   ),
-                  //   child: Text(
-                  //     'Reset',
-                  //     style: TextStyle(
-                  //       fontSize: 16,
-                  //       fontWeight: FontWeight.w600,
-                  //       color: Colors.white, // Adjust text color as needed
-                  //     ),
-                  //   ),
-                  // )),
-                  Center(
-                    child: Form(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 20),
-                          buildDropdownBox(
-                            'Preference 1:',
-                            _selectedPreference1,
-                            (val) {
-                              if (val != _selectedPreference5 &&
-                                  val != _selectedPreference4 &&
-                                  val != _selectedPreference2 &&
-                                  val != _selectedPreference3) {
-                                setState(() {
-                                  _selectedPreference1 = val;
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 5),
-                          buildDropdownBox('Preference 2:', _selectedPreference2,
-                              (val) {
-                            if (val != _selectedPreference5 &&
-                                val != _selectedPreference4 &&
-                                val != _selectedPreference3 &&
-                                val != _selectedPreference1) {
-                              setState(() {
-                                _selectedPreference2 = val;
-                              });
-                            }
-                          }),
-                          SizedBox(height: 5),
-                          buildDropdownBox(
-                            'Preference 3:',
-                            _selectedPreference3,
-                            (val) {
-                              if (val != _selectedPreference5 &&
-                                  val != _selectedPreference4 &&
-                                  val != _selectedPreference2 &&
-                                  val != _selectedPreference1) {
-                                setState(() {
-                                  _selectedPreference3 = val;
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 5),
-                          buildDropdownBox(
-                            'Preference 4:',
-                            _selectedPreference4,
-                            (val) {
-                              if (val != _selectedPreference5 &&
-                                  val != _selectedPreference1 &&
-                                  val != _selectedPreference2 &&
-                                  val != _selectedPreference3) {
-                                setState(() {
-                                  _selectedPreference4 = val;
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 5),
-                          buildDropdownBox(
-                            'Preference 5:',
-                            _selectedPreference5,
-                            (val) {
-                              if (val != _selectedPreference1 &&
-                                  val != _selectedPreference4 &&
-                                  val != _selectedPreference2 &&
-                                  val != _selectedPreference3) {
-                                setState(() {
-                                  _selectedPreference5 = val;
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          Center(
-                              child: ElevatedButton(
-                            onPressed: _resetDropdowns,
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(150, 40),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 44, 7, 251),
-                            ),
-                            child: Text(
-                              'Reset',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white, // Adjust text color as needed
-                              ),
-                            ),
-                          )),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: isLoading
-                                ? null
-                                : () {
-                                    if (_selectedPreference1 != null &&
-                                        _selectedPreference2 != null &&
-                                        _selectedPreference3 != null &&
-                                        _selectedPreference4 != null &&
-                                        _selectedPreference5 != null) {
-                                      submitPreferences();
-                                      print('Submitted');
-                                    } else {
-                                      // Show a message widget when preferences are not filled
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text("Error"),
-                                            content: Text(
-                                                "Please fill all the preferences."),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text("OK"),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-                                  },
-                            child: isLoading
-                                ? LoadingAnimationWidget.staggeredDotsWave(
-                                    color: Colors.white,
-                                    size: 24,
-                                  )
-                                : Text(
-                                    "Submit",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(Size(150, 40)),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (states) {
-                                if (states.contains(MaterialState.disabled)) {
-                                  return Color.fromARGB(255, 44, 7, 251)
-                                      .withOpacity(0.5); // Disabled color
-                                }
-                                return Color.fromARGB(
-                                    255, 44, 7, 251); // Enabled color
-                              }),
-                              padding: MaterialStateProperty.all(
-                                  EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10)),
-                              textStyle: MaterialStateProperty.all(TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.black,
-                              )),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Student Form'),
         ),
-      ),
-    );
+        body: Center(
+          child: Text('Form is not yet available.'),
+        ),
+      );
+    }
+    // return SizedBox();
   }
 }
