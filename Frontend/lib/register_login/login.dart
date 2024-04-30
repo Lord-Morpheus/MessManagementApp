@@ -60,6 +60,11 @@ class _HomepgState extends State<Homepg> {
         print('Login failed: ${response.body}');
       }
     } catch (e) {
+      TinyAlert.error(
+        context,
+        title: "Error!",
+        message: "Incorrect Credentials, try again!",
+      );
       print('Network error: $e');
     } finally {
       setState(() {
