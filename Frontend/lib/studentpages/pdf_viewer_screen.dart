@@ -9,6 +9,12 @@ class PdfViewerScreen extends StatefulWidget {
 }
 
 class _PdfViewerScreenState extends State<PdfViewerScreen> {
+  @override
+  void initState() {
+    super.initState();
+    displayPDF();
+  }
+
   Future<Uint8List> fetchPDFData() async {
     final response = await http
         .get(Uri.parse('http://172.16.12.115:3001/api/v1/users/menu'));
@@ -34,24 +40,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PDF Viewer'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: displayPDF,
-          child: Text('View PDF'),
-        ),
+        title: Text('Mess Menu'),
       ),
     );
   }
 }
-// @override
-// Widget build(BuildContext context) {
-// return Scaffold(
-// appBar: AppBar(
-// title: Text('PDF Viewer'),
-// ),
-// body: SfPdfViewer.asset("assets/menu_pdfs/Mess_Menu_north_campus.pdf")
-// );
-// }
-// }
