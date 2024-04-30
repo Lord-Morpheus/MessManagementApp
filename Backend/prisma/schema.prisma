@@ -128,3 +128,12 @@ model Menu {
   data      Bytes
   createdAt DateTime @default(now())
 }
+
+model Notification {
+  id        String   @id @default(uuid()) @map("_id")
+  isOpened  Boolean  @default(false)
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
+import { addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, seedHostel, seedMess, sendNotification, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/common.controller.js';
 import { exportUser, importUser } from '../controllers/excel.controller.js';
@@ -18,7 +18,7 @@ router.get('/students', getAllStudents);
 router.get('/get/:id', adminAuthMiddleware, getStudent);
 router.get('/filter', adminAuthMiddleware, filterMiddleware, filterStudents)
 router.delete('/delete', adminAuthMiddleware, deleteStudent);
-router.put('/update',adminAuthMiddleware, updateStudent);
+router.put('/update', adminAuthMiddleware, updateStudent);
 router.post('/reset/password', forgotPassword);
 router.put('/reset/password/', resetPassword);
 router.post('/send/otp', sendSignupOTP);
@@ -28,7 +28,7 @@ router.post('/add/mess', adminAuthMiddleware, addMess);
 router.post('/add/hostel', adminAuthMiddleware, addHostel);
 router.get('/hostels', getHostel);
 router.post('/import/users', upload.single('excelFile'), importUser)
-router.post('/seeddata', seedData);
+router.get('/seeddata', seedData);
 router.get('/mess', getMess)
 router.get('/studentid', studentID);
 router.get('/seedforms', seedForms);
@@ -36,10 +36,12 @@ router.get('/allocate', adminAuthMiddleware, messAllocation);
 router.get('/getform', adminAuthMiddleware, getFormData)
 router.post('/upload', upload.single('file'), menuUplaoder);
 router.get('/menu', getMenuPDF);
-router.get('/getMessStudentCount',getStudentsCountByMess);
-router.get('/getRevenue',getRevenueOfMess);
-router.get('/feedback',getFeedbacks);
-router.get('/getFeedbackCount',getFeedbackCountByMess);
-
+router.get('/getMessStudentCount', getStudentsCountByMess);
+router.get('/getRevenue', getRevenueOfMess);
+router.get('/feedback', getFeedbacks);
+router.get('/getFeedbackCount', getFeedbackCountByMess);
+router.post('/notification', adminAuthMiddleware, sendNotification);
+router.get('/seedmess', seedMess);
+router.get('/seedhostel', seedHostel);
 
 export default router;
