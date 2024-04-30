@@ -25,6 +25,7 @@ class StudentForm extends StatefulWidget {
 
 class _StudentFormState extends State<StudentForm> {
   bool isLoading = false;
+  bool LoadingData = true;
   var _formAvailable = false;
   var _token;
   void initState() {
@@ -62,6 +63,10 @@ class _StudentFormState extends State<StudentForm> {
       }
     } catch (e) {
       print('Error: $e');
+    } finally {
+      setState(() {
+        LoadingData = false;
+      });
     }
   }
 
@@ -247,6 +252,19 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Widget build(BuildContext context) {
+    if (LoadingData) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Student Form'),
+        ),
+        body: Center(
+          child: LoadingAnimationWidget.inkDrop(
+            size: 30,
+            color: Colors.blue, // Customize the color if needed
+          ),
+        ),
+      );
+    }
     if (_formAvailable) {
       return Scaffold(
         appBar: AppBar(
