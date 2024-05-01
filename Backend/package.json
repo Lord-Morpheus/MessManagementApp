@@ -4,14 +4,18 @@
   "description": "Folder for Backend programs.",
   "type": "module",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
-    "seed": "node prisma/seed.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "seed": "node prisma/seed.js",
+    "postinstall": "prisma generate"
   },
   "author": "",
   "license": "ISC",
