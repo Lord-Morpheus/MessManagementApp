@@ -4,6 +4,9 @@
   "description": "Folder for Backend programs.",
   "type": "module",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
