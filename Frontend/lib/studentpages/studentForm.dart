@@ -43,7 +43,7 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> checkFormAvailability() async {
-    final url = Uri.parse('http://$ip:3001/api/v1/users/status');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/status');
     // final url = Uri.parse('http://$ip:3000/api/form');
 
     try {
@@ -139,7 +139,7 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   Future<void> submitPreferences() async {
-    final url = Uri.parse('http://$ip:3001/api/v1/users/submit');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/submit');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');

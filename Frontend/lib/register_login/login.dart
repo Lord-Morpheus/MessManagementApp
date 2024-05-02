@@ -34,8 +34,7 @@ class _HomepgState extends State<Homepg> {
   }
 
   Future<void> sendLoginRequest() async {
-    print('$ip');
-    final url = Uri.parse('http://$ip:3001/api/v1/users/login');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/login');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode({'username': roll, 'password': pass});
 
