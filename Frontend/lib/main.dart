@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mess/register_login/login.dart';
+import 'package:mess/studentpages/campus.dart';
+import 'package:mess/studentpages/northform.dart';
 
 void main() {
   runApp(const MyApp());
