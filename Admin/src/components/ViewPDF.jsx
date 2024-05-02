@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { PDFViewer } from "./PdfViewer";
 import swal from "sweetalert2";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 // eslint-disable-next-line react/prop-types
-export default function ViewPDF({ pdfURL }) {
+export default function ViewPDF() {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
@@ -22,16 +23,28 @@ export default function ViewPDF({ pdfURL }) {
     console.log(formData);
     try {
       setUploading(true);
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URI}/admin/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+
+      const s3Client = new S3Client({
+        region: `${import.meta.env.VITE_AWS_REGION}`,
+        credentials: {
+          accessKeyId: `${import.meta.env.VITE_AWS_ACCESS_KEY_ID}`,
+          secretAccessKey: `${import.meta.env.VITE_AWS_SECRET_KEY}`,
+        },
+      });
+
+      const command = new PutObjectCommand({
+        Bucket: "mess-menu",
+        Key: "menu.pdf",
+        Body: file,
+      });
+
+      const upload = await s3Client.send(command);
+
+      console.log(upload);
+
       setUploading(false);
 
-      if (response.ok) {
+      if (upload.$metadata.httpStatusCode === 200) {
         swal
           .fire({
             title: "Done",
@@ -43,7 +56,7 @@ export default function ViewPDF({ pdfURL }) {
           });
         console.log("File uploaded successfully!");
       } else {
-        console.error("Failed to upload file:", response.statusText);
+        console.error("Failed to upload file:");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -116,7 +129,7 @@ export default function ViewPDF({ pdfURL }) {
             <div className="w-full max-w-3xl border border-dashed border-gray-200 rounded-lg border-2xl dark:border-gray-800">
               <div className="aspect-[4/3] w-full">
                 <div className="flex items-center justify-center text-2xl font-bold">
-                  <PDFViewer pdfURL={pdfURL} />
+                  <PDFViewer />
                 </div>
               </div>
             </div>

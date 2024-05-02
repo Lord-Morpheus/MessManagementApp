@@ -51,7 +51,7 @@ export const MessMenu = () => {
           <Navbar />
         </div>
         <Card className="m-8">
-          <ViewPDF pdfURL="https://iitmandi.ac.in/administration/tender/php/uploads/Veg%20mess%20EOI.pdf" />
+          <ViewPDF />
         </Card>
       </div>
     </div>
