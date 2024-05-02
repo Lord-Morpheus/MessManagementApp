@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home:const Homepg(),
+      home: const Homepg(),
     );
   }
 }

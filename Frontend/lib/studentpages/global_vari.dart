@@ -10,5 +10,9 @@ final options=[
   {
     'title':'QR',
     'image':'assets/images/qr.png',
+  },
+  {
+    'title':'MESS OFF',
+    'image':'assets/images/feed.png',
   }
 ];

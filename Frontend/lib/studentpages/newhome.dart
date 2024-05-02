@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:mess/studentpages/messoff.dart';
 import 'package:mess/studentpages/pdf_viewer_screen.dart';
 import 'Newmenu.dart';
 import 'global_vari.dart';
@@ -37,6 +38,11 @@ class _NewhomeState extends State<Newhome> {
               else if(opt['title']=='MESS PREFERENCE FORM'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context){
                 return StudentForm();
+                }));
+              }
+              else if(opt['title']=='MESS OFF'){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                return Messoff();
                 }));
               }
               else{
