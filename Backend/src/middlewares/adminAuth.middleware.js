@@ -1,8 +1,6 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
-
-const client = new PrismaClient();
+import client from "../../db/index.js";
 
 export const adminAuthMiddleware = asyncHandler(async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];

@@ -1,8 +1,6 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
-
-const client = new PrismaClient();
+import client from "../../db/index.js";
 
 export const vendorAuthMiddleware = asyncHandler(async (req, res, next) => {
 

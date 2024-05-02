@@ -254,7 +254,7 @@ export default function Selection() {
             </p>
             <div className="flex justify-between items-center w-full">
               <div className="flex flex-col gap-2 justify-center items-center">
-                <div className="flex items-center">
+                <div className="flex items-center mb-3">
                   <p className="ml-3">
                     Select range of dates you want form to be opened:
                   </p>
@@ -262,7 +262,7 @@ export default function Selection() {
                     <Datepicker value={value} onChange={handleValueChange} />
                   </div>
                 </div>
-                <div className="flex mb-3 w-full items-center">
+                {/* <div className="flex mb-3 w-full items-center">
                   <p className="ml-3">
                     Enter percentage of seats based on proximity:
                   </p>
@@ -274,7 +274,7 @@ export default function Selection() {
                       placeholder="enter ratio eg:75 for 75%"
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
               <button
                 disabled={sending}

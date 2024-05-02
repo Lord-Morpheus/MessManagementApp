@@ -393,7 +393,7 @@ export default function App() {
         <DialogBody className="flex-col">
           <div className="pb-4">
             <div className="flex items-center gap-3">
-              <p className="">No of mess off days </p>
+              <p className="">No of mess-off days </p>
               <input
                 type="text"
                 value={messOff}
