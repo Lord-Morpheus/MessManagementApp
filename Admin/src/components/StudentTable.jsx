@@ -194,7 +194,7 @@ export function TableComponent({
           className="bg-green-700"
           onClick={() => {
             exportToExcel(filteredItems);
-            console.log(filteredItems);
+            console.log(filteredItems,'ll');
           }}
         >
           <TbFileExport className="mr-2 h-5 w-5" />
