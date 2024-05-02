@@ -1,14 +1,12 @@
 import { loginSchema, registerSchema } from "../../packages/zod.js";
 import asyncHandler from "../utils/asyncHandler.js";
-import { PrismaClient } from '@prisma/client';
+import client from "../../db/index.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { z } from "zod";
 import { deleteOtp } from "./common.controller.js";
 import { messMap } from "../utils/messId.js";
 import sendEmail from "../utils/email/index.js";
-
-const client = new PrismaClient();
 
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, hostel, password, OTP, defaultMess } = req.body;

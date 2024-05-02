@@ -1,6 +1,6 @@
 import { adminSignUpSchema } from "../../packages/zod.js";
 import asyncHandler from "../utils/asyncHandler.js";
-import { PrismaClient } from "@prisma/client";
+import client from "../../db/index.js";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -18,7 +18,6 @@ import sendEmail from "../utils/email/index.js";
 import { messMap } from "../utils/messId.js";
 import { FileEmbedder } from "pdf-lib";
 
-const client = new PrismaClient();
 
 // Admin Signup using OTP and Admin Secret
 export const signUp = asyncHandler(async (req, res) => {

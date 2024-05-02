@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { PDFDocument } from 'pdf-lib';
 import fs from 'fs';
 
-const prisma = new PrismaClient();
+import client from '../../db/index.js';
 
 export const menuUplaoder = async (req, res) => {
     try {

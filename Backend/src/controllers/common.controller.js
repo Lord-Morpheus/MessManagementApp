@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import sendEmail from '../utils/email/index.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { z } from 'zod';
 import { generateOTP } from '../utils/email/generateOTP.js';
 import jwt from 'jsonwebtoken';
-const client = new PrismaClient();
+import client from '../../db/index.js';
 
 //  Delete OTP
 export const deleteOtp = async (email) => {
