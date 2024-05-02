@@ -144,6 +144,7 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
         name: true,
         username: true,
         email: true,
+        daysPresent: true,
         hostel: {
           select: {
             name: true,
@@ -162,6 +163,7 @@ export const getAllStudents = asyncHandler(async (req, res, next) => {
 
     for (const user of users) {
       // console.log(user.hostel)
+      user.mess_off = 31 - user.daysPresent;
       if (!user.hostel) {
         user.hostel = "Not Assigned"
       } else {
@@ -267,7 +269,7 @@ export const deleteStudent = asyncHandler(async (req, res) => {
 
 // Update a student in database
 export const updateStudent = asyncHandler(async (req, res) => {
-  const { name, username, studentId, email, hostelId, messId } = req.body;
+  const { name, username, studentId, email, hostelId, messId, offDays } = req.body;
   console.log(studentId);
   console.log(req.body)
 
@@ -275,6 +277,12 @@ export const updateStudent = asyncHandler(async (req, res) => {
   const dataToUpdate = {};
 
   // Check if each field is not null, and if not, add it to the dataToUpdate object
+  if (offDays !== null && offDays !== undefined && offDays !== 0) {
+    dataToUpdate.daysPresent = {
+      increment: -offDays,
+    };
+  }
+
   if (name !== null && name !== undefined) {
     dataToUpdate.name = name;
   }
@@ -1135,6 +1143,26 @@ export const Profile = asyncHandler(async (req, res) => {
     });
 
     return res.status(200).json({ data: user });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const messOff = asyncHandler(async (req, res) => {
+  const { studentId, days } = req.body;
+  try {
+    const student = await client.student.update({
+      where: {
+        id: studentId,
+      },
+      data: {
+        daysPresent: {
+          increment: -days,
+        },
+      },
+    });
+
+    return res.status(200).json({ data: student });
   } catch (err) {
     return res.status(403).json(err);
   }

@@ -6,6 +6,7 @@ const columns = [
   { name: "ROLL NO", uid: "username" },
   { name: "HOSTEL", uid: "hostel" },
   // { name: "STATUS", uid: "status" },
+  { name: "MESS OFF", uid: "mess_off" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
