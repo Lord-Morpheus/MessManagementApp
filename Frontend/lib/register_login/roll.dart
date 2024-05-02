@@ -41,7 +41,7 @@ class _RollState extends State<Roll> {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) {
+            .push(MaterialPageRoute(builder: (context) {
           return Registration(roll: roll, name: name);
         }));
       } else {

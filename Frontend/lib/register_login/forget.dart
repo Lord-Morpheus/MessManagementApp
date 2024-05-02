@@ -18,7 +18,7 @@ class _ForgetState extends State<Forget> {
   assign5(){
     roll=textEditingController1.text;
     email="$roll@students.iitmandi.ac.in";
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context){
                       return Reset(roll : roll);
                     }));
   }
