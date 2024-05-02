@@ -11,6 +11,7 @@ import ViewFeedback from "./pages/viewFeedback";
 import { StudentsPage } from "./pages/StudentsPage";
 import { MessMenu } from "./pages/MessMenu";
 import Selection from "./pages/MessSelection";
+import BillGenerated from "./pages/billGenerated";
 
 function App() {
   // const token = localStorage.getItem("token");
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/student" element={<StudentsPage />} />
           <Route path="/menu" element={<MessMenu />} />
           <Route path="/messSelect" element={<Selection />} />
+          <Route path="/bill" element={<BillGenerated />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </BrowserRouter>

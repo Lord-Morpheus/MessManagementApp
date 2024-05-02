@@ -28,6 +28,7 @@ model Student {
   messId      String?
   messForm    MessForm[]
   defaultMess String?
+  daysPresent Int        @default(31)
 }
 
 model Feedback {

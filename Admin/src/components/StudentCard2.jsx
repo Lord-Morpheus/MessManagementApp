@@ -47,6 +47,7 @@ export default function App() {
   const [open, setOpen] = useState(false);
   const hasSearchFilter = Boolean(filterValue);
   const [studentId, setStudentId] = useState("");
+  const [messOff, setMessOff] = useState(0);
   // const [updatedName, setUpdatedName] = useState("");
   // const [updatedUsername, setUpdatedUsername] = useState("");
   // const [updatedEmail, setUpdatedEmail] = useState("");
@@ -171,7 +172,7 @@ export default function App() {
     }
   };
 
-  const handleOpen = (studentId,mess,hostel) => {
+  const handleOpen = (studentId, mess, hostel) => {
     setOpen(!open);
     setStudentId(studentId);
     console.log("Student Id", studentId);
@@ -190,6 +191,7 @@ export default function App() {
           studentId: studentId,
           hostelId: updatedHostelId,
           messId: updatedMessId,
+          offDays: messOff,
         },
         {
           headers: {
@@ -204,16 +206,16 @@ export default function App() {
           text: "Student details updated successfully!",
           icon: "success",
         });
-        handleOpen(studentId,mess,hostel);
+        handleOpen(studentId, mess, hostel);
       } else {
         swal.fire("Error", "Failed to update student details", "error");
-        console.log('same value')
-        handleOpen(studentId,mess,hostel);
+        console.log("same value");
+        handleOpen(studentId, mess, hostel);
       }
     } catch (error) {
       console.error("Error updating student details:", error);
       swal.fire("Error", "Failed to update student details", "error");
-      handleOpen(studentId,mess,hostel);
+      handleOpen(studentId, mess, hostel);
     }
   };
 
@@ -301,7 +303,7 @@ export default function App() {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <div onClick={() => handleOpen(user.id,user.mess,user.hostel)}>
+            <div onClick={() => handleOpen(user.id, user.mess, user.hostel)}>
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -388,101 +390,114 @@ export default function App() {
         className="flex flex-col"
       >
         <DialogHeader>Update Student Details</DialogHeader>
-        <DialogBody className="flex gap-3 ">
-          <div className="relative inline-block text-left">
-            <button
-              type="button"
-              className="inline-flex justify-center rounded-md bg-[#012169] text-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#012169dd] capitalize"
-              id="menu-button"
-              onClick={() => {
-                setMessMenuClick(!MessMenuclick);
-                setHostelMenuClick(false);
-              }}
-            >
-              {mess === "" ? "Update Mess" : `${mess}`}
-              <svg
-                className="-mr-1 h-5 w-5 text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-            {MessMenuclick && (
-              <div
-                className="absolute z-10 mt-2 w-[230%] origin-top-left rounded-md bg-[#012169] text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-              >
-                <div className="py-1 " role="none">
-                  <div className="w-full grid grid-cols-2 gap-3 px-3">
-                    {messOptions.map(({ name, id }) => (
-                      <div
-                        key={id}
-                        onClick={() => onMessChange(name, id)}
-                        className="hover:bg-[white] hover:text-black cursor-pointer border-2 border-[#012169] rounded-md text-center"
-                      >
-                        {name.toUpperCase()}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
+        <DialogBody className="flex-col">
+          <div className="pb-4">
+            <div className="flex items-center gap-3">
+              <p className="">No of mess off days </p>
+              <input
+                type="text"
+                value={messOff}
+                className="w-lg border-2 border-[#012169] rounded-md p-2"
+                placeholder="0"
+                onChange={(e) => setMessOff(e.target.value)}
+              />
+            </div>
           </div>
-          <div className="relative inline-block text-left">
-            <button
-              type="button"
-              className="inline-flex justify-center w-[125%] rounded-md bg-[#012169] text-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#012169dd] capitalize"
-              id="menu-button"
-              onClick={() => {
-                setHostelMenuClick(!HostelMenuclick);
-                setMessMenuClick(false);
-                
-              }}
-            >
-              {hostel === "" ? "Update hostel" : `${hostel}`}
-              <svg
-                className="-mr-1 h-5 w-5 text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
+          <div>
+            <div className="relative inline-block text-left">
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-md bg-[#012169] text-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#012169dd] capitalize"
+                id="menu-button"
+                onClick={() => {
+                  setMessMenuClick(!MessMenuclick);
+                  setHostelMenuClick(false);
+                }}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-            {HostelMenuclick && (
-              <div
-                className="absolute z-10 mt-2 w-[250%] origin-top-left rounded-md bg-[#012169] text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-              >
-                <div className="py-1 " role="none">
-                  <div className="w-full grid grid-cols-3 gap-2 px-2">
-                    {hostelOptions.map(({ name, id }) => (
-                      <div
-                        key={id}
-                        onClick={() => onHostelChange(name, id)}
-                        className="hover:bg-[white] hover:text-black cursor-pointer border-2 rounded-md text-center border-[#012169]"
-                      >
-                        {name.toUpperCase()}
-                      </div>
-                    ))}
+                {mess === "" ? "Update Mess" : `${mess}`}
+                <svg
+                  className="-mr-1 h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              {MessMenuclick && (
+                <div
+                  className="absolute z-10 mt-2 w-[230%] origin-top-left rounded-md bg-[#012169] text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <div className="py-1 " role="none">
+                    <div className="w-full grid grid-cols-2 gap-3 px-3">
+                      {messOptions.map(({ name, id }) => (
+                        <div
+                          key={id}
+                          onClick={() => onMessChange(name, id)}
+                          className="hover:bg-[white] hover:text-black cursor-pointer border-2 border-[#012169] rounded-md text-center"
+                        >
+                          {name.toUpperCase()}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            <div className="relative inline-block text-left">
+              <button
+                type="button"
+                className="inline-flex justify-center w-[125%] rounded-md bg-[#012169] text-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#012169dd] capitalize"
+                id="menu-button"
+                onClick={() => {
+                  setHostelMenuClick(!HostelMenuclick);
+                  setMessMenuClick(false);
+                }}
+              >
+                {hostel === "" ? "Update hostel" : `${hostel}`}
+                <svg
+                  className="-mr-1 h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              {HostelMenuclick && (
+                <div
+                  className="absolute z-10 mt-2 w-[250%] origin-top-left rounded-md bg-[#012169] text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <div className="py-1 " role="none">
+                    <div className="w-full grid grid-cols-3 gap-2 px-2">
+                      {hostelOptions.map(({ name, id }) => (
+                        <div
+                          key={id}
+                          onClick={() => onHostelChange(name, id)}
+                          className="hover:bg-[white] hover:text-black cursor-pointer border-2 rounded-md text-center border-[#012169]"
+                        >
+                          {name.toUpperCase()}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </DialogBody>
         <DialogFooter>
