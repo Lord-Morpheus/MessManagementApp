@@ -24,7 +24,7 @@ export const deleteOtp = async (email) => {
 };
 
 //  Send OTP for signup
-export const sendSignupOTP = asyncHandler(async (req, res) => {
+export const sendSignupOTPStudent = asyncHandler(async (req, res) => {
     const { email, username } = req.body;
     const { success } = z.string().email().safeParse(email);
 
@@ -69,6 +69,69 @@ export const sendSignupOTP = asyncHandler(async (req, res) => {
             mail: email,
             subject: '🍽️ Welcome to IIT Mandi Mess Service! Activate Your Account',
             text: `Hi there! Welcome to IIT Mandi Mess Service. We're thrilled to have you join us for delicious meals! To complete your registration and start enjoying our meals, please use the OTP below:
+        
+        🔒 One-Time Passcode (OTP): ${OTP}
+    
+        If you have any questions or need assistance, feel free to reach out to our support team.
+        
+        We can't wait to serve you!
+        
+        Best regards,
+        IIT Mandi Mess Service Team`
+        });
+
+        return res.status(200).json({ username, email, message: `OTP send to email ${email}` });
+    } catch (err) {
+        await deleteOtp(email);
+        return res.status(403).json(err);
+    }
+});
+
+export const sendSignupOTPAdmin = asyncHandler(async (req, res) => {
+    const { email, username } = req.body;
+    const { success } = z.string().email().safeParse(email);
+
+    if (!success) {
+        return res.status(400).json({ message: "Invalid Input" });
+    }
+
+    if (!email.endsWith("iitmandi.ac.in")) {
+        return res.status(400).json({ message: "Please use institute email ID" });
+    }
+
+    try {
+        const user1 = await client.admin.findUnique({
+            where: {
+                email
+            },
+        });
+
+        const user2 = await client.admin.findUnique({
+            where: {
+                username
+            },
+        });
+
+        if (user1 || user2) {
+            return res.status(404).json({ message: "User already exists" });
+        }
+
+        const { OTP, OTP_EXPIRY } = generateOTP();
+
+        await deleteOtp(email);
+
+        await client.otp.create({
+            data: {
+                email,
+                key: OTP,
+                expiry: OTP_EXPIRY,
+            },
+        });
+
+        await sendEmail({
+            mail: email,
+            subject: '🍽️ Welcome to IIT Mandi Mess Service! Activate Your Account',
+            text: `Hi ${username}! Welcome to IIT Mandi Mess Service. We're thrilled to have you join us for delicious meals! To complete your registration and start enjoying our meals, please use the OTP below:
         
         🔒 One-Time Passcode (OTP): ${OTP}
     

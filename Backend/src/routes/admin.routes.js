@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { Profile, addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, seedHostel, seedMess, sendNotification, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
-import { forgotPassword, resetPassword, sendSignupOTP } from '../controllers/common.controller.js';
+import { forgotPassword, resetPassword, sendSignupOTPAdmin } from '../controllers/common.controller.js';
 import { exportUser, importUser } from '../controllers/excel.controller.js';
 import { filterMiddleware } from '../middlewares/filter.middleware.js';
 import { upload } from '../middlewares/multer.middleware.js';
@@ -21,7 +21,7 @@ router.delete('/delete', adminAuthMiddleware, deleteStudent);
 router.put('/update', adminAuthMiddleware, updateStudent);
 router.post('/reset/password', forgotPassword);
 router.put('/reset/password/', resetPassword);
-router.post('/send/otp', sendSignupOTP);
+router.post('/send/otp', sendSignupOTPAdmin);
 router.get('/export', adminAuthMiddleware, filterMiddleware, exportUser);
 router.post('/add/vendor', adminAuthMiddleware, addVendor);
 router.post('/add/mess', adminAuthMiddleware, addMess);
