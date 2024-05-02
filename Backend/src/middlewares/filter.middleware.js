@@ -1,9 +1,7 @@
 // Filter middleware based on various conditions and queries in single function
 
 import asyncHandler from "../utils/asyncHandler.js";
-import { PrismaClient } from '@prisma/client';
-
-const client = new PrismaClient();
+import client from "../../db/index.js";
 
 export const filterMiddleware = asyncHandler(async (req, res, next) => {
 

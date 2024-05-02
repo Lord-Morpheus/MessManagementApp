@@ -203,7 +203,7 @@ class _DashState extends State<Dash> {
                                     children: [
                                       const SizedBox(height: 30),
                                       Text(
-                                        "NAME: $name",
+                                        "NAME: ${name.toUpperCase()}",
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -211,7 +211,7 @@ class _DashState extends State<Dash> {
                                       ),
                                       const SizedBox(height: 20),
                                       Text(
-                                        "ROLL NO. : $roll",
+                                        "ROLL NO. : ${roll.toUpperCase()}",
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -219,7 +219,7 @@ class _DashState extends State<Dash> {
                                       ),
                                       const SizedBox(height: 20),
                                       Text(
-                                        "MESS: $mess",
+                                        "MESS: ${mess.toUpperCase()}",
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -227,7 +227,7 @@ class _DashState extends State<Dash> {
                                       ),
                                       const SizedBox(height: 20),
                                       Text(
-                                        "HOSTEL: $hostel",
+                                        "HOSTEL: ${hostel.toUpperCase()}",
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
