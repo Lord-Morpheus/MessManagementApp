@@ -93,7 +93,7 @@ class _DashState extends State<Dash> {
     print('token is $token');
     final headers = {'Authorization': '$token'};
     final response = await http.get(
-        Uri.parse('http://$ip:3001/api/v1/users/get'),
+        Uri.parse('https://mess-api.vercel.app/api/v1/users/get'),
         headers: headers);
     print(response.body);
     if (response.statusCode == 200) {

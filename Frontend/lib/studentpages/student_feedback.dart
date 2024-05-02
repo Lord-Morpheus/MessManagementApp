@@ -60,7 +60,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('http://$ip:3001/api/v1/users/feedback');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/feedback');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final body = {
       'title': _feedbackType,

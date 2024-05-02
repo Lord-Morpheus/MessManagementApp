@@ -58,7 +58,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   Future<void> sendQRData(String data) async {
     // final url = Uri.parse('http://10.8.90.133:3000/api/verify');
-    final url = Uri.parse('http://$ip:3001/api/v1/users/verifyqr');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/verifyqr');
     final body = jsonEncode({'qrMessId': data});
     print(data);
     try {

@@ -97,7 +97,7 @@ class _RegistrationState extends State<Registration> {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('http://$ip:3001/api/v1/users/signup');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/signup');
 
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/signup');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');

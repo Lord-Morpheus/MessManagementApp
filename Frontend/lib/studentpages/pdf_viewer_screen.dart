@@ -18,7 +18,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
 
   Future<Uint8List> fetchPDFData() async {
     final response = await http
-        .get(Uri.parse('http://$ip:3001/api/v1/users/menu'));
+        .get(Uri.parse('https://mess-api.vercel.app/api/v1/users/menu'));
     return response.bodyBytes;
   }
 

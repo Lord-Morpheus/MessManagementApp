@@ -31,7 +31,7 @@ class _RollState extends State<Roll> {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('http://$ip:3001/api/v1/users/send/otp');
+    final url = Uri.parse('https://mess-api.vercel.app/api/v1/users/send/otp');
     // final url = Uri.parse('http://192.168.135.166:3000/api/test');
     final headers = {'Content-Type': 'Application/json'};
     final body = jsonEncode(
