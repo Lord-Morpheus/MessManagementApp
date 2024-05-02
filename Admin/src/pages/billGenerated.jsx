@@ -14,7 +14,8 @@ import {
 } from "@nextui-org/table";
 import { Button } from "@nextui-org/react";
 import { TbFileExport } from "react-icons/tb";
-import { exportToExcel } from "../utils/exportToExcel";
+// import { exportToExcel } from "../utils/exportToExcel";
+import { exportToExcel2 } from "../utils/exportToExcel2";
 
 const columns = [
   { name: "DESCRIPTION  ", uid: "description" },
@@ -117,10 +118,10 @@ export default function BillGenerated() {
           <div className="text-lg font-semibold">{mess}</div>
           <div>
             <Button
-              className="bg-green-700"
+              className="bg-green-700 text-white"
               onClick={() => {
-                exportToExcel(MessData.mess);
-                console.log(MessData.mess);
+                console.log(MessData,{mess});
+                exportToExcel2(MessData,{mess});
               }}
             >
               <TbFileExport className="mr-2 h-5 w-5" />
@@ -148,7 +149,7 @@ export default function BillGenerated() {
                   <Table
                     color="primary"
                     aria-label={`Table for ${mess}`}
-                    topContent={topContent(mess,MessData)}
+                    topContent={topContent(mess,daysPresentData)}
                     isStriped
                   >
                     <TableHeader columns={columns}>
