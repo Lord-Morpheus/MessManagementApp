@@ -1180,6 +1180,8 @@ export const getMessOff = asyncHandler(async (req, res) => {
         endDate: true,
       }
     })
+
+    return res.status(200).json(data);
   } catch (err) {
     return res.status(403).json(err);
   }
