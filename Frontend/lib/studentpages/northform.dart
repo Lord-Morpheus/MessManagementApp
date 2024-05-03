@@ -117,6 +117,7 @@ class _NorthFormState extends State<NorthForm> {
       "D1 mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
       "D2 mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
       "D3 mess": "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
+      "Yoga Mess": "397851cc-7ee1-4825-9fc9-ce6e6f1f3aa1",
     };
 
     if (_selectedPreference1 != '--None--') {

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mess/register_login/login.dart';
 import 'package:mess/studentpages/campus.dart';
 import 'package:mess/studentpages/northform.dart';
+import 'package:mess/studentpages/studenthomepg.dart';
 
-void main() {
-  runApp(const MyApp());
+final storage = new FlutterSecureStorage();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String? token = await storage.read(key: 'token');
+  runApp(MyApp(token: token));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? token;
+
+  const MyApp({Key? key, this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Lato',
         colorScheme: ColorScheme.fromSeed(
-          seedColor:const Color.fromARGB(255, 62, 20, 167),
+          seedColor: const Color.fromARGB(255, 62, 20, 167),
           primary: const Color.fromARGB(255, 91, 65, 143),
         ),
         appBarTheme: const AppBarTheme(
@@ -28,13 +36,12 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        // dropdownMenuTheme: DropdownMenuThemeData(inputDecorationTheme: InputDecorationTheme()),
         inputDecorationTheme: const InputDecorationTheme(
           hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 16, 
+            fontSize: 16,
           ),
-          prefixIconColor: Color.fromRGBO(119, 119,119,1),
+          prefixIconColor: Color.fromRGBO(119, 119, 119, 1),
         ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
@@ -49,16 +56,16 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
-          titleSmall:  TextStyle(
+          titleSmall: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
-            color:Color.fromARGB(255, 36, 27, 173),
+            color: Color.fromARGB(255, 36, 27, 173),
             decoration: TextDecoration.underline,
           ),
         ),
         useMaterial3: true,
       ),
-      home: const Homepg(),
+      home: token != null ? Studenthomepage() : Homepg(),
     );
   }
 }

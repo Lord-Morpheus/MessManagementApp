@@ -399,3 +399,27 @@ export const getFormStatus = asyncHandler(async (req, res) => {
         return res.status(403).json(err);
     }
 });
+
+export const MessOff = asyncHandler(async (req, res) => {
+    const { imgUrl, startDate, endDate } = req.body;
+
+    try {
+        const data = await client.MessOff.create({
+            data: {
+                imgUrl,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate),
+                student: {
+                    connect: {
+                        id: req.user.id,
+                    }
+                },
+            },
+        });
+
+        return res.status(200).json(data);
+
+    } catch (err) {
+        return res.status(403).json(err);
+    }
+});
