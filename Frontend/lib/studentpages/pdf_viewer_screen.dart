@@ -17,8 +17,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   }
 
   Future<Uint8List> fetchPDFData() async {
-    final response = await http
-        .get(Uri.parse('https://mess-api.vercel.app/api/v1/users/menu'));
+    final response = await http.get(Uri.parse(
+        'https://mess-menu.s3.ap-southeast-2.amazonaws.com/menu.pdf'));
     return response.bodyBytes;
   }
 
@@ -29,7 +29,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(
-            title: Text('PDF Viewer'),
+            title: Text('Mess Menu'),
           ),
           body: SfPdfViewer.memory(bytes),
         ),

@@ -39,7 +39,7 @@ export default function Mess() {
     }
     fetchData();
   }, [navigate]);
-  
+
   return (
     <div className="flex">
       <Sidebar />
@@ -53,8 +53,13 @@ export default function Mess() {
               <span className=" mb-8 text-4xl font-bold ">Mess Details</span>
               <div className="flex flex-wrap justify-between w-[90%] gap-4 mb-3">
                 {messOptions ? (
-                  messOptions.map(({ name, id }) => (
-                    <MessCard2 key={id} mess={name} />
+                  messOptions.map(({ firm, firmMail, name, id }) => (
+                    <MessCard2
+                      key={id}
+                      mess={name}
+                      firm={firm}
+                      mail={firmMail}
+                    />
                   ))
                 ) : (
                   <div>Loading...</div>

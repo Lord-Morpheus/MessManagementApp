@@ -710,6 +710,8 @@ export const getMess = asyncHandler(async (req, res) => {
     select: {
       id: true,
       name: true,
+      firm: true,
+      firmMail: true,
     },
   });
   // console.log(mess);
@@ -1105,15 +1107,15 @@ export const sendNotification = asyncHandler(async (req, res) => {
 
     const students = await client.student.findMany({});
 
-    // for (const student of students) {
-    //   const email = student.email;
-    //   const subject = "🍽️ Mess Forms Are Out";
-    //   const message = `Hi ${student.name}!\n\nThe mess form is now open. Please fill the form before the deadline. Deadline to fill the form is ${endDate}.\n\nIIT Mandi Mess Service Team`;
+    for (const student of students) {
+      const email = student.email;
+      const subject = "🍽️ Mess Forms Are Out";
+      const message = `Hi ${student.name}!\n\nThe mess form is now open. Please fill the form before the deadline. Deadline to fill the form is ${endDate}.\n\nIIT Mandi Mess Service Team`;
 
-    //   await sendEmail({ mail: email, subject, text: message });
+      await sendEmail({ mail: email, subject, text: message });
 
-    //   console.log(`Notification email sent to ${email}`);
-    // }
+      console.log(`Notification email sent to ${email}`);
+    }
 
     await new Promise((resolve) => {
       setTimeout(() => {

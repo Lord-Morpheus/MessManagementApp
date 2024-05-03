@@ -16,14 +16,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final storage = new FlutterSecureStorage();
 
-class StudentForm extends StatefulWidget {
-  const StudentForm({Key? key});
+class SouthForm extends StatefulWidget {
+  const SouthForm({Key? key});
 
   @override
-  State<StudentForm> createState() => _StudentFormState();
+  State<SouthForm> createState() => _SouthFormState();
 }
 
-class _StudentFormState extends State<StudentForm> {
+class _SouthFormState extends State<SouthForm> {
   bool isLoading = false;
   bool LoadingData = true;
   var _formAvailable = false;
@@ -79,26 +79,20 @@ class _StudentFormState extends State<StudentForm> {
   }
 
   final List<String> _preferences = [
-    'Tulsi Mess(North Campus)',
-    'Pine Mess',
-    'Alder Mess(S11)',
-    'Oak Mess',
-    'Peepal Mess(North Campus)'
+    'D1 Mess',
+    'D2 Mess',
+    'D3 Mess',
   ];
 
   String? _selectedPreference1;
   String? _selectedPreference2;
   String? _selectedPreference3;
-  String? _selectedPreference4;
-  String? _selectedPreference5;
 
   void _resetDropdowns() {
     setState(() {
       _selectedPreference1 = null;
       _selectedPreference2 = null;
       _selectedPreference3 = null;
-      _selectedPreference4 = null;
-      _selectedPreference5 = null;
     });
   }
 
@@ -128,13 +122,6 @@ class _StudentFormState extends State<StudentForm> {
     if (_selectedPreference3 != '--None--') {
       selectedPreferenceIds.add(messIdMap[_selectedPreference3]!);
     }
-    if (_selectedPreference4 != '--None--') {
-      selectedPreferenceIds.add(messIdMap[_selectedPreference4]!);
-    }
-    if (_selectedPreference5 != '--None--') {
-      selectedPreferenceIds.add(messIdMap[_selectedPreference5]!);
-    }
-
     return selectedPreferenceIds;
   }
 
@@ -210,8 +197,6 @@ class _StudentFormState extends State<StudentForm> {
       _selectedPreference1,
       _selectedPreference2,
       _selectedPreference3,
-      _selectedPreference4,
-      _selectedPreference5
     ];
     _remain.remove(value);
     return Column(
@@ -235,15 +220,24 @@ class _StudentFormState extends State<StudentForm> {
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
-            child: DropdownButton(
-              value: value,
-              items: _preferences.map((e) {
-                return DropdownMenuItem(
-                  child: Text(e),
-                  value: e,
-                );
-              }).toList(),
-              onChanged: onChanged,
+            child: SizedBox(
+              width: 250, // Specify your desired width here
+              child: DropdownButton(
+                isExpanded:
+                    true, // This will make the dropdown expand to fill the SizedBox
+                value: value,
+                items: _preferences.map((e) {
+                  return DropdownMenuItem(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.all(8.0), // Add your desired padding here
+                      child: Text(e),
+                    ),
+                    value: e,
+                  );
+                }).toList(),
+                onChanged: onChanged,
+              ),
             ),
           ),
         )
@@ -366,9 +360,7 @@ class _StudentFormState extends State<StudentForm> {
                               'Preference 1:',
                               _selectedPreference1,
                               (val) {
-                                if (val != _selectedPreference5 &&
-                                    val != _selectedPreference4 &&
-                                    val != _selectedPreference2 &&
+                                if (val != _selectedPreference2 &&
                                     val != _selectedPreference3) {
                                   setState(() {
                                     _selectedPreference1 = val;
@@ -379,9 +371,7 @@ class _StudentFormState extends State<StudentForm> {
                             SizedBox(height: 5),
                             buildDropdownBox(
                                 'Preference 2:', _selectedPreference2, (val) {
-                              if (val != _selectedPreference5 &&
-                                  val != _selectedPreference4 &&
-                                  val != _selectedPreference3 &&
+                              if (val != _selectedPreference3 &&
                                   val != _selectedPreference1) {
                                 setState(() {
                                   _selectedPreference2 = val;
@@ -393,42 +383,10 @@ class _StudentFormState extends State<StudentForm> {
                               'Preference 3:',
                               _selectedPreference3,
                               (val) {
-                                if (val != _selectedPreference5 &&
-                                    val != _selectedPreference4 &&
-                                    val != _selectedPreference2 &&
+                                if (val != _selectedPreference2 &&
                                     val != _selectedPreference1) {
                                   setState(() {
                                     _selectedPreference3 = val;
-                                  });
-                                }
-                              },
-                            ),
-                            SizedBox(height: 5),
-                            buildDropdownBox(
-                              'Preference 4:',
-                              _selectedPreference4,
-                              (val) {
-                                if (val != _selectedPreference5 &&
-                                    val != _selectedPreference1 &&
-                                    val != _selectedPreference2 &&
-                                    val != _selectedPreference3) {
-                                  setState(() {
-                                    _selectedPreference4 = val;
-                                  });
-                                }
-                              },
-                            ),
-                            SizedBox(height: 5),
-                            buildDropdownBox(
-                              'Preference 5:',
-                              _selectedPreference5,
-                              (val) {
-                                if (val != _selectedPreference1 &&
-                                    val != _selectedPreference4 &&
-                                    val != _selectedPreference2 &&
-                                    val != _selectedPreference3) {
-                                  setState(() {
-                                    _selectedPreference5 = val;
                                   });
                                 }
                               },
@@ -459,9 +417,7 @@ class _StudentFormState extends State<StudentForm> {
                                   : () {
                                       if (_selectedPreference1 != null &&
                                           _selectedPreference2 != null &&
-                                          _selectedPreference3 != null &&
-                                          _selectedPreference4 != null &&
-                                          _selectedPreference5 != null) {
+                                          _selectedPreference3 != null) {
                                         submitPreferences();
                                         print('Submitted');
                                       } else {

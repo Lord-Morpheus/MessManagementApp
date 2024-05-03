@@ -151,7 +151,7 @@ class _HomepgState extends State<Homepg> {
                     const SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) {
                           return const Forget();
                         }));
@@ -205,7 +205,7 @@ class _HomepgState extends State<Homepg> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) {
                               return const Roll();
                             }));
