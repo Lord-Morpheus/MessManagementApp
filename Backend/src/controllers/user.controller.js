@@ -285,7 +285,7 @@ export const getFeedbacks = asyncHandler(async (req, res) => {
 });
 
 export const submitForm = asyncHandler(async (req, res) => {
-    const { preferences } = req.body;
+    const { preferences, campus } = req.body;
     const { success } = z.object({
         preferences: z.array(z.string()),
     }).safeParse(req.body);
@@ -329,6 +329,7 @@ export const submitForm = asyncHandler(async (req, res) => {
             data: {
                 studentId,
                 preferences,
+                campus
             },
         });
 
