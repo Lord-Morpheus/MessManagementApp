@@ -79,7 +79,10 @@ export default function MessOff() {
         text: "Mess Off Request Approved.",
         icon: "success",
         timer: "1500",
-      });
+      }).then(()=>{
+        window.location.reload();
+      }
+      );
       console.log("Mess off request approved:", response.data);
     } catch (error) {
       console.error("Error approving mess off request:", error);
@@ -104,6 +107,8 @@ export default function MessOff() {
         text: "Mess Off Request Not Approved.",
         icon: "error",
         timer: "1500",
+      }).then(()=>{
+        window.location.reload();
       });
       console.log("Mess off request declined:", response.data);
     } catch (error) {
@@ -138,7 +143,7 @@ export default function MessOff() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="green"
-                className="w-6 h-6"
+                className="w-6 h-6 cursor-pointer"
                 onClick={() => approveMessOff(item.id)}
               >
                 <path
@@ -153,7 +158,7 @@ export default function MessOff() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="red"
-                className="w-6 h-6"
+                className="w-6 h-6 cursor-pointer"
                 onClick={() => declineMessOff(item.id)}
               >
                 <path
@@ -180,12 +185,18 @@ export default function MessOff() {
             {item.status}
           </Chip>
         );
+      case 'name':
+        return item.student.name;
+      case 'username':
+        return item.student.username;
       default:
         return item[columnKey];
     }
   };
   const columns = [
-    { name: "Start Date  ", uid: "startDate" },
+    { name: "Name", uid: "name" },
+    { name: "Roll Number", uid: "username" },
+    { name: "Start Date", uid: "startDate" },
     { name: "End Date", uid: "endDate" },
     { name: "Image", uid: "imgUrl" },
     { name: "Status", uid: "status" },
