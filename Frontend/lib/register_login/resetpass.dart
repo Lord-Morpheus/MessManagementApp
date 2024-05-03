@@ -18,6 +18,7 @@ class _ResetState extends State<Reset> {
   late String pass;
   late String confirmpass;
   late String roll2;
+  bool _obscureTextConfirm = true;
 
   final TextEditingController textEditingController2=TextEditingController();
   final TextEditingController textEditingController3=TextEditingController();
@@ -131,19 +132,36 @@ class _ResetState extends State<Reset> {
                     ),
                     const SizedBox(height: 15),
                     TextField(
-                      controller: textEditingController4,
-                      style:Theme.of(context).textTheme.titleMedium,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical:10,horizontal:10),
-                        labelText: 'Confirm Password',
-                        prefixIcon: const Icon(Icons.lock_outline,color: Color.fromARGB(255, 36, 27, 173),),
-                        labelStyle:Theme.of(context).textTheme.titleMedium,
-                        border:border,
-                        enabledBorder: border,
-                        focusedBorder: border,
-                      ),
-                      obscureText: true,
+                  controller: textEditingController4,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    labelText: 'Confirm Password',
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: Color.fromARGB(255, 36, 27, 173),
                     ),
+                    labelStyle: Theme.of(context).textTheme.titleMedium,
+                    border: border,
+                    enabledBorder: border,
+                    focusedBorder: border,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureTextConfirm = !_obscureTextConfirm;
+                        });
+                      },
+                      child: Icon(
+                        _obscureTextConfirm
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  obscureText: _obscureTextConfirm,
+                ),
                     const SizedBox(height: 15),
                     ElevatedButton(
                       style:ElevatedButton.styleFrom(
