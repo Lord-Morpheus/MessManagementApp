@@ -893,6 +893,7 @@ export const getFormData = asyncHandler(async (req, res) => {
   }
 });
 
+
 export const getStudentsCountByMess = asyncHandler(async (req, res, next) => {
   try {
     const messes = await client.mess.findMany({
@@ -1283,7 +1284,7 @@ export const getMessOff = asyncHandler(async (req, res) => {
       select: {
         id: true,
         imgUrl: true,
-        status:true,
+        status: true,
         student: {
           select: {
             id: true,
@@ -1320,7 +1321,7 @@ export const approveMessOff = asyncHandler(async (req, res) => {
       },
       data: {
         daysPresent: {
-          increment: Math.floor((messOff.endDate - messOff.startDate) / (1000 * 60 * 60 * 24)),
+          decremen: -(Math.floor((messOff.endDate - messOff.startDate) / (1000 * 60 * 60 * 24))),
         },
       },
     });
