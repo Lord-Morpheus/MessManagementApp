@@ -862,11 +862,13 @@ export const seedForms = asyncHandler(async (req, res) => {
 });
 
 export const getFormData = asyncHandler(async (req, res) => {
-  try {
+  // try {
+    // await client.messForm.deleteMany({})
     const forms = await client.messForm.findMany({
       select: {
         id: true,
         preferences: true,
+        campus: true,
         studentId: true,
         alloted: true,
         student: {
@@ -886,9 +888,9 @@ export const getFormData = asyncHandler(async (req, res) => {
 
     console.log(forms);
     return res.status(200).json(forms);
-  } catch (err) {
-    return res.status(403).json(err);
-  }
+  // } catch (err) {
+  //   return res.status(403).json(err);
+  // }
 });
 
 export const getStudentsCountByMess = asyncHandler(async (req, res, next) => {
@@ -1281,6 +1283,7 @@ export const getMessOff = asyncHandler(async (req, res) => {
       select: {
         id: true,
         imgUrl: true,
+        status:true,
         student: {
           select: {
             id: true,
