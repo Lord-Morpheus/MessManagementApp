@@ -158,7 +158,7 @@ class _NorthFormState extends State<NorthForm> {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json', 'Authorization': _token},
-        body: jsonEncode({'preferences': (body)}),
+        body: jsonEncode({'preferences': (body), 'campus': 'north'}),
       );
       print('response for post ${response.statusCode}');
       if (response.statusCode == 200) {
