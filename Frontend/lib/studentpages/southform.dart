@@ -82,17 +82,20 @@ class _SouthFormState extends State<SouthForm> {
     'D1 Mess',
     'D2 Mess',
     'D3 Mess',
+    'Yoga Mess'
   ];
 
   String? _selectedPreference1;
   String? _selectedPreference2;
   String? _selectedPreference3;
+  String? _selectedPreference4;
 
   void _resetDropdowns() {
     setState(() {
       _selectedPreference1 = null;
       _selectedPreference2 = null;
       _selectedPreference3 = null;
+      _selectedPreference4 = null;
     });
   }
 
@@ -108,9 +111,10 @@ class _SouthFormState extends State<SouthForm> {
       "Peepal Mess(North Campus)": "c7bc1615-5208-46dc-bb7e-0b2d8765866a",
       "Tulsi Mess(North Campus)": "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
       "Alder Mess(S11)": "abbccc55-e1d4-40db-b41b-d4ed9ad0b23a",
-      "D1 mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
-      "D2 mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
-      "D3 mess": "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
+      "D1 Mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
+      "D2 Mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
+      "D3 Mess": "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
+      "Yoga Mess": "397851cc-7ee1-4825-9fc9-ce6e6f1f3aa1",
     };
 
     if (_selectedPreference1 != '--None--') {
@@ -121,6 +125,9 @@ class _SouthFormState extends State<SouthForm> {
     }
     if (_selectedPreference3 != '--None--') {
       selectedPreferenceIds.add(messIdMap[_selectedPreference3]!);
+    }
+    if (_selectedPreference4 != '--None--') {
+      selectedPreferenceIds.add(messIdMap[_selectedPreference4]!);
     }
     return selectedPreferenceIds;
   }
@@ -145,7 +152,7 @@ class _SouthFormState extends State<SouthForm> {
         headers: {'Content-Type': 'application/json', 'Authorization': _token},
         body: jsonEncode({'preferences': (body)}),
       );
-
+      print('response is${response.statusCode}');
       if (response.statusCode == 200) {
         // Request successful
         print('Preferences submitted successfully');
@@ -159,6 +166,18 @@ class _SouthFormState extends State<SouthForm> {
           context,
           title: "Success!",
           message: "Preferences Submitted successfully!",
+        );
+      } else if (response.statusCode == 400) {
+        TinyAlert.error(
+          onConfirm: () => {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
+          context,
+          title: "Error!",
+          message: "You have already submitted the form!",
         );
       } else if (response.statusCode == 401) {
         logout();
@@ -197,6 +216,7 @@ class _SouthFormState extends State<SouthForm> {
       _selectedPreference1,
       _selectedPreference2,
       _selectedPreference3,
+      _selectedPreference4
     ];
     _remain.remove(value);
     return Column(
@@ -361,7 +381,8 @@ class _SouthFormState extends State<SouthForm> {
                               _selectedPreference1,
                               (val) {
                                 if (val != _selectedPreference2 &&
-                                    val != _selectedPreference3) {
+                                    val != _selectedPreference3 &&
+                                    val != _selectedPreference4) {
                                   setState(() {
                                     _selectedPreference1 = val;
                                   });
@@ -370,23 +391,42 @@ class _SouthFormState extends State<SouthForm> {
                             ),
                             SizedBox(height: 5),
                             buildDropdownBox(
-                                'Preference 2:', _selectedPreference2, (val) {
-                              if (val != _selectedPreference3 &&
-                                  val != _selectedPreference1) {
-                                setState(() {
-                                  _selectedPreference2 = val;
-                                });
-                              }
-                            }),
+                              'Preference 2:',
+                              _selectedPreference2,
+                              (val) {
+                                if (val != _selectedPreference1 &&
+                                    val != _selectedPreference3 &&
+                                    val != _selectedPreference4) {
+                                  setState(() {
+                                    _selectedPreference2 = val;
+                                  });
+                                }
+                              },
+                            ),
                             SizedBox(height: 5),
                             buildDropdownBox(
                               'Preference 3:',
                               _selectedPreference3,
                               (val) {
-                                if (val != _selectedPreference2 &&
-                                    val != _selectedPreference1) {
+                                if (val != _selectedPreference1 &&
+                                    val != _selectedPreference2 &&
+                                    val != _selectedPreference4) {
                                   setState(() {
                                     _selectedPreference3 = val;
+                                  });
+                                }
+                              },
+                            ),
+                            SizedBox(height: 5),
+                            buildDropdownBox(
+                              'Preference 4:',
+                              _selectedPreference4,
+                              (val) {
+                                if (val != _selectedPreference1 &&
+                                    val != _selectedPreference2 &&
+                                    val != _selectedPreference3) {
+                                  setState(() {
+                                    _selectedPreference4 = val;
                                   });
                                 }
                               },
@@ -417,7 +457,8 @@ class _SouthFormState extends State<SouthForm> {
                                   : () {
                                       if (_selectedPreference1 != null &&
                                           _selectedPreference2 != null &&
-                                          _selectedPreference3 != null) {
+                                          _selectedPreference3 != null &&
+                                          _selectedPreference4 != null) {
                                         submitPreferences();
                                         print('Submitted');
                                       } else {
