@@ -94,6 +94,14 @@ export const DropDown = ({ username, name, email }) => {
               check mess bills
             </Link>
           </li>
+          <li>
+            <Link
+              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white capitalize"
+              to={'/messOff'}
+            >
+              check mess off request
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
