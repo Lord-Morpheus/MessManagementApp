@@ -201,16 +201,19 @@ export default function App() {
       );
 
       if (response.status === 201) {
+        handleOpen(studentId, mess, hostel);
         swal.fire({
           title: "Success",
           text: "Student details updated successfully!",
           icon: "success",
+        }).then(()=>{
+          window.location.reload();
+
         });
-        handleOpen(studentId, mess, hostel);
       } else {
+        handleOpen(studentId, mess, hostel);
         swal.fire("Error", "Failed to update student details", "error");
         console.log("same value");
-        handleOpen(studentId, mess, hostel);
       }
     } catch (error) {
       console.error("Error updating student details:", error);

@@ -22,6 +22,7 @@ class _RegistrationState extends State<Registration> {
   late String confirmpass;
   late String roll2;
   late String name2;
+  bool _obscureTextConfirm = true;
   late List<Map<String, dynamic>> hostelList;
   bool isLoading = false;
 
@@ -239,8 +240,21 @@ class _RegistrationState extends State<Registration> {
                     border: border,
                     enabledBorder: border,
                     focusedBorder: border,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureTextConfirm = !_obscureTextConfirm;
+                        });
+                      },
+                      child: Icon(
+                        _obscureTextConfirm
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: _obscureTextConfirm,
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
