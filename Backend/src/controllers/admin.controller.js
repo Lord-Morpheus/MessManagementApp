@@ -887,7 +887,7 @@ export const getFormData = asyncHandler(async (req, res) => {
     });
 
     console.log(forms);
-    return res.status(200);
+    return res.status(200).json(forms);
   // } catch (err) {
   //   return res.status(403).json(err);
   // }
@@ -1283,6 +1283,7 @@ export const getMessOff = asyncHandler(async (req, res) => {
       select: {
         id: true,
         imgUrl: true,
+        status:true,
         student: {
           select: {
             id: true,
