@@ -538,7 +538,7 @@ export const messAllocation = asyncHandler(async (req, res) => {
         return mess.capacity * ratio;
       }
     });
-    const allocatedForms = [0, 0, 0, 0, 0, 0, 0, 0];
+    const allocatedForms = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     let messForms = await client.messForm.findMany({
       // where: {
@@ -547,6 +547,9 @@ export const messAllocation = asyncHandler(async (req, res) => {
       //         lte: endDate
       //     }
       // },
+      where: {
+        campus: "north"
+      },
       select: {
         id: true,
         createdAt: true,
@@ -562,31 +565,12 @@ export const messAllocation = asyncHandler(async (req, res) => {
       },
     });
 
-    // console.log('messOPtions', messOptions);
-    // console.log('messForms', messForms);
-
-    // for (let i = 0; i < messForms.length; i++) {
-    //     // console.log(messForms[i])
-    //     console.log(messForms[i].student.name)
-    //     // console.log(messForms[i].preferences[0]);
-    //     console.log(messForms[i].preferences);
-
-    // }
-
     // Allocated first come first serve basis store not assigned forms
     for (let i = 0; i < 5; i++) {
       let idx = 0;
       for (const mess of messOptions) {
-        // console.log(mess.name)
-        // const filteredForms = messForms.filter(form => form.preferences[i] === mess.id);
-
-        // filteredForms.sort((a, b) => {
-        //     return new Date(a.createdAt) - new Date(b.createdAt);
-        // });
 
         let fcfsRatio = capacities[idx];
-        // idx++;
-        // console.log(fcfsRatio);
 
         for (const form of messForms) {
           if (
@@ -642,7 +626,6 @@ export const messAllocation = asyncHandler(async (req, res) => {
 
         capacities[idx] = fcfsRatio;
         idx++;
-        // console.log(mess.name, messForms.length);
       }
     }
 
@@ -695,8 +678,137 @@ export const messAllocation = asyncHandler(async (req, res) => {
       }
     }
 
-    // Allocated remaining forms to the mess according to proximity
-    console.log(allocatedForms);
+    let messForms2 = await client.messForm.findMany({
+      where: {
+        campus: "south"
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        preferences: true,
+        studentId: true,
+        alloted: true,
+        student: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    // Allocated first come first serve basis store not assigned forms
+    for (let i = 0; i < 4; i++) {
+      let idx = 0;
+      for (const mess of messOptions) {
+
+        let fcfsRatio = capacities[idx];
+
+        for (const form of messForms2) {
+          if (
+            fcfsRatio > 0 &&
+            form.preferences[i] === mess.id &&
+            !form.alloted
+          ) {
+            const updatedUser = await client.student.update({
+              where: {
+                id: form.studentId,
+              },
+              data: {
+                messId: mess.id,
+              },
+              select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                hostel: true,
+                messId: true,
+              },
+            });
+            await client.messForm.update({
+              where: {
+                id: form.id,
+              },
+              data: {
+                alloted: true,
+              },
+            });
+            // console.log(updatedUser);
+            await sendEmail({
+              mail: updatedUser.email,
+              subject: "Alert!! (this is a 🍽️ Test Message)",
+              text: `Hi there! you have been succesfully alloted : ${messMap[updatedUser.messId]}
+          
+      
+          If you have any questions or need assistance, feel free to reach out to our support team.
+          
+          We can't wait to serve you!
+          
+          Best regards,
+          IIT Mandi Mess Service Team`,
+            });
+
+            form.alloted = true;
+            fcfsRatio--;
+          }
+        }
+
+        allocatedForms[idx] += capacities[idx] - fcfsRatio;
+
+        capacities[idx] = fcfsRatio;
+        idx++;
+      }
+    }
+
+    for (const form of messForms2) {
+      if (!form.alloted) {
+        const student = await client.student.findFirst({
+          where: {
+            id: form.studentId,
+          },
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            hostel: true,
+            messId: true,
+          },
+        });
+        // console.log(student)
+        const user = await client.student.update({
+          where: {
+            id: form.studentId,
+          },
+          data: {
+            messId: student.hostel.preferredMessId,
+          },
+        });
+        await client.messForm.update({
+          where: {
+            id: form.id,
+          },
+          data: {
+            alloted: true,
+          },
+        });
+        await sendEmail({
+          mail: student.email,
+          subject: "Alert!! (this is a 🍽️ Test Message) ",
+          text: `Hi there! you have been succesfully alloted : ${messMap[user.messId]}
+      
+  
+      If you have any questions or need assistance, feel free to reach out to our support team.
+      
+      We can't wait to serve you!
+      
+      Best regards,
+      IIT Mandi Mess Service Team`,
+        });
+        form.alloted = true;
+      }
+    }
 
     return res.status(201).json({ msg: "Mess allocated successfully" });
   } catch (err) {

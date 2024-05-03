@@ -6,5 +6,6 @@ export const messMap = {
     "abbccc55-e1d4-40db-b41b-d4ed9ad0b23a": "alder mess",
     "9402c23e-f077-41c3-bc32-472286d8ac55": "d1 mess",
     "e9caf747-6c02-4cc4-b45b-fe0873c73e0b": "d2 mess",
-    "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9": "d3 mess"
+    "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9": "d3 mess",
+    "397851cc-7ee1-4825-9fc9-ce6e6f1f3aa1": "yoga mess"
 }
