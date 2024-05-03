@@ -108,9 +108,9 @@ class _SouthFormState extends State<SouthForm> {
       "Peepal Mess(North Campus)": "c7bc1615-5208-46dc-bb7e-0b2d8765866a",
       "Tulsi Mess(North Campus)": "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
       "Alder Mess(S11)": "abbccc55-e1d4-40db-b41b-d4ed9ad0b23a",
-      "D1 mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
-      "D2 mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
-      "D3 mess": "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
+      "D1 Mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
+      "D2 Mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
+      "D3 Mess": "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
     };
 
     if (_selectedPreference1 != '--None--') {
@@ -145,7 +145,7 @@ class _SouthFormState extends State<SouthForm> {
         headers: {'Content-Type': 'application/json', 'Authorization': _token},
         body: jsonEncode({'preferences': (body)}),
       );
-
+      print('response is${response.statusCode}');
       if (response.statusCode == 200) {
         // Request successful
         print('Preferences submitted successfully');
@@ -159,6 +159,18 @@ class _SouthFormState extends State<SouthForm> {
           context,
           title: "Success!",
           message: "Preferences Submitted successfully!",
+        );
+      } else if (response.statusCode == 400) {
+        TinyAlert.error(
+          onConfirm: () => {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
+          context,
+          title: "Error!",
+          message: "You have already submitted the form!",
         );
       } else if (response.statusCode == 401) {
         logout();

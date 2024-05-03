@@ -51,7 +51,7 @@ class _NorthFormState extends State<NorthForm> {
         url,
         headers: {'Authorization': _token},
       );
-      print('res $response.statusCode');
+      print('res ${response.statusCode}');
       if (response.statusCode == 200) {
         setState(() {
           _formAvailable = true;
@@ -111,8 +111,8 @@ class _NorthFormState extends State<NorthForm> {
     final Map<String, String> messIdMap = {
       "Pine Mess": "18e766cd-58ec-46b6-b658-f683b0519165",
       "Oak Mess": "79287884-7794-4f5b-ac3c-7a6109f0d028",
-      "Peepal Mess(North Campus)": "c7bc1615-5208-46dc-bb7e-0b2d8765866a",
-      "Tulsi Mess(North Campus)": "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
+      "Peepal Mess": "c7bc1615-5208-46dc-bb7e-0b2d8765866a",
+      "Tulsi Mess": "89b53ed9-23e0-4156-a7c2-fc21310ef3a4",
       "Alder Mess(S11)": "abbccc55-e1d4-40db-b41b-d4ed9ad0b23a",
       "D1 mess": "9402c23e-f077-41c3-bc32-472286d8ac55",
       "D2 mess": "e9caf747-6c02-4cc4-b45b-fe0873c73e0b",
@@ -144,6 +144,7 @@ class _NorthFormState extends State<NorthForm> {
     // final url = Uri.parse('http://192.168.135.166:3001/api/v1/users/submit');
     // final url = Uri.parse('http://10.8.90.133:3000/api/test');
     final body = getSelectedPreferenceIds();
+
     // final body = {
     // 'preference1': _selectedPreference1,
     // 'preference2': _selectedPreference2,
@@ -158,7 +159,7 @@ class _NorthFormState extends State<NorthForm> {
         headers: {'Content-Type': 'application/json', 'Authorization': _token},
         body: jsonEncode({'preferences': (body)}),
       );
-
+      print('response for post ${response.statusCode}');
       if (response.statusCode == 200) {
         // Request successful
         print('Preferences submitted successfully');
@@ -172,6 +173,18 @@ class _NorthFormState extends State<NorthForm> {
           context,
           title: "Success!",
           message: "Preferences Submitted successfully!",
+        );
+      } else if (response.statusCode == 400) {
+        TinyAlert.error(
+          onConfirm: () => {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return const Studenthomepage();
+            }))
+          },
+          context,
+          title: "Error!",
+          message: "You have already submitted the form!",
         );
       } else if (response.statusCode == 401) {
         logout();
