@@ -1321,7 +1321,7 @@ export const approveMessOff = asyncHandler(async (req, res) => {
       },
       data: {
         daysPresent: {
-          decremen: -(Math.floor((messOff.endDate - messOff.startDate) / (1000 * 60 * 60 * 24))),
+          increment: -(Math.floor((messOff.endDate - messOff.startDate) / (1000 * 60 * 60 * 24))),
         },
       },
     });
