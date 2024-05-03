@@ -306,6 +306,25 @@ export const submitForm = asyncHandler(async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
+        const alreadyForm = await client.messForm.findFirst({
+            where: {
+                studentId,
+            },
+        });
+
+        const currentTime = new Date();
+
+        const notification = await client.notification.findFirst({
+            where: {
+                endDate: { gte: currentTime },
+                startDate: { lte: currentTime },
+            },
+        });
+
+        if (alreadyForm && alreadyForm.createdAt > notification.startDate && alreadyForm.createdAt < notification.endDate) {
+            return res.status(400).json({ message: "Form already submitted" });
+        }
+
         const form = await client.messForm.create({
             data: {
                 studentId,
