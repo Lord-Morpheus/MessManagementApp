@@ -22,6 +22,7 @@ class _HomepgState extends State<Homepg> {
   late String roll;
   late String pass;
   bool isLoading = false;
+  bool _obscureText = true;
 
   final TextEditingController textEditingController1 = TextEditingController();
   final TextEditingController textEditingController2 = TextEditingController();
@@ -147,8 +148,21 @@ class _HomepgState extends State<Homepg> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
-                      obscureText: true,
+                      obscureText: _obscureText,
                     ),
                     const SizedBox(height: 20),
                     TextButton(

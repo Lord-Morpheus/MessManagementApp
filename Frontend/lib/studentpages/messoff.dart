@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mess/studentpages/studenthomepg.dart';
 import 'package:tiny_alert/tiny_alert.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final storage = new FlutterSecureStorage();
 
@@ -15,6 +16,7 @@ class MessOff extends StatefulWidget {
 }
 
 class _MessOffState extends State<MessOff> {
+  bool _isLoading = false;
   var _token;
   File? _image;
   DateTime? _startDate;
@@ -46,13 +48,27 @@ class _MessOffState extends State<MessOff> {
   }
 
   Future<void> uploadImage() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (_image == null || _startDate == null || _endDate == null) {
+      setState(() {
+        _isLoading = false;
+      });
       TinyAlert.warning(context,
           title: 'all options not selected',
           message: 'please select image, start date and end date');
       return;
     }
-
+    if (_startDate!.isAfter(_endDate!)) {
+      setState(() {
+        _isLoading = false;
+      });
+      TinyAlert.warning(context,
+          title: 'Invalid Dates',
+          message: 'Start date cannot be after end date');
+      return;
+    }
     final cloudinaryUrl =
         Uri.parse('https://api.cloudinary.com/v1_1/dve3n9ftf/image/upload');
 
@@ -107,6 +123,9 @@ class _MessOffState extends State<MessOff> {
           title: 'error', message: 'unable to apply for mess off, try again');
       print('Failed to make POST request: ${response.reasonPhrase}');
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   Future<void> _selectStartDate(BuildContext context) async {
@@ -148,6 +167,12 @@ class _MessOffState extends State<MessOff> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: getImage,
+                child: Text('Select Image'),
+              ),
+              SizedBox(height: 10),
               _image == null
                   ? Text('No image selected.')
                   : ConstrainedBox(
@@ -157,18 +182,11 @@ class _MessOffState extends State<MessOff> {
                       ),
                       child: Image.file(_image!),
                     ),
-              ElevatedButton(
-                onPressed: getImage,
-                child: Text('Select Image'),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Mess Off',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              _image == null
+                  ? Text('upload a screenshot with approval from warden')
+                  : SizedBox(
+                      height: 5,
+                    ),
               const SizedBox(height: 20),
               InkWell(
                 onTap: () => _selectStartDate(context),
@@ -204,7 +222,30 @@ class _MessOffState extends State<MessOff> {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: uploadImage, child: Text('SUBMIT'))
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  elevation: 20,
+                  backgroundColor: const Color.fromARGB(156, 44, 7, 251),
+                  fixedSize: const Size(150, 50),
+                ),
+                onPressed: _isLoading ? null : uploadImage,
+                child: _isLoading
+                    ? LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.white,
+                        size: 24,
+                      )
+                    : const Text(
+                        'SUBMIT',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
             ],
           ),
         ),
