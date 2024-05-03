@@ -166,7 +166,7 @@ class _campusState extends State<campus> {
                     }
                   },
                   child: Text(
-                    'Submit',
+                    'Next',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
