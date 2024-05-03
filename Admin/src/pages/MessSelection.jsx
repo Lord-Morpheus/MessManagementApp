@@ -67,6 +67,10 @@ export default function Selection() {
       mess_id: "5b31984b-c5b7-4ee5-a97b-1e6ad7d095f9",
       name: "d3 mess",
     },
+    {
+      mess_id: "397851cc-7ee1-4825-9fc9-ce6e6f1f3aa1",
+      name: "yoga mess",
+    },
   ];
 
   const messMapping = {};
@@ -90,8 +94,10 @@ export default function Selection() {
             },
           }
         );
+        console.log(response);
         const data = response.data.map((item) => ({
           name: item.student.name,
+          campus:item.campus,
           roll_no: item.student.username,
           preference_1: messMapping[item.preferences[0]],
           preference_2: messMapping[item.preferences[1]],
@@ -111,7 +117,6 @@ export default function Selection() {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -163,6 +168,7 @@ export default function Selection() {
     { key: "preference_5", label: "Preference 5" },
     { key: "allocated", label: "Allocated" },
     { key: "allotedMess", label: "Current Mess" },
+    { key: "campus", label: "Campus" },
   ];
 
   const rows = users.map((item, index) => ({
