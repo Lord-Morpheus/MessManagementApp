@@ -1337,7 +1337,7 @@ export const approveMessOff = asyncHandler(async (req, res) => {
       },
     });
 
-    await client.student.update({
+    const student = await client.student.update({
       where: {
         id: messOff.studentId,
       },
@@ -1347,6 +1347,12 @@ export const approveMessOff = asyncHandler(async (req, res) => {
         },
       },
     });
+
+    const email = student.email;
+    const subject = "🍽️ Mess Off Request Approved";
+    const message = `Hi ${student.name}!\n\nYour mess off request from ${messOff.startDate} to ${messOff.endDate} has been successfully accepted. You're all set!\n\nIIT Mandi Mess Service Team`;
+
+    await sendEmail({ mail: email, subject, text: message });
 
     return res.status(200).json({ data: messOff });
   } catch (err) {
@@ -1365,6 +1371,19 @@ export const declineMessOff = asyncHandler(async (req, res) => {
         status: "declined",
       },
     });
+
+    const student = await client.student.findFirst({
+      where: {
+        id: messOff.studentId,
+      },
+    });
+
+    const email = student.email;
+    const subject = "🍽️ Mess Off Request Declined";
+    const message = `Hi ${student.name}!\n\nUnfortunately, your mess off request from ${messOff.startDate} to ${messOff.endDate} has been declined. If you have any questions, please contact us.\n\nIIT Mandi Mess Service Team`;
+
+    await sendEmail({ mail: email, subject, text: message });
+
 
     return res.status(200).json({ data: messOff });
   } catch (err) {
