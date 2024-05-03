@@ -710,6 +710,8 @@ export const getMess = asyncHandler(async (req, res) => {
     select: {
       id: true,
       name: true,
+      firm: true,
+      firmMail: true,
     },
   });
   // console.log(mess);

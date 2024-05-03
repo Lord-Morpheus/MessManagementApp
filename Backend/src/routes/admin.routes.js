@@ -24,7 +24,7 @@ router.put('/reset/password/', resetPassword);
 router.post('/send/otp', sendSignupOTPAdmin);
 router.get('/export', adminAuthMiddleware, filterMiddleware, exportUser);
 router.post('/add/vendor', adminAuthMiddleware, addVendor);
-router.post('/add/mess', adminAuthMiddleware, addMess);
+router.post('/add/mess', addMess);
 router.post('/add/hostel', adminAuthMiddleware, addHostel);
 router.get('/hostels', getHostel);
 router.post('/import/users', upload.single('excelFile'), importUser)
