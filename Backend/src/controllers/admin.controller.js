@@ -1117,12 +1117,6 @@ export const sendNotification = asyncHandler(async (req, res) => {
       console.log(`Notification email sent to ${email}`);
     }
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 5000);
-    });
-
     return res.status(200).json({ message: "Notifications sent successfully" });
   } catch (err) {
     return res.status(403).json(err);
@@ -1164,6 +1158,75 @@ export const messOff = asyncHandler(async (req, res) => {
     });
 
     return res.status(200).json({ data: student });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const getMessOff = asyncHandler(async (req, res) => {
+  try {
+    const data = await client.messOff.findMany({
+      select: {
+        id: true,
+        imgUrl: true,
+        student: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+          },
+        },
+        startDate: true,
+        endDate: true,
+      }
+    })
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const approveMessOff = asyncHandler(async (req, res) => {
+  const { messOffId } = req.body;
+  try {
+    const messOff = await client.messOff.update({
+      where: {
+        id: messOffId,
+      },
+      data: {
+        status: "approved",
+      },
+    });
+
+    await client.student.update({
+      where: {
+        id: messOff.studentId,
+      },
+      data: {
+        daysPresent: {
+          increment: Math.floor((messOff.endDate - messOff.startDate) / (1000 * 60 * 60 * 24)),
+        },
+      },
+    });
+
+    return res.status(200).json({ data: messOff });
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+export const declineMessOff = asyncHandler(async (req, res) => {
+  const { messOffId } = req.body;
+  try {
+    const messOff = await client.messOff.update({
+      where: {
+        id: messOffId,
+      },
+      data: {
+        status: "declined",
+      },
+    });
+
+    return res.status(200).json({ data: messOff });
   } catch (err) {
     return res.status(403).json(err);
   }

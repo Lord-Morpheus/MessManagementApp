@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Profile, addHostel, addMess, addVendor, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, seedHostel, seedMess, sendNotification, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
+import { Profile, addHostel, addMess, addVendor, approveMessOff, declineMessOff, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getMessOff, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, seedHostel, seedMess, sendNotification, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTPAdmin } from '../controllers/common.controller.js';
 import { exportUser, importUser } from '../controllers/excel.controller.js';
@@ -44,5 +44,7 @@ router.post('/notification', adminAuthMiddleware, sendNotification);
 router.get('/seedmess', seedMess);
 router.get('/seedhostel', seedHostel);
 router.get('/profile', adminAuthMiddleware, Profile);
-
+router.get('/messoff', adminAuthMiddleware, getMessOff);
+router.put('/approve', adminAuthMiddleware, approveMessOff);
+router.put('/reject', adminAuthMiddleware, declineMessOff);
 export default router;

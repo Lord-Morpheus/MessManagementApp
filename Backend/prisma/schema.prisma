@@ -29,6 +29,7 @@ model Student {
   messForm    MessForm[]
   defaultMess String?
   daysPresent Int        @default(31)
+  messOff     MessOff[]
 }
 
 model Feedback {
@@ -68,6 +69,18 @@ model Hostel {
   updatedAt       DateTime  @updatedAt
   Student         Student[]
   preferredMessId String?
+}
+
+model MessOff {
+  id        String   @id @default(uuid()) @map("_id")
+  imgUrl    String
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String
+  startDate DateTime
+  endDate   DateTime
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // model Menu {
