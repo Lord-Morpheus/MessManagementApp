@@ -108,7 +108,7 @@ export default function HomeCard4() {
       }
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URI}/admin/getRevenue`,
+          `${import.meta.env.VITE_BACKEND_URI}/admin/students`,
           {
             headers: {
               Authorization: `Admin ${token}`,
@@ -118,8 +118,96 @@ export default function HomeCard4() {
         if (response.status !== 200) {
           console.log("Failed to fetch data");
         }
-        const data = response.data;
-        setChartConfig(data.data);
+        const studentsData = response.data.data;
+        const revenueData = {};
+        studentsData.forEach((student) => {
+          const mess = student.mess || "Not Assigned";
+          const daysPresent = student.daysPresent;
+          const revenue = daysPresent * 125;
+          revenueData[mess] = (revenueData[mess] || 0) + revenue;
+        });
+
+        const categories = Object.keys(revenueData);
+        const data = categories.map((mess) => revenueData[mess]);
+
+        // Convert revenue data object to array format for chart series
+        const newChartConfig = {
+          type: "bar",
+          height: 240,
+          width: 420,
+          series: [
+            {
+              name: "Revenue",
+              data: data,
+            },
+          ],
+          options: {
+            chart: {
+              toolbar: {
+                show: false,
+              },
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            colors: ["#012169"],
+            plotOptions: {
+              bar: {
+                columnWidth: "60%",
+                borderRadius: 2,
+              },
+            },
+            xaxis: {
+              axisTicks: {
+                show: false,
+              },
+              axisBorder: {
+                show: false,
+              },
+              labels: {
+                style: {
+                  colors: "#616161",
+                  fontSize: "12px",
+                  fontFamily: "inherit",
+                  fontWeight: 400,
+                },
+              },
+              categories: categories,
+            },
+            yaxis: {
+              labels: {
+                style: {
+                  colors: "#616161",
+                  fontSize: "12px",
+                  fontFamily: "inherit",
+                  fontWeight: 400,
+                },
+              },
+            },
+            grid: {
+              show: false,
+              borderColor: "#dddddd",
+              strokeDashArray: 5,
+              xaxis: {
+                lines: {
+                  show: true,
+                },
+              },
+              padding: {
+                top: 5,
+                right: 20,
+              },
+            },
+            fill: {
+              opacity: 0.8,
+            },
+            tooltip: {
+              theme: "dark",
+            },
+          },
+        };
+        setChartConfig(newChartConfig);
+
       } catch (error) {
         const status = error.response.status;
         console.log(status);
@@ -134,7 +222,7 @@ export default function HomeCard4() {
     fetchChartConfig();
   }, [navigate]);
 
-  console.log(chartConfig, "kk");
+  // console.log(chartConfig, "kk");
 
   return (
     <Card className="max-h-96 h-full">

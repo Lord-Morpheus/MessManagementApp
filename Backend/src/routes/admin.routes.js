@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Profile, addHostel, addMess, addVendor, approveMessOff, declineMessOff, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getMessOff, getRevenueOfMess, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, seedHostel, seedMess, sendNotification, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
+import { Profile, addHostel, addMess, addVendor, approveMessOff, declineMessOff, deleteStudent, filterStudents, getAllStudents, getFeedbackCountByMess, getFeedbacks, getFormData, getHostel, getMess, getMessOff, getStudent, getStudentsCountByMess, messAllocation, seedData, seedForms, seedHostel, seedMess, sendNotification, signIn, signUp, studentID, updateStudent } from '../controllers/admin.controller.js';
 import { adminAuthMiddleware } from '../middlewares/adminAuth.middleware.js';
 import { forgotPassword, resetPassword, sendSignupOTPAdmin } from '../controllers/common.controller.js';
 import { exportUser, importUser } from '../controllers/excel.controller.js';
@@ -37,7 +37,7 @@ router.get('/getform', adminAuthMiddleware, getFormData)
 router.post('/upload', upload.single('file'), menuUplaoder);
 router.get('/menu', getMenuPDF);
 router.get('/getMessStudentCount', getStudentsCountByMess);
-router.get('/getRevenue', getRevenueOfMess);
+// router.get('/getRevenue', getRevenueOfMess);
 router.get('/feedback', getFeedbacks);
 router.get('/getFeedbackCount', getFeedbackCountByMess);
 router.post('/notification', adminAuthMiddleware, sendNotification);
