@@ -150,7 +150,7 @@ class _SouthFormState extends State<SouthForm> {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json', 'Authorization': _token},
-        body: jsonEncode({'preferences': (body)}),
+        body: jsonEncode({'preferences': (body), 'campus': 'south'}),
       );
       print('response is${response.statusCode}');
       if (response.statusCode == 200) {

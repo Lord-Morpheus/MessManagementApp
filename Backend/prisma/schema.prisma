@@ -100,7 +100,7 @@ model MessForm {
   student     Student  @relation(fields: [studentId], references: [id])
   studentId   String
   preferences String[]
-  campus      String?
+  campus      String   @default("Not Assigned")
   alloted     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
