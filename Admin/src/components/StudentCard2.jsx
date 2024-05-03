@@ -22,7 +22,7 @@ import { columns } from "./data";
 import { TableComponent } from "./StudentTable";
 import { getToken } from "../utils/getToken";
 import axios from "axios";
-import { useAsyncError, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
 // import Popup from "reactjs-popup";
 // import { useUsers } from "../hooks/useUsers";

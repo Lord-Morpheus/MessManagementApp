@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
@@ -9,7 +9,7 @@ export const DropDown = ({ username, name, email }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const dropdownRef = useRef(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
