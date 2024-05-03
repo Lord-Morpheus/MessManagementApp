@@ -85,12 +85,12 @@ class _MessOffState extends State<MessOff> {
     };
 
     final response = await http.post(
-      // Uri.parse('http://192.168.89.166:3000/api/test'),
+      // Uri.parse('http://192.168.89.166:3001/api/v1/users/messoff'),
       Uri.parse('https://mess-api.vercel.app/api/v1/users/messoff'),
       headers: {'Content-Type': 'application/json', 'Authorization': _token},
       body: jsonEncode(requestBody),
     );
-    print(response);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       print('POST request successful!');
       TinyAlert.success(context,
