@@ -87,16 +87,16 @@ export const signUp = asyncHandler(async (req, res) => {
 export const signIn = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  const { success } = z
-    .object({
-      username: z.string().length(6),
-      password: z.string().min(6),
-    })
-    .safeParse(req.body);
+  // const { success } = z
+  //   .object({
+  //     username: z.string().length(6),
+  //     password: z.string().min(6),
+  //   })
+  //   .safeParse(req.body);
 
-  if (!success) {
-    return res.status(400).json({ message: "Invalid Input" });
-  }
+  // if (!success) {
+  //   return res.status(400).json({ message: "Invalid Input" });
+  // }
 
   try {
     const user = await client.admin.findUnique({
