@@ -22,18 +22,15 @@ import { FileEmbedder } from "pdf-lib";
 // Admin Signup using OTP and Admin Secret
 export const signUp = asyncHandler(async (req, res) => {
   const { name, username, email, password, adminSecret, OTP } = req.body;
-  const { success } = adminSignUpSchema.safeParse(req.body);
+  // const { success } = adminSignUpSchema.safeParse(req.body);
 
-  if (!success) {
-    return res.status(400).json({ message: "Invalid Input" });
-  }
 
   if (adminSecret !== process.env.ADMIN_SECRET) {
     console.log(adminSecret, process.env.ADMIN_SECRET);
     return res.status(401).json({ message: "Forbidden" });
   }
 
-  try {
+  // try {
     const matched = await client.otp.findFirst({
       where: {
         email,
@@ -81,9 +78,9 @@ export const signUp = asyncHandler(async (req, res) => {
     return res
       .status(200)
       .json({ token, message: "Admin registered successfully" });
-  } catch (err) {
-    return res.status(403).json(err);
-  }
+  // } catch (err) {
+  //   return res.status(403).json(err);
+  // }
 });
 
 // Admin Signin
