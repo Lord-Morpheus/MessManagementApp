@@ -93,10 +93,11 @@ export default function Login() {
                 <input
                   type="text"
                   className="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="B22126"
+                  placeholder="gajendra"
                   onChange={(e) => setUsername(() => e.target.value)}
                 />
               </div>
+              <div className="my-1">sample username - gajendra</div>
             </div>
 
             <div className="form-field mt-5">
@@ -152,6 +153,7 @@ export default function Login() {
                   onChange={(e) => setPassword(() => e.target.value)}
                 />
               </div>
+              <div className="my-1">sample password - 123456</div>
             </div>
             <div className="mb-3 flex justify-end font-normal mt-2">
               <Link className="text-blue-600 underline" to="/signup">
