@@ -97,7 +97,7 @@ export default function Login() {
                   onChange={(e) => setUsername(() => e.target.value)}
                 />
               </div>
-              <div className="my-1">sample username - gajendra</div>
+              <div className="my-1">login username - gajendra</div>
             </div>
 
             <div className="form-field mt-5">
@@ -153,7 +153,7 @@ export default function Login() {
                   onChange={(e) => setPassword(() => e.target.value)}
                 />
               </div>
-              <div className="my-1">sample password - 123456</div>
+              <div className="my-1">login password - 123456</div>
             </div>
             <div className="mb-3 flex justify-end font-normal mt-2">
               <Link className="text-blue-600 underline" to="/signup">
